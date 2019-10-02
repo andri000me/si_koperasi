@@ -33,7 +33,7 @@
           <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row">
-              <div class="col-lg-6 d-none d-lg-block bg-login-image">
+              <div class="col-lg-6 d-none d-lg-block">
                   <img style="width:400px;height:300px;" src="<?php echo base_url(); ?>assets/img/koperasi-logo.png" alt="">
               </div>
               <div class="col-lg-6">

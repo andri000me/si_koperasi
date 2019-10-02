@@ -29,6 +29,13 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/icofont/icofont.min.css">
   <script src="<?php echo base_url() . 'assets/vendor/web-bluetooth/' ?>bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
   <script src="<?php echo base_url() ?>assets/js/jquery-3.4.0.min.js"></script>
+  
+  <style>
+    /* Style to change separator  */
+    .breadcrumb-item + .breadcrumb-item::before {
+        content: ">";
+    }
+  </style>
 
 </head>
 
@@ -72,11 +79,11 @@
         <div id="navDataMaster" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="#">Anggota</a>
-            <a class="collapse-item" href="#">Pengguna Sistem</a>
+            <a class="collapse-item" href="<?php echo base_url().'index.php/user'; ?>">User</a>
           </div>
         </div>
       </li>
-      
+
       <!-- Nav Monitoring -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#navMonitoring" aria-expanded="true" aria-controls="collapseTwo">
@@ -142,9 +149,6 @@
           </div>
         </div>
       </li>
-      
-
-
       <!-- Divider -->
       <hr class="sidebar-divider">
       
