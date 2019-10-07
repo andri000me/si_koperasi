@@ -78,7 +78,7 @@
         </a>
         <div id="navDataMaster" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="#">Anggota</a>
+            <a class="collapse-item" href="<?php echo base_url().'index.php/anggota' ?>">Anggota</a>
             <a class="collapse-item" href="<?php echo base_url().'index.php/user'; ?>">User</a>
           </div>
         </div>
@@ -97,6 +97,16 @@
           </div>
         </div>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="<?php echo base_url().'index.php/dashboard'; ?>">
+          <i class="icofont-ui-home"></i>
+          <span>Simpanan Pokok</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="<?php echo base_url().'index.php/dashboard'; ?>">
+          <i class="icofont-ui-home"></i>
+          <span>Simpanan Wajib</span></a>
+      </li>
       <!-- Nav Simuda -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#navSimuda" aria-expanded="true" aria-controls="collapseTwo">
@@ -105,7 +115,9 @@
         </a>
         <div id="navSimuda" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="#">Menu 1</a>
+            <a class="collapse-item" href="#">Form Buka Rekening</a>
+            <a class="collapse-item" href="#">Kelola Rekening</a>
+            <a class="collapse-item" href="#">Daftar Nominatif</a>
             <a class="collapse-item" href="#">Setel Limit Debet Simuda</a>
           </div>
         </div>
@@ -151,22 +163,46 @@
       </li>
       <!-- Divider -->
       <hr class="sidebar-divider">
-      
       <!-- Heading -->
       <div class="sidebar-heading">
         Akuntansi
       </div>
-      <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#generalLedger" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-cog"></i>
-          <span>Components</span>
+          <span>General Ledger</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="generalLedger" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Components:</h6>
-            <a class="collapse-item" href="buttons.html">Buttons</a>
-            <a class="collapse-item" href="cards.html">Cards</a>
+            <a class="collapse-item" href="">Buku Besar</a>  
+            <a class="collapse-item" href="">Neraca Saldo</a>  
+            <a class="collapse-item" href="">Laba/Rugi</a>  
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#transaksiAkuntansi" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Transaksi</span>
+        </a>
+        <div id="transaksiAkuntansi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="">Kas</a>  
+            <a class="collapse-item" href="">Bank</a>  
+            <a class="collapse-item" href="">Memorial</a>  
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#setupAkuntansi" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Setup Akuntansi</span>
+        </a>
+        <div id="setupAkuntansi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="">Kode Induk</a>
+            <a class="collapse-item" href="">Kode Rekening</a>
+            
           </div>
         </div>
       </li>
