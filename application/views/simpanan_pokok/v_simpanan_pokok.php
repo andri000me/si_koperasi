@@ -103,29 +103,19 @@
                                                         <div class="col-md-6">
                                                             <div class="form-group-inner">
                                                                 <label for="" class="pull-left">No. Anggota</label>
-                                                                <input type="text" name="no_anggota" class="form-control form-control-sm" placeholder="Masukkan Nama" required>
+                                                                <input type="text" name="no_anggota" class="form-control form-control-sm" placeholder="Masukkan No anggota" required>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group-inner">
-                                                                <label for="" class="pull-left">Nama Terang</label>
+                                                                <label for="" class="pull-left">Tanggal Bayar</label>
                                                                 <input type="text" name="nama_terang" class="form-control form-control-sm" placeholder="Masukkan Nama" required>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group-inner">
-                                                                <label for="" class="pull-left">Alamat</label>
-                                                                <textarea class="form-control" name="alamat" placeholder="Masukkan Alamat"></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group-inner">
-                                                                <label for="" class="pull-left">Status</label>
-                                                                <select name="status" id="" class="form-control form-control-sm" required>
-                                                                    <option value="">--Pilih--</option>
-                                                                    <option value="1">Aktif</option>
-                                                                    <option value="0">Non Aktif</option>
-                                                                </select>
+                                                                <label for="" class="pull-left">Jumlah</label>
+                                                                <textarea class="form-control" name="alamat" placeholder="Masukkan Jumlah"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
