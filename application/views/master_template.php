@@ -1,11 +1,12 @@
 <?php
-  // if($this->session->userdata('_login') != TRUE){
-  //   redirect('login');          
-  // }
+// if($this->session->userdata('_login') != TRUE){
+//   redirect('login');          
+// }
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
   <meta charset="utf-8">
@@ -29,11 +30,11 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/icofont/icofont.min.css">
   <script src="<?php echo base_url() . 'assets/vendor/web-bluetooth/' ?>bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
   <script src="<?php echo base_url() ?>assets/js/jquery-3.4.0.min.js"></script>
-  
+
   <style>
     /* Style to change separator  */
-    .breadcrumb-item + .breadcrumb-item::before {
-        content: ">";
+    .breadcrumb-item+.breadcrumb-item::before {
+      content: ">";
     }
   </style>
 
@@ -48,7 +49,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo base_url().'index.php/dashboard' ?>">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo base_url() . 'index.php/dashboard' ?>">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="icofont-food-cart"></i>
         </div>
@@ -60,7 +61,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url().'index.php/dashboard'; ?>">
+        <a class="nav-link" href="<?php echo base_url() . 'index.php/dashboard'; ?>">
           <i class="icofont-ui-home"></i>
           <span>Dashboard</span></a>
       </li>
@@ -78,8 +79,8 @@
         </a>
         <div id="navDataMaster" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo base_url().'index.php/anggota' ?>">Anggota</a>
-            <a class="collapse-item" href="<?php echo base_url().'index.php/user'; ?>">User</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/anggota' ?>">Anggota</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/user'; ?>">User</a>
           </div>
         </div>
       </li>
@@ -104,7 +105,7 @@
         </a>
         <div id="navPokokWajib" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="#">Simpanan Pokok</a>
+            <a class="collapse-item" href="<?= base_url() . 'index.php/simpanan_pokok' ?>">Simpanan Pokok</a>
             <a class="collapse-item" href="#">Simpanan Wajib</a>
             <a class="collapse-item" href="#">Pengaturan Limit</a>
           </div>
@@ -134,11 +135,11 @@
         </a>
         <div id="navSijaka" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="#">Form Sijaka</a>
-          <a class="collapse-item" href="#">Kelola Rekening</a>
-          <a class="collapse-item" href="#">Daftar Nominatif</a>  
-          <a class="collapse-item" href="#">Perhitungan Akhir Bulan</a>
-            
+            <a class="collapse-item" href="#">Form Sijaka</a>
+            <a class="collapse-item" href="#">Kelola Rekening</a>
+            <a class="collapse-item" href="#">Daftar Nominatif</a>
+            <a class="collapse-item" href="#">Perhitungan Akhir Bulan</a>
+
           </div>
         </div>
       </li>
@@ -169,9 +170,9 @@
         </a>
         <div id="generalLedger" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="">Buku Besar</a>  
-            <a class="collapse-item" href="">Neraca Saldo</a>  
-            <a class="collapse-item" href="">Laba/Rugi</a>  
+            <a class="collapse-item" href="">Buku Besar</a>
+            <a class="collapse-item" href="">Neraca Saldo</a>
+            <a class="collapse-item" href="">Laba/Rugi</a>
           </div>
         </div>
       </li>
@@ -182,9 +183,9 @@
         </a>
         <div id="transaksiAkuntansi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="">Kas</a>  
-            <a class="collapse-item" href="">Bank</a>  
-            <a class="collapse-item" href="">Memorial</a>  
+            <a class="collapse-item" href="">Kas</a>
+            <a class="collapse-item" href="">Bank</a>
+            <a class="collapse-item" href="">Memorial</a>
           </div>
         </div>
       </li>
@@ -197,7 +198,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="">Kode Induk</a>
             <a class="collapse-item" href="">Kode Rekening</a>
-            
+
           </div>
         </div>
       </li>
@@ -257,12 +258,12 @@
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="<?php echo base_url().'index.php/user/editPasswordBySelf' ?>">
+                <a class="dropdown-item" href="<?php echo base_url() . 'index.php/user/editPasswordBySelf' ?>">
                   <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                   Ganti Password
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="<?php echo base_url().'index.php/login/logout' ?>" onclick="return confirm('Anda Yakin Ingin Keluar?')">
+                <a class="dropdown-item" href="<?php echo base_url() . 'index.php/login/logout' ?>" onclick="return confirm('Anda Yakin Ingin Keluar?')">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>
@@ -276,7 +277,7 @@
 
         <!-- Begin Page Content -->
         <?php $this->load->view($path); ?>
-        
+
         <!-- /.container-fluid -->
 
       </div>
