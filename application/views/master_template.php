@@ -98,14 +98,17 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url().'index.php/dashboard'; ?>">
-          <i class="icofont-ui-home"></i>
-          <span>Simpanan Pokok</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url().'index.php/dashboard'; ?>">
-          <i class="icofont-ui-home"></i>
-          <span>Simpanan Wajib</span></a>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#navPokokWajib" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Pokok & Wajib</span>
+        </a>
+        <div id="navPokokWajib" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="#">Simpanan Pokok</a>
+            <a class="collapse-item" href="#">Simpanan Wajib</a>
+            <a class="collapse-item" href="#">Pengaturan Limit</a>
+          </div>
+        </div>
       </li>
       <!-- Nav Simuda -->
       <li class="nav-item">
@@ -119,6 +122,7 @@
             <a class="collapse-item" href="#">Kelola Rekening</a>
             <a class="collapse-item" href="#">Daftar Nominatif</a>
             <a class="collapse-item" href="#">Setel Limit Debet Simuda</a>
+            <a class="collapse-item" href="#">Perhitungan Akhir Bulan</a>
           </div>
         </div>
       </li>
@@ -130,8 +134,11 @@
         </a>
         <div id="navSijaka" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="#">Menu 1</a>
-            <a class="collapse-item" href="#">Menu 2</a>
+          <a class="collapse-item" href="#">Form Sijaka</a>
+          <a class="collapse-item" href="#">Kelola Rekening</a>
+          <a class="collapse-item" href="#">Daftar Nominatif</a>  
+          <a class="collapse-item" href="#">Perhitungan Akhir Bulan</a>
+            
           </div>
         </div>
       </li>
@@ -143,21 +150,9 @@
         </a>
         <div id="navKredit" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="#">Menu 1</a>
-            <a class="collapse-item" href="#">Menu 2</a>
-          </div>
-        </div>
-      </li>
-      <!-- Nav Kredit/Pembiayaan -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#navPengaturan" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Pengaturan</span>
-        </a>
-        <div id="navPengaturan" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="#">Menu 1</a>
-            <a class="collapse-item" href="#">Menu 2</a>
+            <a class="collapse-item" href="#">Form Kredit</a>
+            <a class="collapse-item" href="#">Kelola Kredit</a>
+            <a class="collapse-item" href="#">Daftar Nominatif</a>
           </div>
         </div>
       </li>
