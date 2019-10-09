@@ -1,4 +1,4 @@
-<!--<script>
+<script>
     function edit(id) {
         $.ajax({
             url: "<?php echo base_url() . 'index.php/anggota/edit'; ?>",
@@ -14,7 +14,7 @@
             }
         });
     }
-</script>-->
+</script>
 <!-- BreadCumb -->
 
 <!-- Content -->
@@ -60,11 +60,13 @@
                         foreach ($simpanan_pokok as $s) {
                             ?>
                             <tr>
-                                <!--<td><?php echo $no++; ?></td>
-                                <td><?php echo $p->no_anggota; ?></td>
-                                <td><?php echo $p->nama; ?></td>
-                                <td><?php echo $p->alamat; ?></td>
-                                <td><?php if ($p->status == "0") {
+                                <td><?php echo $no++; ?></td>
+                                <td><?php echo $s->no_anggota; ?></td>
+                                <td><?php echo $s->nama; ?></td>
+                                <td><?php echo $s->tanggal_pembayaran; ?></td>
+                                <td><?php echo $s->jumlah; ?></td>
+                                <td><?php echo $s->id_user; ?></td>
+                                <td><?php if ($s->status == "0") {
                                             echo "Non Aktif";
                                         } else if ($p->status == "1") {
                                             echo "Aktif";
@@ -85,50 +87,50 @@
         </div>
     </div>
 
-</div>-->
-                                <!-- The Modal -->
-                                <!-- Buat Form Tambahnya-->
-                                <div class="modal" id="myModal">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <form name="tambah-pelanggan" method="POST" action="<?php echo base_url(); ?>index.php/anggota/add">
-                                                <!-- Modal Header -->
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title">Tambah User</h4>
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                </div>
-                                                <!-- Modal body -->
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group-inner">
-                                                                <label for="" class="pull-left">No. Anggota</label>
-                                                                <input type="text" name="no_anggota" class="form-control form-control-sm" placeholder="Masukkan No anggota" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group-inner">
-                                                                <label for="" class="pull-left">Tanggal Bayar</label>
-                                                                <input type="text" name="nama_terang" class="form-control form-control-sm" placeholder="Masukkan Nama" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group-inner">
-                                                                <label for="" class="pull-left">Jumlah</label>
-                                                                <textarea class="form-control" name="alamat" placeholder="Masukkan Jumlah"></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+</div>
+<!-- The Modal -->
+<!-- Buat Form Tambahnya-->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form name="tambah-pelanggan" method="POST" action="<?php echo base_url(); ?>index.php/Simpanan_pokok/add">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Tambah Simpanan Pokok</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group-inner">
+                                <label for="" class="pull-left">No. Anggota</label>
+                                <input type="text" name="no_anggota" class="form-control form-control-sm" placeholder="Masukkan No anggota" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group-inner">
+                                <label for="" class="pull-left">Tanggal Bayar</label>
+                                <input type="date" name="input_tanggal" class="form-control form-control-sm" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group-inner">
+                                <label for="" class="pull-left">Jumlah</label>
+                                <textarea class="form-control" name="alamat" placeholder="Masukkan Jumlah"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                                                <!-- Modal footer -->
-                                                <div class="modal-footer">
-                                                    <button type="reset" class="btn btn-danger btn-sm">Reset</button>
-                                                    <input type="submit" class="btn btn-primary btn-sm" value="Simpan" />
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal" id="modaledit">
-                                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-danger btn-sm">Reset</button>
+                    <input type="submit" class="btn btn-primary btn-sm" value="Simpan" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modaledit">
+</div>

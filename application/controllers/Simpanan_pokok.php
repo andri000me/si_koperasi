@@ -28,9 +28,38 @@ class Simpanan_pokok extends CI_Controller
                 'label' => 'Nama Anggota',
                 'rules' => 'required'
             ),
-            array(),
-            array(),
-            array(),
+            array(
+                'field' => 'tanggal_pembayaran',
+                'label' => 'Tanggal',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'jumlah',
+                'label' => 'Jumlah',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'teller',
+                'label' => 'Teller',
+                'rules' => 'required'
+            ),
         );
+        $this->form_validation->set_rules($config);
+        if ($this->form_validation->run() == TRUE) {
+            // jika validasi berhasil maka input ke tabel simpanan pokok
+            $data = array(
+                'no_anggota' => $this->input->post('no_anggota'),
+                'tanggal_pembayaran' => $this->input->post('tanggal_pembayaran'),
+                'jumlah' => $this->input->post('jumlah'),
+                'id_user' => $this->input->post('id_user')
+            );
+            $this->M_simpanan_pokok->addSimpananpokok($data);
+            //INPUT KE TABEL SIMPANAN POKOK
+        } else { //jika validasi form gagal
+            $gagal = validation_errors();
+            $this->session->set_flashdata("input_failed", "<div class='alert alert-danger'>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Gagal Ditambahkan!!<br>" . $gagal . "</div>");
+        }
+        redirect('Simpanan_pokok');
     }
 }
