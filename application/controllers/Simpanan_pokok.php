@@ -62,4 +62,8 @@ class Simpanan_pokok extends CI_Controller
         }
         redirect('Simpanan_pokok');
     }
+    function edit()
+    {
+        $this->load->view('simpanan_pokok/edit_simpanan_pokok');
+    }
 }

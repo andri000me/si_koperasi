@@ -1,7 +1,7 @@
 <script>
     function edit(id) {
         $.ajax({
-            url: "<?php echo base_url() . 'index.php/anggota/edit'; ?>",
+            url: "<?php echo base_url() . 'index.php/simpanan_pokok/edit'; ?>",
             type: "POST",
             data: {
                 id: id
@@ -66,18 +66,9 @@
                                 <td><?php echo $s->tanggal_pembayaran; ?></td>
                                 <td><?php echo $s->jumlah; ?></td>
                                 <td><?php echo $s->id_user; ?></td>
-                                <td><?php if ($s->status == "0") {
-                                            echo "Non Aktif";
-                                        } else if ($p->status == "1") {
-                                            echo "Aktif";
-                                        } ?></td>
                                 <td style="text-align:center;">
-                                    <button type="button" class="btn btn-sm btn-success" onclick="edit(<?php echo $p->no_anggota; ?>)"><i class="icofont-ui-edit"></i></button>
-                                    <?php if ($p->status == 1) { ?>
-                                        <a onclick="return confirm('Anda Yakin Ingin Menonaktifkan Anggota?')" href="<?php echo base_url() . 'index.php/user/disableAccount/' . $p->no_anggota; ?>" class="btn btn-sm btn-danger"><i class="icofont-ui-power"></i></a>
-                                    <?php } else if ($p->status == 0) { ?>
-                                        <a onclick="return confirm('Anda Yakin Ingin Mengaktifkan Anggota?')" href="<?php echo base_url() . 'index.php/user/enableAccount/' . $p->no_anggota; ?>" class="btn btn-sm btn-primary"><i class="icofont-ui-power"></i></a>
-                                    <?php } ?>
+                                    <button type="button" class="btn btn-sm btn-success" onclick="edit(<?php echo $s->no_anggota; ?>)"><i class="icofont-ui-edit"></i></button>
+                                    <button type="button" class="btn btn-sm btn-danger" onclick="hapus(<?php echo $s->no_anggota; ?>)"><i class="icofont-ui-delete"></i></button>
                                 </td>
                             </tr>
                         <?php } ?>

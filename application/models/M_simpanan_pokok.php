@@ -6,7 +6,7 @@ class M_simpanan_pokok extends CI_Model
 
     function getSimpananpokok()
     {
-        return $this->db->get($this->_table)->result();
+        return $this->db->query('select * from anggota inner join master_simpanan_pokok on master_simpanan_pokok.no_anggota=anggota.no_anggota')->result();
     }
     function addSimpananpokok($data)
     {
