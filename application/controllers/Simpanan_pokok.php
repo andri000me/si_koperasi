@@ -24,25 +24,15 @@ class Simpanan_pokok extends CI_Controller
                 'rules' => 'required'
             ),
             array(
-                'field' => 'nama_anggota',
-                'label' => 'Nama Anggota',
-                'rules' => 'required'
-            ),
-            array(
                 'field' => 'tanggal_pembayaran',
-                'label' => 'Tanggal',
+                'label' => 'Tanggal Pembayaran',
                 'rules' => 'required'
             ),
             array(
                 'field' => 'jumlah',
                 'label' => 'Jumlah',
                 'rules' => 'required'
-            ),
-            array(
-                'field' => 'teller',
-                'label' => 'Teller',
-                'rules' => 'required'
-            ),
+            )
         );
         $this->form_validation->set_rules($config);
         if ($this->form_validation->run() == TRUE) {
@@ -50,8 +40,7 @@ class Simpanan_pokok extends CI_Controller
             $data = array(
                 'no_anggota' => $this->input->post('no_anggota'),
                 'tanggal_pembayaran' => $this->input->post('tanggal_pembayaran'),
-                'jumlah' => $this->input->post('jumlah'),
-                'id_user' => $this->input->post('id_user')
+                'jumlah' => $this->input->post('jumlah')
             );
             $this->M_simpanan_pokok->addSimpananpokok($data);
             //INPUT KE TABEL SIMPANAN POKOK
@@ -62,8 +51,15 @@ class Simpanan_pokok extends CI_Controller
         }
         redirect('Simpanan_pokok');
     }
-    function edit()
+    /*function delete($id)
+    {
+        $where = array('id_simpanan_pokok' => $id);
+        $this->M_simpanan_pokok->delete($where, 'master_simpanan_pokok');
+        redirect('simpanan_pokok');
+    }*/
+
+    /*function edit()
     {
         $this->load->view('simpanan_pokok/edit_simpanan_pokok');
-    }
+    }*/
 }

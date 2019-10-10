@@ -16,4 +16,10 @@ class M_simpanan_pokok extends CI_Model
             return FALSE;
         }
     }
+
+    /*function delete($where, $table)
+    {
+        $this->db->where($where);
+        $this->db->delete($table);
+    }*/
 }

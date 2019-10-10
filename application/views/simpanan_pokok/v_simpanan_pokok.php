@@ -68,7 +68,7 @@
                                 <td><?php echo $s->id_user; ?></td>
                                 <td style="text-align:center;">
                                     <button type="button" class="btn btn-sm btn-success" onclick="edit(<?php echo $s->no_anggota; ?>)"><i class="icofont-ui-edit"></i></button>
-                                    <button type="button" class="btn btn-sm btn-danger" onclick="hapus(<?php echo $s->no_anggota; ?>)"><i class="icofont-ui-delete"></i></button>
+                                    <button type="button" class="btn btn-sm btn-danger" onclick="hapus(<?php echo $s->id_simpanan_pokok; ?>)"><i class="icofont-ui-delete"></i></button>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -102,13 +102,13 @@
                         <div class="col-md-6">
                             <div class="form-group-inner">
                                 <label for="" class="pull-left">Tanggal Bayar</label>
-                                <input type="date" name="input_tanggal" class="form-control form-control-sm" required>
+                                <input type="date" name="tanggal_pembayaran" class="form-control form-control-sm">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group-inner">
                                 <label for="" class="pull-left">Jumlah</label>
-                                <textarea class="form-control" name="alamat" placeholder="Masukkan Jumlah"></textarea>
+                                <textarea class="form-control" name="jumlah" placeholder="Masukkan Jumlah"></textarea>
                             </div>
                         </div>
                     </div>
