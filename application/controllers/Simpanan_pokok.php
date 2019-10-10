@@ -32,7 +32,8 @@ class Simpanan_pokok extends CI_Controller
                 'field' => 'jumlah',
                 'label' => 'Jumlah',
                 'rules' => 'required'
-            )
+            ),
+
         );
         $this->form_validation->set_rules($config);
         if ($this->form_validation->run() == TRUE) {
@@ -40,7 +41,8 @@ class Simpanan_pokok extends CI_Controller
             $data = array(
                 'no_anggota' => $this->input->post('no_anggota'),
                 'tanggal_pembayaran' => $this->input->post('tanggal_pembayaran'),
-                'jumlah' => $this->input->post('jumlah')
+                'jumlah' => $this->input->post('jumlah'),
+                'id_user' => '1'
             );
             $this->M_simpanan_pokok->addSimpananpokok($data);
             //INPUT KE TABEL SIMPANAN POKOK
@@ -58,8 +60,9 @@ class Simpanan_pokok extends CI_Controller
         redirect('simpanan_pokok');
     }*/
 
-    /*function edit()
+    function edit()
     {
+
         $this->load->view('simpanan_pokok/edit_simpanan_pokok');
-    }*/
+    }
 }
