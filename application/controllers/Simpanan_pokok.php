@@ -53,16 +53,28 @@ class Simpanan_pokok extends CI_Controller
         }
         redirect('Simpanan_pokok');
     }
-    /*function delete($id)
+
+    function delete($id)
     {
+        // $id = $this->input->post('id');
         $where = array('id_simpanan_pokok' => $id);
-        $this->M_simpanan_pokok->delete($where, 'master_simpanan_pokok');
-        redirect('simpanan_pokok');
-    }*/
+        $this->M_simpanan_pokok->hapus_data($where, 'master_simpanan_pokok');
+        redirect('Simpanan_pokok');
+    }
 
     function edit()
     {
-
+        $id_simpanan_pokok = $this->input->post('id');
+        $data['simpanan_pokok'] = $this->M_simpanan_pokok->get1Anggota(array('id_simpanan_pokok' => $id_simpanan_pokok));
         $this->load->view('simpanan_pokok/edit_simpanan_pokok');
+    }
+
+    function update(){
+        //melakukan validasi untuk menjamin data terisi semua
+        $config = array(
+            array(
+                'field'=> '',
+            )
+        )
     }
 }
