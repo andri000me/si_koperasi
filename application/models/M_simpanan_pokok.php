@@ -28,4 +28,14 @@ class M_simpanan_pokok extends CI_Model
         $this->db->where($where);
         $this->db->delete($table);
     }
+
+    function updateAnggota($where, $data)
+    {
+        $this->db->where($where);
+        if ($this->db->update($this->_table, $data) == TRUE) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
 }

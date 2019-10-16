@@ -67,7 +67,7 @@
                                 <td><?php echo $s->jumlah; ?></td>
                                 <td><?php echo $s->nama_terang; ?></td>
                                 <td style="text-align:center;">
-                                    <button type="button" class="btn btn-sm btn-success" onclick="edit(<?php echo $s->no_anggota; ?>)"><i class="icofont-ui-edit"></i></button>
+                                    <button type="button" class="btn btn-sm btn-success" onclick="edit(<?php echo $s->id_simpanan_pokok; ?>)"><i class="icofont-ui-edit"></i></button>
                                     <a onclick="confirm('Apakah anda yakin ?')" href="<?= base_url('index.php/') . 'Simpanan_pokok/delete/' . $s->id_simpanan_pokok ?>">
                                         <button class="btn btn-danger btn-sm"><i class="icofont-ui-delete"></i></button>
                                     </a>
@@ -110,7 +110,7 @@
                         <div class="col-md-6">
                             <div class="form-group-inner">
                                 <label for="" class="pull-left">Jumlah</label>
-                                <textarea class="form-control" name="jumlah" placeholder="Masukkan Jumlah"></textarea>
+                                <input type="number" name="jumlah" class="form-control form-control-sm">
                             </div>
                         </div>
                     </div>
