@@ -86,10 +86,10 @@
 <div class="modal" id="myModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form name="tambah-pelanggan" method="POST" action="<?php echo base_url(); ?>index.php/Simpanan_pokok/add">
+            <form name="tambah-pelanggan" method="POST" action="<?php echo base_url(); ?>index.php/Simpanan_wajib/add">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Simpanan Pokok</h4>
+                    <h4 class="modal-title">Tambah Simpanan Wajib</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
@@ -104,7 +104,7 @@
                         <div class="col-md-6">
                             <div class="form-group-inner">
                                 <label for="" class="pull-left">Tanggal Bayar</label>
-                                <input type="date" name="tanggal_pembayaran" class="form-control form-control-sm">
+                                <input type="date" name="tgl_pembayaran" class="form-control form-control-sm">
                             </div>
                         </div>
                         <div class="col-md-6">

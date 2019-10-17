@@ -14,14 +14,14 @@ class M_simpanan_wajib extends CI_Model
         return $this->db->get_where($this->_table, $where)->result();
     }
 
-    // function addSimpananpokok($data)
-    // {
-    //     if ($this->db->insert($this->_table, $data) == TRUE) {
-    //         return TRUE;
-    //     } else {
-    //         return FALSE;
-    //     }
-    // }
+    function addSimpananwajib($data)
+    {
+        if ($this->db->insert($this->_table, $data) == TRUE) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
 
     // function hapus_data($where, $table)
     // {
