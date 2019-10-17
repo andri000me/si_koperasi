@@ -106,7 +106,7 @@
         <div id="navPokokWajib" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="<?= base_url() . 'index.php/simpanan_pokok' ?>">Simpanan Pokok</a>
-            <a class="collapse-item" href="#">Simpanan Wajib</a>
+            <a class="collapse-item" href="<?= base_url() . 'index.php/simpanan_wajib'; ?>">Simpanan Wajib</a>
             <a class="collapse-item" href="#">Pengaturan Limit</a>
           </div>
         </div>
@@ -196,7 +196,7 @@
         </a>
         <div id="setupAkuntansi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="<?php echo base_url() . 'index.php/setup-akuntansi/kodeinduk' ?>">Kode Induk</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/setup-akuntansi/kodeinduk' ?>">Kode Induk</a>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/setup-akuntansi/koderekening' ?>">Kode Rekening</a>
           </div>
         </div>
