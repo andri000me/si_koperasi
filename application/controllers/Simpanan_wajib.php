@@ -61,4 +61,55 @@ class Simpanan_wajib extends CI_Controller
         $this->M_simpanan_wajib->hapus_data($where, 'master_simpanan_wajib');
         redirect('Simpanan_wajib');
     }
+    function edit()
+    {
+        $id_simpanan_wajib = $this->input->post('id');
+        $data['simpanan_wajib'] = $this->M_simpanan_wajib->get1Anggota(array('id_simpanan_wajib' => $id_simpanan_wajib));
+        $this->load->view('simpanan_wajib/edit_simpanan_wajib', $data);
+    }
+
+    function update()
+    {
+        $config = array(
+            array(
+                'field' => 'temp_id_simpanan_wajib',
+                'label' => 'Temp',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'no_anggota',
+                'label' => 'No anggota',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'tgl_pembayaran',
+                'label' => 'Tanggal Pembayaran',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'jumlah',
+                'label' => 'Jumlah',
+                'rules' => 'required'
+            )
+        );
+
+        $this->form_validation->set_rules($config);
+        if ($this->form_validation->run() == TRUE) {
+            $where = array('id_simpanan_wajib' => $this->input->post('temp_id_simpanan_wajib'));
+            $data = array(
+                'id_simpanan_wajib' => $this->input->post('id_simpanan_wajib'),
+                'no_anggota' => $this->input->post('no_anggota'),
+                'tgl_pembayaran' => $this->input->post('tgl_pembayaran'),
+                'jumlah' => $this->input->post('jumlah')
+            );
+            $this->M_simpanan_wajib->updateAnggota($where, $data);
+            $this->session->set_flashdata("update_success", "<div class='alert alert-success'>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Berhasil Diperbarui.</div>");
+        } else {
+            $gagal = validation_errors();
+            $this->session->set_flashdata("update_failed", "<div class='alert alert-danger'>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Gagal Diubah!!<br>" . $gagal . "</div>");
+        }
+        redirect('simpanan_wajib');
+    }
 }
