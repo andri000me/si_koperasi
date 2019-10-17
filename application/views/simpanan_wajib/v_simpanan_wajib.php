@@ -68,7 +68,7 @@
                                 <td><?php echo $w->nama_terang; ?></td>
                                 <td style="text-align:center;">
                                     <button type="button" class="btn btn-sm btn-success" onclick="edit()"><i class="icofont-ui-edit"></i></button>
-                                    <a onclick="confirm('Apakah anda yakin ?')" href="">
+                                    <a onclick="confirm('Apakah anda yakin ?')" href="<?= base_url('index.php/') . 'Simpanan_wajib/delete/' . $w->id_simpanan_wajib ?>">
                                         <button class="btn btn-danger btn-sm"><i class="icofont-ui-delete"></i></button>
                                     </a>
                                 </td>

@@ -54,4 +54,11 @@ class Simpanan_wajib extends CI_Controller
         }
         redirect('Simpanan_wajib');
     }
+    function delete($id)
+    {
+        // $id = $this->input->post('id');
+        $where = array('id_simpanan_wajib' => $id);
+        $this->M_simpanan_wajib->hapus_data($where, 'master_simpanan_wajib');
+        redirect('Simpanan_wajib');
+    }
 }
