@@ -26,10 +26,14 @@
 
   <!-- Custom styles for this page -->
   <link href="<?php echo base_url(); ?>assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <!--Select2 -->
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/select2/select2-bootstrap4.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/select2/select2.min.css">
   <!-- Icofont -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/icofont/icofont.min.css">
-  <script src="<?php echo base_url() . 'assets/vendor/web-bluetooth/' ?>bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+
   <script src="<?php echo base_url() ?>assets/js/jquery-3.4.0.min.js"></script>
+
 
   <style>
     /* Style to change separator  */
@@ -119,10 +123,10 @@
         </a>
         <div id="navSimuda" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="#">Form Buka Rekening</a>
-            <a class="collapse-item" href="#">Kelola Rekening</a>
-            <a class="collapse-item" href="#">Daftar Nominatif</a>
-            <a class="collapse-item" href="#">Setel Limit Debet Simuda</a>
+            <a class="collapse-item" href="<?php echo base_url().'index.php/simuda/bukarekening'; ?>">Form Buka Rekening</a>
+            <a class="collapse-item" href="<?php echo base_url().'index.php/simuda/kelolarekening'; ?>">Kelola Rekening</a>
+            <a class="collapse-item" href="<?php echo base_url().'index.php/simuda/daftarnominatif'; ?>">Daftar Nominatif</a>
+            <a class="collapse-item" href="<?php echo base_url().'index.php/simuda/stellimitdebet'; ?>">Setel Limit Debet Simuda</a>
             <a class="collapse-item" href="#">Perhitungan Akhir Bulan</a>
           </div>
         </div>
@@ -319,6 +323,8 @@
 
   <!-- Page level custom scripts -->
   <script src="<?php echo base_url(); ?>assets/js/demo/datatables-demo.js"></script>
+  <!-- Select2 -->
+  <script src="<?php echo base_url(); ?>assets/vendor/select2/select2.min.js"></script>
 
 </body>
 
