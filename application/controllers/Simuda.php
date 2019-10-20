@@ -71,4 +71,10 @@ Class Simuda extends CI_Controller{
         }
         redirect('simuda/stelLimitDebet');
     }
+    //Daftar Nominatif
+    function daftarNominatif(){ 
+        $data['path'] = 'simuda/daftar_nominatif';
+        $data['nominatif'] = $this->M_simuda->getMasterSimuda();
+        $this->load->view('master_template',$data);
+    }
 }

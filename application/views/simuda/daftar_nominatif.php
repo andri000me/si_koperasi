@@ -1,18 +1,20 @@
-<script>
-    function manageAjax() {
-        var no_anggota_field = $("#no_anggota").val()
+<!-- <script>
+    function edit(id) {
         $.ajax({
-            url: "<?php echo base_url() . 'index.php/simuda/manageajaxgetdataanggota'; ?>",
+            url: "<?php echo base_url() . 'index.php/anggota/edit'; ?>",
             type: "POST",
             data: {
-                id : no_anggota_field
+                id: id
             },
             success: function(ajaxData) {
-                $('.data-ajax').html(ajaxData);
+                $("#modaledit").html(ajaxData);
+                $("#modaledit").modal('show', {
+                    backdrop: 'true'
+                });
             }
         });
     }
-</script>
+</script> -->
 <!-- BreadCumb -->
 
 <!-- Content -->
@@ -21,13 +23,13 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="<?php echo base_url().'index.php/dashboard' ?>">Dashboard</a></li>
     <li class="breadcrumb-item"><a href="#">Simuda</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Form Buka Rekening</li>
+    <li class="breadcrumb-item active" aria-current="page">Daftar Nominatif</li>
   </ol>
 </nav>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Form Buka Rekening</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Daftar Nominatif</h6>
         </div>
         <div class="card-body">
             <?php
@@ -38,57 +40,54 @@
             echo $this->session->flashdata("delete_success");
             echo $this->session->flashdata("delete_failed");
             ?>
-            <form method="POST" action="<?php echo base_url().'index.php/simuda/simpanRekeningBaru' ?>">
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="">No. Rekening</label>
-                        <input type="text" name="no_rekening_simuda" class="form-control" value="" required>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="">No. Anggota</label>
-                        <select name="no_anggota" id="no_anggota" class="form-control" onchange="manageAjax()">
-                            <option value="">--Pilih--</option>
-                            <?php foreach($anggota as $a){ ?>
-                            <option value="<?php echo $a->no_anggota; ?>"><?php echo $a->no_anggota.' - '.$a->nama ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="row data-ajax">
-                    
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="">Saldo Awal</label>
-                        <input type="number" class="form-control" value="saldo_awal">
-                    </div>
-                    <div class="col-md-4">
-                        <label for="">Status</label>
-                        <select name="status_pembukaan_rekening" id="" class="form-control">
-                            <option value="0">Baru</option>
-                            <option value="1">Migrasi Sistem</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-md-4">
-                        <button type="submit" class="btn btn-sm btn-primary mr-1">Simpan</button>
-                        <button type="reset" class="btn btn-sm btn-default btn-danger">Reset</button>
-                    </div>
-                </div>
-            </form>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>No.Rekening</th>
+                            <th>No. Anggota</th>
+                            <th>Nama</th>
+                            <th>Saldo Bulan Lalu</th>
+                            <th>Saldo Bulan Ini</th>
+                            <th>Saldo Terendah</th>
+                            <th>Aksi</th>
+                            <!-- <th>Aksi</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $no = 1;
+                        foreach ($nominatif as $p) {
+                            ?>
+                            <tr>
+                                <td><?php echo $no++; ?></td>
+                                <td><?php echo $p->no_rekening_simuda; ?></td>
+                                <td><?php echo $p->no_anggota; ?></td>
+                                <td><?php echo $p->nama; ?></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <a href="<?php echo base_url().'index.php/simuda/detailRekening/'.$p->no_rekening_simuda; ?>" class="btn btn-sm btn-primary">Detail</a>
+                                </td>
+                                <!-- <td style="text-align:center;">
+                                    <button type="button" class="btn btn-sm btn-success" onclick="edit(<?php echo $p->no_anggota; ?>)"><i class="icofont-ui-edit"></i></button>
+                                    <?php if($p->status==1){ ?>
+                                    <a onclick="return confirm('Anda Yakin Ingin Menonaktifkan Anggota?')" href="<?php echo base_url() . 'index.php/user/disableAccount/' . $p->no_anggota; ?>" class="btn btn-sm btn-danger" ><i class="icofont-ui-power"></i></a>
+                                    <?php }else if($p->status==0){ ?>
+                                    <a onclick="return confirm('Anda Yakin Ingin Mengaktifkan Anggota?')" href="<?php echo base_url() . 'index.php/user/enableAccount/' . $p->no_anggota; ?>" class="btn btn-sm btn-primary" ><i class="icofont-ui-power"></i></a>
+                                    <?php } ?>
+                                </td> -->
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
 </div>
-<script>
-    $(document).ready(function(){
-        $('select').select2({
-            theme: 'bootstrap4',
-        });
-    });
-    
-</script>
 <!-- The Modal -->
 <div class="modal" id="myModal">
     <div class="modal-dialog">

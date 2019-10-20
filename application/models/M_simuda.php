@@ -11,6 +11,12 @@ Class M_simuda extends CI_Model{
             return FALSE;
         }
     }
+    function getMasterSimuda(){
+        $this->db->select('no_rekening_simuda,master_rekening_simuda.no_anggota,nama');
+        $this->db->from('master_rekening_simuda');
+        $this->db->join('anggota','master_rekening_simuda.no_anggota = anggota.no_anggota');
+        return $this->db->get()->result();
+    }
     function get1MasterSimuda(){
         $this->db->select('no_rekening_simuda');
         $this->db->from('master_rekening_simuda');
