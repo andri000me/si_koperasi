@@ -123,10 +123,10 @@
         </a>
         <div id="navSimuda" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo base_url().'index.php/simuda/bukarekening'; ?>">Form Buka Rekening</a>
-            <a class="collapse-item" href="<?php echo base_url().'index.php/simuda/kelolarekening'; ?>">Kelola Rekening</a>
-            <a class="collapse-item" href="<?php echo base_url().'index.php/simuda/daftarnominatif'; ?>">Daftar Nominatif</a>
-            <a class="collapse-item" href="<?php echo base_url().'index.php/simuda/stellimitdebet'; ?>">Setel Limit Debet Simuda</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/bukarekening'; ?>">Form Buka Rekening</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/kelolarekening'; ?>">Kelola Rekening</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/daftarnominatif'; ?>">Daftar Nominatif</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/stellimitdebet'; ?>">Setel Limit Debet Simuda</a>
             <a class="collapse-item" href="#">Perhitungan Akhir Bulan</a>
           </div>
         </div>
@@ -157,7 +157,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="#">Form Kredit</a>
             <a class="collapse-item" href="#">Kelola Kredit</a>
-            <a class="collapse-item" href="#">Daftar Nominatif</a>
+            <a class="collapse-item" href="<?= base_url() . 'index.php/Daftar_nominatif_kredit' ?>">Daftar Nominatif</a>
           </div>
         </div>
       </li>
