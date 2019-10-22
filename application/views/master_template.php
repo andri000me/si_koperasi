@@ -202,6 +202,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/setup-akuntansi/kodeinduk' ?>">Kode Induk</a>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/setup-akuntansi/koderekening' ?>">Kode Rekening</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/setup-akuntansi/settingrekening' ?>">Setting Rekening</a>
           </div>
         </div>
       </li>
