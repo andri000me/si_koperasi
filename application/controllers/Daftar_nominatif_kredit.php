@@ -15,4 +15,10 @@ class Daftar_nominatif_kredit extends CI_Controller
         // $data['simpanan_wajib'] = $this->M_simpanan_wajib->getSimpananpokok();
         $this->load->view('master_template', $data);
     }
+    function detail()
+    {
+        $data['title'] = 'Detail Nominatif Kredit/Pembayaran';
+        $data['path'] = "daftar_nominatif_kredit/detail_daftar_nominatif_kredit";
+        $this->load->view('master_template', $data);
+    }
 }

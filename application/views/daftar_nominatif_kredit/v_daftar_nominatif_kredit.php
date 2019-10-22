@@ -29,7 +29,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Data Simpanan Wajib</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Daftar Nominatif</h6>
         </div>
         <div class="card-body">
             <?php
@@ -68,7 +68,7 @@
                             <td></td>
                             <td></td>
                             <td style="text-align:center;">
-                                <button type="button" class="btn btn-sm btn-info" onclick="">Detail</button>
+                                <a href="Daftar_nominatif_kredit/detail" class="btn btn-primary">Detail</a>
                             </td>
                         </tr>
 
@@ -83,7 +83,7 @@
 <!-- Buat Form Tambahnya-->
 <!-- <div class="modal" id="myModal">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content">--
             <form name="tambah-pelanggan" method="POST" action="<?php echo base_url(); ?>index.php/Simpanan_wajib/add"> -->
 <!-- Modal Header -->
 <!-- <div class="modal-header">
