@@ -68,7 +68,7 @@
                             <td></td>
                             <td></td>
                             <td style="text-align:center;">
-                                <a href="Daftar_nominatif_kredit/detail" class="btn btn-primary">Detail</a>
+                                <a href="detail" class="btn btn-primary">Detail</a>
                             </td>
                         </tr>
 

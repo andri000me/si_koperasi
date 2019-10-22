@@ -20,7 +20,11 @@
             echo $this->session->flashdata("delete_success");
             echo $this->session->flashdata("delete_failed");
             ?>
-            <a href="Daftar_nominatif_kredit/index">Kembali</a>
+            <div class="row">
+                <div class="col-2 ml-auto">
+                    <a href="index" class="btn btn-primary" style="margin-left:30px;">Kembali</a>
+                </div>
+            </div><br>
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
