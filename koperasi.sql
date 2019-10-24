@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 07, 2019 at 09:09 AM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.3.1
+-- Generation Time: Oct 24, 2019 at 05:56 PM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -73,16 +73,24 @@ CREATE TABLE `ak_detail_trx_memorial` (
 
 CREATE TABLE `ak_jurnal` (
   `id_jurnal` int(11) NOT NULL,
-  `tanggal` int(11) NOT NULL,
-  `kode_transaksi` int(11) NOT NULL,
-  `keterangan` int(11) NOT NULL,
+  `tanggal` datetime NOT NULL,
+  `kode_transaksi` int(11) DEFAULT NULL,
+  `keterangan` text NOT NULL,
   `kode` int(11) NOT NULL,
   `lawan` int(11) NOT NULL,
-  `tipe` int(11) NOT NULL,
-  `nominal` int(11) NOT NULL,
-  `tipe_trx_koperasi` enum('''SimPokok''','''SimWajib''','''Simuda''','''Sijaka''','''Kredit''') NOT NULL,
+  `tipe` enum('K','D') NOT NULL,
+  `nominal` float NOT NULL,
+  `tipe_trx_koperasi` enum('SimPokok','SimWajib','Simuda','Sijaka','Kredit') NOT NULL,
   `id_detail` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ak_jurnal`
+--
+
+INSERT INTO `ak_jurnal` (`id_jurnal`, `tanggal`, `kode_transaksi`, `keterangan`, `kode`, `lawan`, `tipe`, `nominal`, `tipe_trx_koperasi`, `id_detail`) VALUES
+(3, '0000-00-00 00:00:00', NULL, '', 0, 0, 'K', 50000, 'Simuda', 0),
+(4, '2019-10-21 02:58:03', NULL, '', 0, 0, 'K', 150000, 'Simuda', 5);
 
 -- --------------------------------------------------------
 
@@ -106,7 +114,21 @@ CREATE TABLE `ak_rekening` (
   `kode_rekening` varchar(10) NOT NULL,
   `nama` varchar(30) NOT NULL,
   `inisial` varchar(3) NOT NULL,
+  `saldo_awal` float NOT NULL,
   `kode_induk` varchar(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ak_set_rekening`
+--
+
+CREATE TABLE `ak_set_rekening` (
+  `id_ak_set_rekening` int(11) NOT NULL,
+  `jenis_trx` varchar(15) NOT NULL,
+  `rek_debet` varchar(12) NOT NULL,
+  `rek_kredit` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -223,6 +245,18 @@ CREATE TABLE `master_detail_rekening_simuda` (
   `id_user` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `master_detail_rekening_simuda`
+--
+
+INSERT INTO `master_detail_rekening_simuda` (`id_detail_rekening_simuda`, `no_rekening_simuda`, `datetime`, `debet`, `kredit`, `saldo`, `id_user`) VALUES
+(4, 12332323, '0000-00-00 00:00:00', 0, 50000, 50000, 1),
+(5, 123232, '2019-10-21 02:58:03', 0, 150000, 150000, 1),
+(6, 12332323, '2019-10-23 00:00:00', 0, 50000, 100000, 1),
+(7, 12332323, '2019-10-23 11:22:00', 0, 50000, 150000, 1),
+(8, 12332323, '2019-10-23 11:22:00', 25000, 0, 125000, 1),
+(9, 12332323, '2019-10-23 22:22:00', 0, 20000, 145000, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -252,6 +286,15 @@ CREATE TABLE `master_rekening_simuda` (
   `no_anggota` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `master_rekening_simuda`
+--
+
+INSERT INTO `master_rekening_simuda` (`no_rekening_simuda`, `no_anggota`) VALUES
+(12332323, 1212),
+(120102, 3002),
+(123232, 3002);
+
 -- --------------------------------------------------------
 
 --
@@ -261,7 +304,7 @@ CREATE TABLE `master_rekening_simuda` (
 CREATE TABLE `master_simpanan_pokok` (
   `id_simpanan_pokok` int(11) NOT NULL,
   `no_anggota` int(11) NOT NULL,
-  `tanggal_pembayaran` int(11) NOT NULL,
+  `tanggal_pembayaran` date NOT NULL,
   `jumlah` int(11) NOT NULL,
   `id_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -297,6 +340,26 @@ CREATE TABLE `support_limit_simuda` (
 
 INSERT INTO `support_limit_simuda` (`id_limit_simuda`, `nominal`) VALUES
 (1, 2500000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `support_simuda_tutup_bulan`
+--
+
+CREATE TABLE `support_simuda_tutup_bulan` (
+  `id_support_simuda_tutup_bulan` int(11) NOT NULL,
+  `no_rekening_simuda` int(11) NOT NULL,
+  `tgl_tutup_bulan` date NOT NULL,
+  `saldo` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `support_simuda_tutup_bulan`
+--
+
+INSERT INTO `support_simuda_tutup_bulan` (`id_support_simuda_tutup_bulan`, `no_rekening_simuda`, `tgl_tutup_bulan`, `saldo`) VALUES
+(1, 120102, '2019-09-30', 500000);
 
 -- --------------------------------------------------------
 
@@ -374,6 +437,12 @@ ALTER TABLE `ak_rekening`
   ADD KEY `kode_induk` (`kode_induk`);
 
 --
+-- Indexes for table `ak_set_rekening`
+--
+ALTER TABLE `ak_set_rekening`
+  ADD PRIMARY KEY (`id_ak_set_rekening`);
+
+--
 -- Indexes for table `ak_trx_bank`
 --
 ALTER TABLE `ak_trx_bank`
@@ -418,8 +487,8 @@ ALTER TABLE `master_detail_rekening_pembiayaan`
 --
 ALTER TABLE `master_detail_rekening_simuda`
   ADD PRIMARY KEY (`id_detail_rekening_simuda`),
-  ADD KEY `id_rekening_simuda` (`no_rekening_simuda`),
-  ADD KEY `id_user` (`id_user`);
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `no_rekening_simuda` (`no_rekening_simuda`);
 
 --
 -- Indexes for table `master_rekening_pembiayaan`
@@ -456,6 +525,13 @@ ALTER TABLE `master_simpanan_wajib`
 --
 ALTER TABLE `support_limit_simuda`
   ADD PRIMARY KEY (`id_limit_simuda`);
+
+--
+-- Indexes for table `support_simuda_tutup_bulan`
+--
+ALTER TABLE `support_simuda_tutup_bulan`
+  ADD PRIMARY KEY (`id_support_simuda_tutup_bulan`),
+  ADD KEY `no_rekening_simuda` (`no_rekening_simuda`);
 
 --
 -- Indexes for table `support_temp_tgl_simpanan_wajib`
@@ -496,7 +572,13 @@ ALTER TABLE `ak_detail_trx_memorial`
 -- AUTO_INCREMENT for table `ak_jurnal`
 --
 ALTER TABLE `ak_jurnal`
-  MODIFY `id_jurnal` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_jurnal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `ak_set_rekening`
+--
+ALTER TABLE `ak_set_rekening`
+  MODIFY `id_ak_set_rekening` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `anggota`
@@ -520,13 +602,13 @@ ALTER TABLE `master_detail_rekening_pembiayaan`
 -- AUTO_INCREMENT for table `master_detail_rekening_simuda`
 --
 ALTER TABLE `master_detail_rekening_simuda`
-  MODIFY `id_detail_rekening_simuda` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detail_rekening_simuda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `master_simpanan_pokok`
 --
 ALTER TABLE `master_simpanan_pokok`
-  MODIFY `id_simpanan_pokok` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_simpanan_pokok` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `master_simpanan_wajib`
@@ -539,6 +621,12 @@ ALTER TABLE `master_simpanan_wajib`
 --
 ALTER TABLE `support_limit_simuda`
   MODIFY `id_limit_simuda` tinyint(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `support_simuda_tutup_bulan`
+--
+ALTER TABLE `support_simuda_tutup_bulan`
+  MODIFY `id_support_simuda_tutup_bulan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `support_temp_tgl_simpanan_wajib`
@@ -567,8 +655,8 @@ ALTER TABLE `master_detail_rekening_pembiayaan`
 -- Constraints for table `master_detail_rekening_simuda`
 --
 ALTER TABLE `master_detail_rekening_simuda`
-  ADD CONSTRAINT `master_detail_rekening_simuda_ibfk_1` FOREIGN KEY (`id_detail_rekening_simuda`) REFERENCES `master_rekening_simuda` (`no_rekening_simuda`),
-  ADD CONSTRAINT `master_detail_rekening_simuda_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
+  ADD CONSTRAINT `master_detail_rekening_simuda_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
+  ADD CONSTRAINT `master_detail_rekening_simuda_ibfk_3` FOREIGN KEY (`no_rekening_simuda`) REFERENCES `master_rekening_simuda` (`no_rekening_simuda`);
 
 --
 -- Constraints for table `master_rekening_pembiayaan`
