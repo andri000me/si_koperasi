@@ -6,6 +6,11 @@
     <li class="breadcrumb-item active" aria-current="page">Form Sijaka</li>
   </ol>
 </nav>
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Form Buka Rekening</h6>
+  </div>
+  <div class="card-body">
     <form>
       <div class="form-row">
         <div class="form-group col-md-6">
@@ -40,11 +45,11 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputMulai">Mulai</label>
-          <input type="text" class="form-control" id="inputMulai" placeholder="Bulan">
+          <input type="date" class="form-control" id="inputMulai" placeholder="Bulan">
         </div>
         <div class="form-group col-md-6">
           <label for="inputSampai">Sampai</label>
-          <input type="text" class="form-control" id="inputSampai" placeholder="Sampai">
+          <input type="date" class="form-control" id="inputSampai" placeholder="Sampai">
         </div>
       </div>
       <!-- <div class="form-group">
@@ -82,7 +87,16 @@
           <label for="inputJmlPembayaranBahas">jumlah Bayar</label>
           <input type="text" class="form-control" id="inputJmlPembayaranBahas">
         </div>
+        <div class="form-group col-md-2">
+          <label for="inputPembayaranBahas">Perpanjangan Otomatis</label>
+          <select id="inputPembayaranBahas" class="form-control">
+            <option>Pilih</option>
+            <option>Ya</option>
+            <option>Tidak</option>
+          </select>
+        </div>
       </div>
+        
       
       <!-- <div class="form-group">
         <div class="form-check">
@@ -95,4 +109,6 @@
       <button type="submit" class="btn btn-primary float-right" style="margin-left:5px;">Simpan</button>
       <button type="reset" class="btn btn-danger float-right">Clear</button>
     </form>
+  </div>
+  </div>
 </div>
