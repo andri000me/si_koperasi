@@ -50,6 +50,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class CI_DB_mysqli_result extends CI_DB_result {
 
+	function next_result()
+	{
+		if (is_object($this->conn_id))
+		{
+			return mysqli_next_result($this->conn_id);
+		}
+	}
 	/**
 	 * Number of rows in the result set
 	 *

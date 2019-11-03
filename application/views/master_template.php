@@ -98,7 +98,7 @@
         <div id="navMonitoring" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="#">Log Activity</a>
-            <a class="collapse-item" href="#">Otorisasi</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/otorisasi'; ?>">Otorisasi</a>
           </div>
         </div>
       </li>
@@ -111,7 +111,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="<?= base_url() . 'index.php/simpanan_pokok' ?>">Simpanan Pokok</a>
             <a class="collapse-item" href="<?= base_url() . 'index.php/simpanan_wajib'; ?>">Simpanan Wajib</a>
-            <a class="collapse-item" href="#">Pengaturan Limit</a>
+            <!-- <a class="collapse-item" href="#">Pengaturan Limit</a> -->
           </div>
         </div>
       </li>
@@ -126,8 +126,10 @@
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/bukarekening'; ?>">Form Buka Rekening</a>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/kelolarekening'; ?>">Kelola Rekening</a>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/daftarnominatif'; ?>">Daftar Nominatif</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/daftartrxotorisasi'; ?>">Daftar Trx Otorisasi</a>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/stellimitdebet'; ?>">Setel Limit Debet Simuda</a>
-            <a class="collapse-item" href="#">Perhitungan Akhir Bulan</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/perhitunganakhirbulan'; ?>">Perhitungan Akhir Bulan</a>
+            
           </div>
         </div>
       </li>
