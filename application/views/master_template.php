@@ -157,9 +157,9 @@
         </a>
         <div id="navKredit" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?= base_url() . 'index.php/form_kredit' ?> ">Form Kredit</a>
+            <a class="collapse-item" href="<?= base_url() . 'index.php/kredit/pengajuanRekening' ?> ">Form Kredit</a>
             <a class="collapse-item" href="#">Kelola Kredit</a>
-            <a class="collapse-item" href="<?= base_url() . 'index.php/Daftar_nominatif_kredit' ?>">Daftar Nominatif</a>
+            <a class="collapse-item" href="<?= base_url() . 'index.php/kredit/daftarNominatif' ?>">Daftar Nominatif</a>
           </div>
         </div>
       </li>
