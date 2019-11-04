@@ -65,10 +65,10 @@
                                 <td><?php echo $p->no_rekening_simuda; ?></td>
                                 <td><?php echo $p->no_anggota; ?></td>
                                 <td><?php echo $p->nama; ?></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
+                                <td class="text-right"><?php echo number_format($p->saldo_bulan_lalu,0,',','.'); ?></td>
+                                <td class="text-right"><?php echo number_format($p->saldo_bulan_ini,0,',','.'); ?></td>
+                                <td class="text-right"><?php echo number_format($p->saldo_terendah,0,',','.'); ?></td>
+                                <td class="text-center">
                                     <a href="<?php echo base_url().'index.php/simuda/detailRekening/'.$p->no_rekening_simuda; ?>" class="btn btn-sm btn-primary">Detail</a>
                                 </td>
                                 <!-- <td style="text-align:center;">

@@ -1,18 +1,18 @@
 <script>
-    function edit(id) {
-        $.ajax({
-            url: "<?php echo base_url() . 'index.php/anggota/edit'; ?>",
-            type: "POST",
-            data: {
-                id: id
-            },
-            success: function(ajaxData) {
-                $("#modaledit").html(ajaxData);
-                $("#modaledit").modal('show', {
-                    backdrop: 'true'
-                });
-            }
-        });
+    function preview() {
+        var nominal = $("#nominal").val()
+        if(nominal == ""){
+            return alert('Nominal Harus Diisi')
+        }else{
+            $.ajax({
+                url: "<?php echo base_url() . 'index.php/simuda/previewPerhitunganAkhirBulan'; ?>",
+                type: "POST",
+                data: { nominal : nominal },
+                success: function(ajaxData) {
+                    $(".ajax-data").html(ajaxData);
+                }
+            });
+        }
     }
 </script>
 <!-- BreadCumb -->
@@ -22,14 +22,14 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="<?php echo base_url().'index.php/dashboard' ?>">Dashboard</a></li>
-    <li class="breadcrumb-item"><a href="#">Data Master</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Data Anggota</li>
+    <li class="breadcrumb-item"><a href="#">Simuda</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Perhitungan Akhir Bulan</li>
   </ol>
 </nav>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Data Anggota</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Perhitungan Akhir Bulan</h6>
         </div>
         <div class="card-body">
             <?php
@@ -40,39 +40,51 @@
             echo $this->session->flashdata("delete_success");
             echo $this->session->flashdata("delete_failed");
             ?>
-            <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#myModal" style="margin-bottom:10px;"><i class="icofont-plus-circle"></i> Tambah</button>
+            <form name="perhitungan_akhir_bulan" method="POST" action="<?php echo base_url().'index.php/simuda/simpanPerhitunganAkhirBulan'; ?>">
+            <div class="form-group row">
+                <div class="col-md-1">
+                    <label for="">Nominal</label>   
+                </div>
+                <div class="col-md-4">
+                    <input type="number" name="nominal" id="nominal" class="form-control form-control-sm">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-sm btn-success mr-1" value="preview" onclick="preview()">Preview</button>
+                    <button type="submit" class="btn btn-sm btn-primary" value="Simpan"">Simpan</button>
+                </div>
+            </div>
+            </form>
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>No.</th>
+                            <th>No.Rekening</th>
                             <th>No. Anggota</th>
-                            <th>Nama Terang</th>
-                            <th>Alamat</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
+                            <th>Nama</th>
+                            <th>Saldo Bulan Ini</th>
+                            <th>Saldo Terendah</th>
+                            <th>Bagi Hasil</th>
+                            <th>Nominal</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="ajax-data">
                         <?php
                         $no = 1;
-                        foreach ($anggota as $p) {
-                            ?>
-                            <tr>
-                                <td><?php echo $no++; ?></td>
-                                <td><?php echo $p->no_anggota; ?></td>
-                                <td><?php echo $p->nama; ?></td>
-                                <td><?php echo $p->alamat; ?></td>
-                                <td><?php if($p->status=="0"){echo "Non Aktif";}else if($p->status=="1"){echo "Aktif";} ?></td>
-                                <td style="text-align:center;">
-                                    <button type="button" class="btn btn-sm btn-success" onclick="edit(<?php echo $p->no_anggota; ?>)"><i class="icofont-ui-edit"></i></button>
-                                    <?php if($p->status==1){ ?>
-                                    <a onclick="return confirm('Anda Yakin Ingin Menonaktifkan Anggota?')" href="<?php echo base_url() . 'index.php/user/disableAccount/' . $p->no_anggota; ?>" class="btn btn-sm btn-danger" ><i class="icofont-ui-power"></i></a>
-                                    <?php }else if($p->status==0){ ?>
-                                    <a onclick="return confirm('Anda Yakin Ingin Mengaktifkan Anggota?')" href="<?php echo base_url() . 'index.php/user/enableAccount/' . $p->no_anggota; ?>" class="btn btn-sm btn-primary" ><i class="icofont-ui-power"></i></a>
-                                    <?php } ?>
-                                </td>
-                            </tr>
+                        foreach($nominatif as $i){ 
+                        ?>
+                        <tr>
+                            <td><?php echo $no++; ?></td>
+                            <td><?php echo $i->no_rekening_simuda; ?></td>
+                            <td><?php echo $i->no_anggota; ?></td>
+                            <td><?php echo $i->nama; ?></td>
+                            <td class="text-right"><?php echo number_format($i->saldo_bulan_ini,0,',','.'); ?></td>
+                            <td class="text-right"><?php echo number_format($i->saldo_terendah,0,',','.'); ?></td>
+                            <td><?php ?></td>
+                            <td><?php ?></td>
+                        </tr>
                         <?php } ?>
                     </tbody>
                 </table>
@@ -88,7 +100,7 @@
             <form name="tambah-pelanggan" method="POST" action="<?php echo base_url(); ?>index.php/anggota/add">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Anggota</h4>
+                    <h4 class="modal-title">Tambah User</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->

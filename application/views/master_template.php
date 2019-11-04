@@ -98,7 +98,7 @@
         <div id="navMonitoring" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="#">Log Activity</a>
-            <a class="collapse-item" href="#">Otorisasi</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/otorisasi'; ?>">Otorisasi</a>
           </div>
         </div>
       </li>
@@ -111,7 +111,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="<?= base_url() . 'index.php/simpanan_pokok' ?>">Simpanan Pokok</a>
             <a class="collapse-item" href="<?= base_url() . 'index.php/simpanan_wajib'; ?>">Simpanan Wajib</a>
-            <a class="collapse-item" href="#">Pengaturan Limit</a>
+            <!-- <a class="collapse-item" href="#">Pengaturan Limit</a> -->
           </div>
         </div>
       </li>
@@ -126,8 +126,10 @@
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/bukarekening'; ?>">Form Buka Rekening</a>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/kelolarekening'; ?>">Kelola Rekening</a>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/daftarnominatif'; ?>">Daftar Nominatif</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/daftartrxotorisasi'; ?>">Daftar Trx Otorisasi</a>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/stellimitdebet'; ?>">Setel Limit Debet Simuda</a>
-            <a class="collapse-item" href="#">Perhitungan Akhir Bulan</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/perhitunganakhirbulan'; ?>">Perhitungan Akhir Bulan</a>
+            
           </div>
         </div>
       </li>
@@ -155,9 +157,9 @@
         </a>
         <div id="navKredit" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?= base_url() . 'index.php/form_kredit' ?> ">Form Kredit</a>
+            <a class="collapse-item" href="<?= base_url() . 'index.php/kredit/pengajuanRekening' ?> ">Form Kredit</a>
             <a class="collapse-item" href="#">Kelola Kredit</a>
-            <a class="collapse-item" href="<?= base_url() . 'index.php/Daftar_nominatif_kredit' ?>">Daftar Nominatif</a>
+            <a class="collapse-item" href="<?= base_url() . 'index.php/kredit/daftarNominatif' ?>">Daftar Nominatif</a>
           </div>
         </div>
       </li>
