@@ -68,7 +68,7 @@
                             <td></td>
                             <td></td>
                             <td style="text-align:center;">
-                                <a href="detail" class="btn btn-primary">Detail</a>
+                                <a href="daftar_nominatif_kredit/detail_daftar_nominatif_kredit.php" class="btn btn-primary">Detail</a>
                             </td>
                         </tr>
 
