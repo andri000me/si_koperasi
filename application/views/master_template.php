@@ -141,10 +141,10 @@
         </a>
         <div id="navSijaka" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/Sijaka'; ?>">Form Sijaka</a>
-            <a class="collapse-item" href="#">Kelola Rekening</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/Daftar_nominatif_sijaka'; ?>">Daftar Nominatif</a>
-            <a class="collapse-item" href="#">Perhitungan Akhir Bulan</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/bukaRekeningSijaka'; ?>">Form Sijaka</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/kelolaRekeningSijaka'; ?>">Kelola Rekening</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/daftarNominatifSijaka'; ?>">Daftar Nominatif</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/perhitunganAkhirBulanSijaka'; ?>">Perhitungan Akhir Bulan</a>
 
           </div>
         </div>
