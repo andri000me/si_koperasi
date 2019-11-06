@@ -26,7 +26,7 @@
       <h6 class="m-0 font-weight-bold text-primary">Form Pengajuan Kredit/Pembiayaan</h6>
     </div>
     <div class="card-body">
-      <form method="POST" action="<?php echo base_url() . 'index.php/kredit/simpanRekeningBaru' ?>">
+      <form method="POST" action="<?php echo base_url() . 'index.php/kredit/simpanKreditBaru' ?>">
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="inputnomer_rekening">Nomer Rekening</label>
@@ -44,7 +44,6 @@
           <div class="row data-ajax">
 
           </div>
-
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputTanggalPembayaran">Tanggal Pembayaran</label>
@@ -55,8 +54,8 @@
               <input type="number" class="form-control" id="inputJumlahPembayaran" placeholder="000xxx">
             </div>
             <div class="form-group col-md-6">
-              <label for="inputAlamat">Pokok</label>
-              <input type="text" class="form-control" id="inputPokok" placeholder="Pokok">
+              <label for="inputPokok">Pokok</label>
+              <input type="number" class="form-control" id="inputPokok" placeholder="Pokok">
             </div>
             <div class="form-group col-md-6">
               <label for="inputAlamat">Bahas</label>
