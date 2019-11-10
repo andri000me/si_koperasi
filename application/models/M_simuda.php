@@ -29,13 +29,23 @@ Class M_simuda extends CI_Model{
         $this->db->where($where);
         return $this->db->get()->result();
     }
-    function getJumlahRecordBulanIni($where){ //Belum Disetting Per Bulan
+    function getJumlahRecordBulanIni($no_rekening_simuda,$bulan,$tahun){ 
+        $where = array(
+            'no_rekening_simuda' => $no_rekening_simuda,
+            'month(datetime)' => $bulan, 
+            'year(datetime)' => $tahun
+        );
         $this->db->select('id_detail_rekening_simuda');
         $this->db->from($this->detail_table);
         $this->db->where($where);
         return $this->db->count_all_results();
     }
-    function getRecordTerakhirBulanIni($where){ //Belum Disetting Per Bulan
+    function getRecordTerakhirBulanIni($no_rekening_simuda,$bulan,$tahun){
+        $where = array(
+            'no_rekening_simuda' => $no_rekening_simuda,
+            'month(datetime)' => $bulan, 
+            'year(datetime)' => $tahun
+        );
         $this->db->select('saldo');
         $this->db->from($this->detail_table);
         $this->db->where($where);
@@ -46,7 +56,12 @@ Class M_simuda extends CI_Model{
             return $i->saldo;
         }
     }
-    function getRecordTerakhirTutupBulanLalu($where){ //Belum Disetting Per Bulan
+    function getRecordTerakhirTutupBulanLalu($no_rekening_simuda,$bulan,$tahun){
+        $where = array(
+            'no_rekening_simuda' => $no_rekening_simuda,
+            'month(tgl_tutup_bulan)' => $bulan, 
+            'year(tgl_tutup_bulan)' => $tahun
+        );
         $this->db->select('saldo');
         $this->db->from('support_simuda_tutup_bulan');
         $this->db->where($where);
