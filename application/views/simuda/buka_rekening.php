@@ -5,7 +5,7 @@
             url: "<?php echo base_url() . 'index.php/simuda/manageajaxgetdataanggota'; ?>",
             type: "POST",
             data: {
-                id : no_anggota_field
+                id: no_anggota_field
             },
             success: function(ajaxData) {
                 $('.data-ajax').html(ajaxData);
@@ -17,13 +17,13 @@
 
 <!-- Content -->
 <div class="container-fluid">
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="<?php echo base_url().'index.php/dashboard' ?>">Dashboard</a></li>
-    <li class="breadcrumb-item"><a href="#">Simuda</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Form Buka Rekening</li>
-  </ol>
-</nav>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="<?php echo base_url() . 'index.php/dashboard' ?>">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="#">Simuda</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Form Buka Rekening</li>
+        </ol>
+    </nav>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -38,7 +38,7 @@
             echo $this->session->flashdata("delete_success");
             echo $this->session->flashdata("delete_failed");
             ?>
-            <form method="POST" action="<?php echo base_url().'index.php/simuda/simpanRekeningBaru' ?>">
+            <form method="POST" action="<?php echo base_url() . 'index.php/simuda/simpanRekeningBaru' ?>">
                 <div class="row">
                     <div class="col-md-4">
                         <label for="">No. Rekening</label>
@@ -48,14 +48,14 @@
                         <label for="">No. Anggota</label>
                         <select name="no_anggota" id="no_anggota" class="form-control select2_" onchange="manageAjax()" required>
                             <option value="">--Pilih--</option>
-                            <?php foreach($anggota as $a){ ?>
-                            <option value="<?php echo $a->no_anggota; ?>"><?php echo $a->no_anggota.' - '.$a->nama ?></option>
+                            <?php foreach ($anggota as $a) { ?>
+                                <option value="<?php echo $a->no_anggota; ?>"><?php echo $a->no_anggota . ' - ' . $a->nama ?></option>
                             <?php } ?>
                         </select>
                     </div>
                 </div>
                 <div class="row data-ajax">
-                    
+
                 </div>
                 <div class="row">
                     <div class="col-md-4">
@@ -82,10 +82,9 @@
 
 </div>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
         $('.select2_').select2({
             theme: 'bootstrap4',
         });
     });
-    
 </script>
