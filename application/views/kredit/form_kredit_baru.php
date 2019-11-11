@@ -12,6 +12,26 @@
       }
     });
   }
+
+  function manageDate() {
+    var tgl_pembayaran_field = $("#tgl_pembayaran").val()
+    var jangka_waktu_field = $("#jangka_waktu").val()
+
+    $.ajax({
+      url: "<?php echo base_url() . 'index.php/kredit/manageajaxDate'; ?>",
+      type: "POST",
+      data: {
+        tgl_pembayaran_field: tgl_pembayaran_field,
+        jangka_waktu_field: jangka_waktu_field
+      },
+      success: function(response) {
+        $("#tgl_lunas").val(response);
+
+      }
+    });
+
+
+  }
 </script>
 <div class="container-fluid">
   <nav aria-label="breadcrumb">
@@ -47,35 +67,38 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputTanggalPembayaran">Tanggal Pembayaran</label>
-              <input type="date" class="form-control" id="inputTanggalPembayaran" placeholder="Tanggal Pembayaran">
+              <?php
+              $tgl = date('Y-m-d');
+              ?>
+              <input type="date" class="form-control" id="tgl_pembayaran" value="<?php echo $tgl; ?>" name="tgl_pembayaran" placeholder="Tanggal Pembayaran">
             </div>
             <div class="form-group col-md-6">
               <label for="inputJumlah">Jumlah Pembayaran</label>
-              <input type="number" class="form-control" id="inputJumlahPembayaran" placeholder="000xxx">
+              <input type="number" name="jumlah" class="form-control" id="inputJumlahPembayaran" placeholder="000xxx">
             </div>
             <div class="form-group col-md-6">
               <label for="inputPokok">Pokok</label>
-              <input type="number" class="form-control" id="inputPokok" placeholder="Pokok">
+              <input type="number" name="pokok" class="form-control" id="inputPokok" placeholder="Pokok">
             </div>
             <div class="form-group col-md-6">
               <label for="inputAlamat">Bahas</label>
-              <input type="text" class="form-control" id="inputBahas" placeholder="Bahas">
+              <input type="number" name="bahas" class="form-control" id="inputBahas" placeholder="Bahas">
             </div>
             <div class="form-group col-md-6">
               <label for="inputJangkaWaktu">Jangka Waktu</label>
-              <select name="status" id="" class="form-control form-control-sm" required>
+              <select name="jangka_waktu" id="jangka_waktu" class="form-control form-control-sm" onchange="manageDate()" required>
                 <option value="">--Pilih Jangka Waktu--</option>
-                <option value="1">3 Bulan</option>
-                <option value="2">6 Bulan</option>
-                <option value="3">12 Bulan</option>
-                <option value="4">18 Bulan</option>
-                <option value="5">24 Bulan</option>
-                <option value="6">30 Bulan</option>
+                <option value="3">3 Bulan</option>
+                <option value="6">6 Bulan</option>
+                <option value="12">12 Bulan</option>
+                <option value="18">18 Bulan</option>
+                <option value="24">24 Bulan</option>
+                <option value="30">30 Bulan</option>
               </select>
             </div>
             <div class="form-group col-md-6">
               <label for="inputSampai">Tanggal Lunas</label>
-              <input type="date" class="form-control" id="inputTanggalLunas" placeholder="Tanggal Lunas">
+              <input type="date" name="tgl_lunas" class="form-control" id="tgl_lunas" placeholder="Tanggal Lunas">
             </div>
           </div>
         </div>

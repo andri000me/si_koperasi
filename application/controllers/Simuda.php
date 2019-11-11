@@ -1,43 +1,48 @@
 <?php
 defined("BASEPATH") or die("No Direct Access Allowed");
-Class Simuda extends CI_Controller{
+class Simuda extends CI_Controller
+{
     //Konstruktor
-    function __construct(){
+    function __construct()
+    {
         parent::__construct();
         $this->load->model('M_simuda');
         $this->load->model('M_anggota');
-        $this->load->model('M_jurnal');    
+        $this->load->model('M_jurnal');
         $this->load->model('M_otorisasi');
     }
     //-----------Halaman Form Buka Rekening---------------------------------------------------------
 
     //Form Buka Rekening
-    function bukaRekening(){
+    function bukaRekening()
+    {
         $data['path'] = 'simuda/buka_rekening';
         $data['anggota'] = $this->M_anggota->getAnggota();
-        $this->load->view('master_template',$data);
+        $this->load->view('master_template', $data);
     }
 
     //Ajax Get Data Anggota
-    function manageAjaxGetDataAnggota(){
-        
+    function manageAjaxGetDataAnggota()
+    {
+
         $no_anggota = $this->input->post('id');
         $data['anggota'] = $this->M_anggota->get1Anggota(array('no_anggota' => $no_anggota));
-        $this->load->view('simuda/get_data_anggota',$data);
+        $this->load->view('simuda/get_data_anggota', $data);
     }
 
     //Aksi Pembukaan Rekening Baru
-    function simpanRekeningBaru(){
+    function simpanRekeningBaru()
+    {
         $config = array(
-            array('field'=>'no_rekening_simuda','label'=>'No. Rekening Simuda','rules'=>'required'),
-            array('field'=>'no_anggota','label'=>'No. Anggota','rules'=>'required'),
-            array('field'=>'nama','label'=>'Nama','rules'=>'required'),
-            array('field'=>'alamat','label'=>'Alamat','rules'=>'required'),
-            array('field'=>'saldo_awal','label'=>'Saldo Awal','rules'=>'required'),
-            array('field'=>'status_pembukaan_rekening','label'=>'Status Pembukaan Rekening','rules'=>'required')
+            array('field' => 'no_rekening_simuda', 'label' => 'No. Rekening Simuda', 'rules' => 'required'),
+            array('field' => 'no_anggota', 'label' => 'No. Anggota', 'rules' => 'required'),
+            array('field' => 'nama', 'label' => 'Nama', 'rules' => 'required'),
+            array('field' => 'alamat', 'label' => 'Alamat', 'rules' => 'required'),
+            array('field' => 'saldo_awal', 'label' => 'Saldo Awal', 'rules' => 'required'),
+            array('field' => 'status_pembukaan_rekening', 'label' => 'Status Pembukaan Rekening', 'rules' => 'required')
         );
         $this->form_validation->set_rules($config);
-        if($this->form_validation->run() == TRUE){
+        if ($this->form_validation->run() == TRUE) {
             //Simpan Ke Tabel Master Rekening Simuda
             $data_master = array(
                 'no_rekening_simuda' => $this->input->post('no_rekening_simuda'),
@@ -57,7 +62,7 @@ Class Simuda extends CI_Controller{
             $this->M_simuda->simpanDetailSimuda($data_detail);
 
             //Jika Status Rekening Baru (Bukan Migrasi) Insert Ke Tabel Jurnal
-            if($this->input->post('status_pembukaan_rekening')=='0'){
+            if ($this->input->post('status_pembukaan_rekening') == '0') {
                 $data_jurnal = array(
                     'tanggal' => $datetime,
                     'kode' => '', //Belum Dikasih
@@ -69,82 +74,84 @@ Class Simuda extends CI_Controller{
 
                 );
                 $this->M_jurnal->inputJurnal($data_jurnal);
-                $this->session->set_flashdata("input_success","<div class='alert alert-success'>
+                $this->session->set_flashdata("input_success", "<div class='alert alert-success'>
                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Berhasil Ditambahkan!!</div>");
             }
-        }else{
+        } else {
             $gagal = validation_errors();
-            $this->session->set_flashdata("input_failed","<div class='alert alert-danger'>
-            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Gagal Ditambahkan!!<br>".$gagal."</div>");
+            $this->session->set_flashdata("input_failed", "<div class='alert alert-danger'>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Gagal Ditambahkan!!<br>" . $gagal . "</div>");
         }
         redirect('simuda/bukaRekening');
     }
 
     //-----Halaman Form Buka Rekening----------------
     //Form Kelola Rekening
-    function kelolaRekening(){
+    function kelolaRekening()
+    {
         $data['path'] = 'simuda/kelola_rekening';
-        $data['master_simuda'] = $this->M_simuda->getMasterSimuda(date('m',strtotime("last month")),date('m'),date('y'));
-        
-        foreach($this->M_simuda->getLimitNominalSimuda() as $i){
+        $data['master_simuda'] = $this->M_simuda->getMasterSimuda(date('m', strtotime("last month")), date('m'), date('y'));
+
+        foreach ($this->M_simuda->getLimitNominalSimuda() as $i) {
             $data['limit_debet_simuda'] = $i->nominal;
         }
-        $this->load->view('master_template',$data);   
+        $this->load->view('master_template', $data);
     }
 
     //Digunakan Untuk Get Saldo Awal Di Form Kelola Rekening
-    function getNominalSaldo(){
+    function getNominalSaldo()
+    {
         $where = array('no_rekening_simuda' => $this->input->post('id'));
         $data_nominal = 0;
         //Mengambil Jumlah Record Untuk Bulan Ini
 
         //Jika Record Lebih dari 0 Maka saldo Mengambil dari bulan ini, jika tidak maka mengambil dari hasil tutup buku bulan lalu
-        if($this->M_simuda->getJumlahRecordBulanIni(array('no_rekening_simuda' => $this->input->post('id'), 'month(datetime)' => date('m'), 'year(datetime)' => date('Y'))) > 0){
+        if ($this->M_simuda->getJumlahRecordBulanIni(array('no_rekening_simuda' => $this->input->post('id'), 'month(datetime)' => date('m'), 'year(datetime)' => date('Y'))) > 0) {
             //Mengambil Record Terakhir Bulan Ini
             $data_nominal = $this->M_simuda->getRecordTerakhirBulanIni(array('no_rekening_simuda' => $this->input->post('id'), 'month(datetime)' => date('m'), 'year(datetime)' => date('Y')));
-        }else{
+        } else {
             //Mengambil Hasil Tutup Buku Bulan Lalu
-            $data_nominal = $this->M_simuda->getRecordTerakhirTutupBulanLalu(array('no_rekening_simuda' => $this->input->post('id'), 'month(tgl_tutup_bulan)' => date('m',strtotime('last month')), 'year(tgl_tutup_bulan)' => date('Y')));
+            $data_nominal = $this->M_simuda->getRecordTerakhirTutupBulanLalu(array('no_rekening_simuda' => $this->input->post('id'), 'month(tgl_tutup_bulan)' => date('m', strtotime('last month')), 'year(tgl_tutup_bulan)' => date('Y')));
         }
         echo "<label>Saldo Awal</label>";
-        echo "<input type='number' name='saldo_awal' id='saldo_awal' class='form-control' value='".$data_nominal."' readonly />";
+        echo "<input type='number' name='saldo_awal' id='saldo_awal' class='form-control' value='" . $data_nominal . "' readonly />";
     }
 
     //Digunakan Untuk Memproses Rekening / Kirim Ke Halaman Otorisasi
-    function simpanKelolaRekening(){
+    function simpanKelolaRekening()
+    {
         //Melakukan Form Validasi
         $config = array(
-            array('field'=>'no_rekening_simuda','label'=>'No. Rekening','rules'=>'required'),
-            array('field'=>'datetime','label'=>'Datetime','rules'=>'required'),
-            array('field'=>'tipe','label'=>'Tipe','rules'=>'required'),
-            array('field'=>'jumlah','label'=>'Jumlah','rules'=>'required'),
-            array('field'=>'saldo_akhir','label'=>'saldo_akhir','rules'=>'required'),
+            array('field' => 'no_rekening_simuda', 'label' => 'No. Rekening', 'rules' => 'required'),
+            array('field' => 'datetime', 'label' => 'Datetime', 'rules' => 'required'),
+            array('field' => 'tipe', 'label' => 'Tipe', 'rules' => 'required'),
+            array('field' => 'jumlah', 'label' => 'Jumlah', 'rules' => 'required'),
+            array('field' => 'saldo_akhir', 'label' => 'saldo_akhir', 'rules' => 'required'),
         );
         $this->form_validation->set_rules($config);
-        if($this->form_validation->run() == TRUE){
+        if ($this->form_validation->run() == TRUE) {
             //Jika Yang Diklik adalah tombol Proses, Maka :
-            if($this->input->post('simpan_') == "proses"){
+            if ($this->input->post('simpan_') == "proses") {
                 //Input Ke Tabel Detail Simuda
-                if($this->input->post('tipe') == "K"){ //Jika Tipe Kredit
+                if ($this->input->post('tipe') == "K") { //Jika Tipe Kredit
                     $data = array(
                         'no_rekening_simuda' => $this->input->post('no_rekening_simuda'),
                         'datetime' => $this->input->post('datetime'),
                         'kredit' => $this->input->post('jumlah'),
                         'saldo' => $this->input->post('saldo_akhir'),
                         'id_user' => 1
-                    );    
-                    
-                }else if($this->input->post('tipe') == "D"){ //Jika Tipe Debet
+                    );
+                } else if ($this->input->post('tipe') == "D") { //Jika Tipe Debet
                     $data = array(
                         'no_rekening_simuda' => $this->input->post('no_rekening_simuda'),
                         'datetime' => $this->input->post('datetime'),
                         'debet' => $this->input->post('jumlah'),
                         'saldo' => $this->input->post('saldo_akhir'),
                         'id_user' => 1
-                    );    
+                    );
                 }
                 $save1 = $this->M_simuda->simpanDetailSimuda($data);
-                
+
                 //Insert Ke Tabel Jurnal
                 $data_jurnal = array(
                     'tanggal' => $this->input->post('datetime'),
@@ -156,14 +163,14 @@ Class Simuda extends CI_Controller{
                     'id_detail' => $this->db->insert_id()
                 );
                 $save2 = $this->M_jurnal->inputJurnal($data_jurnal);
-                if($save1 == TRUE && $save2 == TRUE){
-                    $this->session->set_flashdata("input_success","<div class='alert alert-success'>
+                if ($save1 == TRUE && $save2 == TRUE) {
+                    $this->session->set_flashdata("input_success", "<div class='alert alert-success'>
                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Berhasil Ditambahkan!!</div>");
-                }else{
-                    $this->session->set_flashdata("input_failed","<div class='alert alert-danger'>
+                } else {
+                    $this->session->set_flashdata("input_failed", "<div class='alert alert-danger'>
                 <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Gagal Ditambahkan!!</div>");
                 }
-            }else if($this->input->post('simpan_') == "pengajuan"){ //Jika Yang diklik adalah tombol pengajuan
+            } else if ($this->input->post('simpan_') == "pengajuan") { //Jika Yang diklik adalah tombol pengajuan
                 //Input Ke Tabel Otorisasi
                 $data_otorisasi = array(
                     'tipe' => 'Simuda',
@@ -171,123 +178,130 @@ Class Simuda extends CI_Controller{
                     'nominal_debet' => $this->input->post('jumlah'),
                     'status' => 'Open'
                 );
-                if($this->M_otorisasi->saveOtorisasi($data_otorisasi) == TRUE){
-                    $this->session->set_flashdata("input_success","<div class='alert alert-success'>
+                if ($this->M_otorisasi->saveOtorisasi($data_otorisasi) == TRUE) {
+                    $this->session->set_flashdata("input_success", "<div class='alert alert-success'>
                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Berhasil Ditambahkan!!</div>");
-                }                    
+                }
             }
-        }else{
+        } else {
             $gagal = validation_errors();
-            $this->session->set_flashdata("input_failed","<div class='alert alert-danger'>
-            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Gagal Ditambahkan!!<br>".$gagal."</div>");
+            $this->session->set_flashdata("input_failed", "<div class='alert alert-danger'>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Gagal Ditambahkan!!<br>" . $gagal . "</div>");
         }
         //Redirect Ke Halaman Kelola Rekening
         redirect('Simuda/kelolaRekening');
     }
-   
+
     //Digunakan Untuk Otorisasi Ketika Debet Simuda Dengan >=Limit
 
     // -----------------------------------------------------------------------
     //Stel Limit Debet Simuda
-    function stelLimitDebet(){
+    function stelLimitDebet()
+    {
         $data['path'] = 'simuda/stel_limit_debet';
         $data['limit_debet'] = $this->M_simuda->getLimitNominalSimuda();
-        $this->load->view('master_template',$data);   
+        $this->load->view('master_template', $data);
     }
-    
-    function updateLimitDebet(){
-        $config = array(array('field' => 'nominal','label'=>'Nominal','rules'=>'required'));
+
+    function updateLimitDebet()
+    {
+        $config = array(array('field' => 'nominal', 'label' => 'Nominal', 'rules' => 'required'));
         $this->form_validation->set_rules($config);
-        if($this->form_validation->run() == TRUE){ //Jika validasi Form Berhasil
+        if ($this->form_validation->run() == TRUE) { //Jika validasi Form Berhasil
             $where = array('id_limit_simuda' => 1);
             $data = array('nominal' => $this->input->post('nominal'));
-            $this->M_simuda->updateLimitNominalSimuda($where,$data);
-            $this->session->set_flashdata("update_success","<div class='alert alert-success'>
+            $this->M_simuda->updateLimitNominalSimuda($where, $data);
+            $this->session->set_flashdata("update_success", "<div class='alert alert-success'>
                 <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Berhasil Diubah</div>");
-        }else{
-            $this->session->set_flashdata("update_failed","<div class='alert alert-danger'>
-                <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Gagal Diubah!!<br>".$gagal."</div>");
+        } else {
+            $this->session->set_flashdata("update_failed", "<div class='alert alert-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Gagal Diubah!!<br>" . $gagal . "</div>");
         }
         redirect('simuda/stelLimitDebet');
     }
     //Daftar Nominatif
-    function daftarNominatif(){ 
+    function daftarNominatif()
+    {
         $data['path'] = 'simuda/daftar_nominatif';
-        $data['nominatif'] = $this->M_simuda->getMasterSimuda(date('m',strtotime("last month")),date('m'),date('y'));
-        $this->load->view('master_template',$data);
+        $data['nominatif'] = $this->M_simuda->getMasterSimuda(date('m', strtotime("last month")), date('m'), date('y'));
+        $this->load->view('master_template', $data);
     }
     //Detail Transaksi Per Rekening
-    function detailRekening($id){
+    function detailRekening($id)
+    {
         $data['path'] = 'simuda/detail_rekening';
         $data['id'] = $id;
         $where = array('no_rekening_simuda' => $id);
         $data['master_rekening_simuda'] = $this->M_simuda->get1MasterSimuda($where);
         $data['detail_rekening_simuda'] = $this->M_simuda->get1DetailSimuda($where);
-        $this->load->view('master_template',$data);
+        $this->load->view('master_template', $data);
     }
-    function perhitunganAkhirBulan(){
+    function perhitunganAkhirBulan()
+    {
         $data['path'] = 'simuda/perhitungan_akhir_bulan';
-        $data['nominatif'] = $this->M_simuda->getMasterSimuda(date('m',strtotime("last month")),date('m'),date('y'));
-        $this->load->view('master_template',$data);
+        $data['nominatif'] = $this->M_simuda->getMasterSimuda(date('m', strtotime("last month")), date('m'), date('y'));
+        $this->load->view('master_template', $data);
     }
-    function previewPerhitunganAkhirBulan(){
+    function previewPerhitunganAkhirBulan()
+    {
         $nominal = $this->input->post('nominal');
-        $nominatif = $this->M_simuda->getMasterSimuda(date('m',strtotime("last month")),date('m'),date('y'));
-        
+        $nominatif = $this->M_simuda->getMasterSimuda(date('m', strtotime("last month")), date('m'), date('y'));
+
         //Mendapatkan Total Saldo Terendah
         $total_saldo_terendah_akhir_bulan = 0;
-        foreach($nominatif as $i){
-            $total_saldo_terendah_akhir_bulan += $i->saldo_terendah; 
+        foreach ($nominatif as $i) {
+            $total_saldo_terendah_akhir_bulan += $i->saldo_terendah;
         }
 
         //Menampilkan Data
         $no = 1;
-        foreach($nominatif as $i){
+        foreach ($nominatif as $i) {
             echo "<tr>";
-            echo "<td>".$no++."</td>";
-            echo "<td>".$i->no_rekening_simuda."</td>";
-            echo "<td>".$i->no_anggota."</td>";
-            echo "<td>".$i->nama."</td>";
-            echo "<td class='text-right'>".number_format($i->saldo_bulan_ini,0,',','.')."</td>";
-            echo "<td class='text-right'>".number_format($i->saldo_terendah,0,',','.')."</td>";
+            echo "<td>" . $no++ . "</td>";
+            echo "<td>" . $i->no_rekening_simuda . "</td>";
+            echo "<td>" . $i->no_anggota . "</td>";
+            echo "<td>" . $i->nama . "</td>";
+            echo "<td class='text-right'>" . number_format($i->saldo_bulan_ini, 0, ',', '.') . "</td>";
+            echo "<td class='text-right'>" . number_format($i->saldo_terendah, 0, ',', '.') . "</td>";
             //Perhitungan Data Saldo Terendah
             $nilai_bagi_hasil = $i->saldo_terendah / $total_saldo_terendah_akhir_bulan * $nominal;
-            echo "<td class='text-right'>".number_format($nilai_bagi_hasil,0,',','.')."</td>";
+            echo "<td class='text-right'>" . number_format($nilai_bagi_hasil, 0, ',', '.') . "</td>";
             //Perhitungan Data Nominal
             $where = array('no_rekening_simuda' => $i->no_rekening_simuda);
             //Jika Record Lebih dari 0 Maka saldo Mengambil dari bulan ini, jika tidak maka mengambil dari hasil tutup buku bulan lalu
-            if($this->M_simuda->getJumlahRecordBulanIni(array('no_rekening_simuda' => $this->input->post('id'), 'month(datetime)' => date('m'), 'year(datetime)' => date('Y'))) > 0){
+            if ($this->M_simuda->getJumlahRecordBulanIni(array('no_rekening_simuda' => $this->input->post('id'), 'month(datetime)' => date('m'), 'year(datetime)' => date('Y'))) > 0) {
                 //Mengambil Record Terakhir Bulan Ini
                 $data_nominal = $this->M_simuda->getRecordTerakhirBulanIni(array('no_rekening_simuda' => $this->input->post('id'), 'month(datetime)' => date('m'), 'year(datetime)' => date('Y'))) + $nilai_bagi_hasil;
-            }else{
+            } else {
                 //Mengambil Hasil Tutup Buku Bulan Lalu
-                $data_nominal = $this->M_simuda->getRecordTerakhirTutupBulanLalu(array('no_rekening_simuda' => $this->input->post('id'), 'month(tgl_tutup_bulan)' => date('m',strtotime('last month')), 'year(tgl_tutup_bulan)' => date('Y'))) + $nilai_bagi_hasil;
+                $data_nominal = $this->M_simuda->getRecordTerakhirTutupBulanLalu(array('no_rekening_simuda' => $this->input->post('id'), 'month(tgl_tutup_bulan)' => date('m', strtotime('last month')), 'year(tgl_tutup_bulan)' => date('Y'))) + $nilai_bagi_hasil;
             }
-            echo "<td class='text-right font-weight-bold'>".number_format($data_nominal,0,',','.')."</td>";
+            echo "<td class='text-right font-weight-bold'>" . number_format($data_nominal, 0, ',', '.') . "</td>";
             echo "</tr>";
         }
     }
 
-    function simpanPerhitunganAkhirBulan(){
+    function simpanPerhitunganAkhirBulan()
+    {
         $nominal = $this->input->post('nominal');
-        $nominatif = $this->M_simuda->getMasterSimuda(date('m',strtotime("last month")),date('m'),date('y'));
+        $nominatif = $this->M_simuda->getMasterSimuda(date('m', strtotime("last month")), date('m'), date('y'));
         //Mendapatkan Total Saldo Terendah
         $total_saldo_terendah_akhir_bulan = 0;
-        foreach($nominatif as $i){
-            $total_saldo_terendah_akhir_bulan += $i->saldo_terendah; 
+        foreach ($nominatif as $i) {
+            $total_saldo_terendah_akhir_bulan += $i->saldo_terendah;
         }
 
         //Perhitungan Dan Simpan Data
-        foreach($nominatif as $i){
+        foreach ($nominatif as $i) {
             //Mendapatkan Nilai Bagi Hasil
             $nilai_bagi_hasil = $i->saldo_terendah / $total_saldo_terendah_akhir_bulan * $nominal;
 
             //Perhitungan Data Saldo
             $where = array('no_rekening_simuda' => $i->no_rekening_simuda);
-            if($this->M_simuda->getJumlahRecordBulanIni($where) > 0){
+            if ($this->M_simuda->getJumlahRecordBulanIni($where) > 0) {
                 //Mengambil Record Terakhir Bulan Ini
                 $data_saldo = $this->M_simuda->getRecordTerakhirBulanIni($where) + $nilai_bagi_hasil;
-            }else{
+            } else {
                 //Mengambil Hasil Tutup Buku Bulan Lalu
                 $data_saldo = $this->M_simuda->getRecordTerakhirTutupBulanLalu($where) + $nilai_bagi_hasil;
             }
@@ -305,9 +319,9 @@ Class Simuda extends CI_Controller{
 
             //Tutup Bulan
             $data_tutup_bulan = array(
-               'no_rekening_simuda' => $i->no_rekening_simuda,
-               'tgl_tutup_bulan' => $datetime,
-               'saldo' => $data_saldo
+                'no_rekening_simuda' => $i->no_rekening_simuda,
+                'tgl_tutup_bulan' => $datetime,
+                'saldo' => $data_saldo
 
             );
             $this->M_simuda->simpanTutupBulanSimuda($data_tutup_bulan);
@@ -328,10 +342,11 @@ Class Simuda extends CI_Controller{
     }
 
     //Daftar Otorisasi
-    function daftarTrxOtorisasi(){
+    function daftarTrxOtorisasi()
+    {
         $data['path'] = 'simuda/daftar_trx_otorisasi';
         $data['otorisasi'] = $this->M_otorisasi->get1Otorisasi(array('tipe' => 'Simuda'));
-        $this->load->view('master_template',$data); 
+        $this->load->view('master_template', $data);
     }
 
 
