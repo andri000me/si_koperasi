@@ -102,16 +102,29 @@
           </div>
         </div>
       </li>
+      <!-- Simpanan Pokok -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#navPokokWajib" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#navPokok" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-cog"></i>
-          <span>Pokok & Wajib</span>
+          <span>Simpanan Pokok</span>
         </a>
-        <div id="navPokokWajib" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="navPokok" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="<?= base_url() . 'index.php/simpanan_pokok' ?>">Simpanan Pokok</a>
-            <a class="collapse-item" href="<?= base_url() . 'index.php/simpanan_wajib'; ?>">Simpanan Wajib</a>
             <!-- <a class="collapse-item" href="#">Pengaturan Limit</a> -->
+          </div>
+        </div>
+      </li>
+      <!-- Simpanan Wajib -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#navWajib" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Simpanan Wajib</span>
+        </a>
+        <div id="navWajib" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="<?= base_url() . 'index.php/simpanan_wajib/kelolaRekening' ?>">Kelola Rekening</a>
+            <a class="collapse-item" href="<?= base_url() . 'index.php/simpanan_wajib/nominatif' ?>">Nominatif</a>
           </div>
         </div>
       </li>
@@ -158,7 +171,7 @@
         <div id="navKredit" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="<?= base_url() . 'index.php/kredit/pengajuanRekening' ?> ">Form Kredit</a>
-            <a class="collapse-item" href="<?= base_url() . 'index.php/kelola_kredit' ?> ">Kelola Kredit</a>
+            <a class="collapse-item" href="#">Kelola Kredit</a>
             <a class="collapse-item" href="<?= base_url() . 'index.php/kredit/daftarNominatif' ?>">Daftar Nominatif</a>
           </div>
         </div>

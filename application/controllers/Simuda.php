@@ -102,16 +102,29 @@ class Simuda extends CI_Controller
     function getNominalSaldo()
     {
         $where = array('no_rekening_simuda' => $this->input->post('id'));
+
+    function getNominalSaldo(){
+        $no_rekening_simuda = $this->input->post('id');
+
         $data_nominal = 0;
         //Mengambil Jumlah Record Untuk Bulan Ini
 
         //Jika Record Lebih dari 0 Maka saldo Mengambil dari bulan ini, jika tidak maka mengambil dari hasil tutup buku bulan lalu
+
         if ($this->M_simuda->getJumlahRecordBulanIni(array('no_rekening_simuda' => $this->input->post('id'), 'month(datetime)' => date('m'), 'year(datetime)' => date('Y'))) > 0) {
             //Mengambil Record Terakhir Bulan Ini
             $data_nominal = $this->M_simuda->getRecordTerakhirBulanIni(array('no_rekening_simuda' => $this->input->post('id'), 'month(datetime)' => date('m'), 'year(datetime)' => date('Y')));
         } else {
             //Mengambil Hasil Tutup Buku Bulan Lalu
             $data_nominal = $this->M_simuda->getRecordTerakhirTutupBulanLalu(array('no_rekening_simuda' => $this->input->post('id'), 'month(tgl_tutup_bulan)' => date('m', strtotime('last month')), 'year(tgl_tutup_bulan)' => date('Y')));
+
+        if($this->M_simuda->getJumlahRecordBulanIni($no_rekening_simuda, date('m'), date('Y')) > 0){
+            //Mengambil Record Terakhir Bulan Ini
+            $data_nominal = $this->M_simuda->getRecordTerakhirBulanIni($no_rekening_simuda, date('m'), date('Y'));
+        }else{
+            //Mengambil Hasil Tutup Buku Bulan Lalu
+            $data_nominal = $this->M_simuda->getRecordTerakhirTutupBulanLalu($no_rekening_simuda, date('m',strtotime('last month')), date('Y'));
+
         }
         echo "<label>Saldo Awal</label>";
         echo "<input type='number' name='saldo_awal' id='saldo_awal' class='form-control' value='" . $data_nominal . "' readonly />";
@@ -157,7 +170,7 @@ class Simuda extends CI_Controller
                     'tanggal' => $this->input->post('datetime'),
                     'kode' => '', //Belum Dikasih
                     'lawan' => '',
-                    'tipe' => 'K',
+                    'tipe' => $this->input->post('tipe'),
                     'nominal' => $this->input->post('jumlah'),
                     'tipe_trx_koperasi' => 'Simuda',
                     'id_detail' => $this->db->insert_id()
@@ -267,14 +280,21 @@ class Simuda extends CI_Controller
             $nilai_bagi_hasil = $i->saldo_terendah / $total_saldo_terendah_akhir_bulan * $nominal;
             echo "<td class='text-right'>" . number_format($nilai_bagi_hasil, 0, ',', '.') . "</td>";
             //Perhitungan Data Nominal
-            $where = array('no_rekening_simuda' => $i->no_rekening_simuda);
             //Jika Record Lebih dari 0 Maka saldo Mengambil dari bulan ini, jika tidak maka mengambil dari hasil tutup buku bulan lalu
+
             if ($this->M_simuda->getJumlahRecordBulanIni(array('no_rekening_simuda' => $this->input->post('id'), 'month(datetime)' => date('m'), 'year(datetime)' => date('Y'))) > 0) {
                 //Mengambil Record Terakhir Bulan Ini
                 $data_nominal = $this->M_simuda->getRecordTerakhirBulanIni(array('no_rekening_simuda' => $this->input->post('id'), 'month(datetime)' => date('m'), 'year(datetime)' => date('Y'))) + $nilai_bagi_hasil;
             } else {
                 //Mengambil Hasil Tutup Buku Bulan Lalu
                 $data_nominal = $this->M_simuda->getRecordTerakhirTutupBulanLalu(array('no_rekening_simuda' => $this->input->post('id'), 'month(tgl_tutup_bulan)' => date('m', strtotime('last month')), 'year(tgl_tutup_bulan)' => date('Y'))) + $nilai_bagi_hasil;
+
+            if($this->M_simuda->getJumlahRecordBulanIni($i->no_rekening_simuda, date('m'), date('Y')) > 0){
+                //Mengambil Record Terakhir Bulan Ini
+                $data_nominal = $this->M_simuda->getRecordTerakhirBulanIni($i->no_rekening_simuda, date('m'), date('Y')) + $nilai_bagi_hasil;
+            }else{
+                //Mengambil Hasil Tutup Buku Bulan Lalu
+                $data_nominal = $this->M_simuda->getRecordTerakhirTutupBulanLalu($i->no_rekening_simuda, date('m',strtotime('last month')), date
             }
             echo "<td class='text-right font-weight-bold'>" . number_format($data_nominal, 0, ',', '.') . "</td>";
             echo "</tr>";
@@ -297,13 +317,20 @@ class Simuda extends CI_Controller
             $nilai_bagi_hasil = $i->saldo_terendah / $total_saldo_terendah_akhir_bulan * $nominal;
 
             //Perhitungan Data Saldo
+
             $where = array('no_rekening_simuda' => $i->no_rekening_simuda);
             if ($this->M_simuda->getJumlahRecordBulanIni($where) > 0) {
                 //Mengambil Record Terakhir Bulan Ini
                 $data_saldo = $this->M_simuda->getRecordTerakhirBulanIni($where) + $nilai_bagi_hasil;
             } else {
+
+            if($this->M_simuda->getJumlahRecordBulanIni($i->no_rekening_simuda, date('m'), date('Y')) > 0){
+                //Mengambil Record Terakhir Bulan Ini
+                $data_saldo = $this->M_simuda->getRecordTerakhirBulanIni($i->no_rekening_simuda, date('m'), date('Y')) + $nilai_bagi_hasil;
+            }else{
+
                 //Mengambil Hasil Tutup Buku Bulan Lalu
-                $data_saldo = $this->M_simuda->getRecordTerakhirTutupBulanLalu($where) + $nilai_bagi_hasil;
+                $data_saldo = $this->M_simuda->getRecordTerakhirTutupBulanLalu($i->no_rekening_simuda, date('m',strtotime('last month')), date('Y')) + $nilai_bagi_hasil;
             }
 
             $datetime = date('Y-m-d h:i:s');
@@ -338,6 +365,8 @@ class Simuda extends CI_Controller
             );
             $this->M_jurnal->inputJurnal($data_jurnal);
         }
+        $this->session->set_flashdata("input_success","<div class='alert alert-success'>
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Operasi Perhitungan Akhir Bulan Sukses</div>");
         redirect('simuda/perhitunganakhirbulan');
     }
 
@@ -353,6 +382,7 @@ class Simuda extends CI_Controller
 
 
 
+
     // function test1(){
     //     if($this->M_simuda->getJumlahRecordBulanIni(array('no_rekening_simuda' => $this->input->post('id'), 'MONTH(datetime)' => date('m'), 'YEAR(datetime)' => date('y')  )) > 0){
     //         //Mengambil Record Terakhir Bulan Ini
@@ -363,3 +393,4 @@ class Simuda extends CI_Controller
     //     }
     // }
 }
+
