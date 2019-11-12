@@ -83,17 +83,7 @@
           </div>
           <div class="form-group col-md-4">
             <label for="inputJumlah">Jumlah Pembiayaan</label>
-            <input type="number" name="jumlah_pembiayaan" class="form-control" id="jumlah_pembiayaan" placeholder="000xxx">
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-md-4">
-            <label for="inputPokok">Pokok</label>
-            <input type="number" name="jml_pokok_bulanan" class="form-control" id="jml_pokok_bulanan" placeholder="Pokok">
-          </div>
-          <div class="form-group col-md-4">
-            <label for="inputAlamat">Bahas</label>
-            <input type="number" name="jml_bahas_bulanan" class="form-control" id="jml_bahas_bulanan" placeholder="Bahas">
+            <input type="number" name="jumlah_pembiayaan" class="form-control" id="jumlah_pembiayaan" placeholder="Masukan jumlah pembiayaan">
           </div>
         </div>
         <div class="row">
@@ -112,6 +102,16 @@
           <div class="form-group col-md-4">
             <label for="inputSampai">Tanggal Lunas</label>
             <input type="date" name="tgl_lunas" class="form-control" id="tgl_lunas" placeholder="Tanggal Lunas">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label for="inputPokok">Pokok</label>
+            <input type="number" name="jml_pokok_bulanan" class="form-control" id="jml_pokok_bulanan" placeholder="Pokok">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputAlamat">Bahas</label>
+            <input type="number" name="jml_bahas_bulanan" class="form-control" id="jml_bahas_bulanan" placeholder="Bahas">
           </div>
         </div>
         <div class="form-group">
