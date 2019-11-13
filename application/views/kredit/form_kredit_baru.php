@@ -13,12 +13,13 @@
     });
   }
 
+  // fungsi untuk membuat tanggal menjadi otomatis sesuai jangka waktu pembayaran
   function manageDate() {
     var tgl_pembayaran_field = $("#tgl_pembayaran").val()
     var jangka_waktu_field = $("#jangka_waktu").val()
 
     $.ajax({
-      url: "<?php echo base_url() . 'index.php/kredit/manageajaxDate'; ?>",
+      url: "<?php echo base_url() . 'index.php/kredit/manageAjaxDate'; ?>",
       type: "POST",
       data: {
         tgl_pembayaran_field: tgl_pembayaran_field,
@@ -26,11 +27,22 @@
       },
       success: function(response) {
         $("#tgl_lunas").val(response);
-
       }
     });
+    getPokok();
+  }
+  $('#jumlah_pembiayaan').keyup(function(e) {
+    getPokok();
+  });
 
+  // membuat jumlah pokok menjadi otomatis sesuai dengan jumlah pembiayaan da njangka waktu yang diinginkan
+  function getPokok() {
+    let jmlPembiayaan = $('#jumlah_pembiayaan').val();
+    let jangkaWaktu = $('#jangka_waktu').val();
+    let jmlPokok = parseInt(jmlPembiayaan) / parseInt(jangkaWaktu);
+    $('#jml_pokok_bulanan').val(Math.ceil(jmlPokok));
 
+    // console.log(jmlPokok);
   }
 </script>
 <div class="container-fluid">
@@ -83,7 +95,7 @@
           </div>
           <div class="form-group col-md-4">
             <label for="inputJumlah">Jumlah Pembiayaan</label>
-            <input type="number" name="jumlah_pembiayaan" class="form-control" id="jumlah_pembiayaan" placeholder="Masukan jumlah pembiayaan">
+            <input type="number" name="jumlah_pembiayaan" class="form-control" id="jumlah_pembiayaan" placeholder="Masukan jumlah pembiayaan" required>
           </div>
         </div>
         <div class="row">
@@ -91,7 +103,7 @@
             <label for="inputJangkaWaktu">Jangka Waktu</label>
             <select name="jangka_waktu_bulan" id="jangka_waktu" class="form-control form-control-sm" onchange="manageDate()" required>
               <option value="">--Pilih Jangka Waktu--</option>
-              <option value="3">3 Bulan</option>
+              <option value=" 3">3 Bulan</option>
               <option value="6">6 Bulan</option>
               <option value="12">12 Bulan</option>
               <option value="18">18 Bulan</option>
@@ -107,7 +119,7 @@
         <div class="row">
           <div class="form-group col-md-4">
             <label for="inputPokok">Pokok</label>
-            <input type="number" name="jml_pokok_bulanan" class="form-control" id="jml_pokok_bulanan" placeholder="Pokok">
+            <input type="text" name="jml_pokok_bulanan" class="form-control" id="jml_pokok_bulanan" placeholder="Pokok">
           </div>
           <div class="form-group col-md-4">
             <label for="inputAlamat">Bahas</label>
