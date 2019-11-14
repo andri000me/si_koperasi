@@ -47,6 +47,14 @@ class Kredit extends CI_Controller
         echo $date;
     }
 
+    function manageajaxPokok()
+    {
+        $jumlah_pembiayaan = $this->input->post('jumlah_pembiayaan_field');
+        $jangka_waktu = $this->input->post('jangka_waktu_field');
+        // $pokok = jumlah_pembiayaan_field; // jangka_waktu_field; ini buat ngitungnya
+        // echo $pokok;
+    }
+
     //Aksi form kredit 
     function simpanKreditBaru()
     {
