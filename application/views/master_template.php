@@ -202,9 +202,9 @@
         </a>
         <div id="transaksiAkuntansi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="">Kas</a>
-            <a class="collapse-item" href="">Bank</a>
-            <a class="collapse-item" href="">Memorial</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/kas' ?>">Kas</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/bank' ?>">Bank</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/memorial' ?>">Memorial</a>
           </div>
         </div>
       </li>

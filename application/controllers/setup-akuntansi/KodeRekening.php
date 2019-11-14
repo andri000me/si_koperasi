@@ -48,7 +48,7 @@ Class KodeRekening extends CI_Controller{
             //Input Ke Tabel Anggota
             $data = array(
                 'kode_rekening' => $this->input->post('kode_induk'). '.' .$this->input->post('kode_rekening'),
-                'nama' => $this->input->post('nama'),
+                'nama' => ucwords($this->input->post('nama')),
                 'inisial' => $this->input->post('inisial'),
                 'saldo_awal' => $this->input->post('saldo_awal'),
                 'kode_induk' => $this->input->post('kode_induk'),
@@ -105,7 +105,7 @@ Class KodeRekening extends CI_Controller{
             $where = array('kode_rekening' => $this->input->post('kode'));
             $data = array(
                 'kode_rekening' => $this->input->post('kode_induk').'.'.$this->input->post('new_kode_rekening'),
-                'nama' => $this->input->post('nama'),
+                'nama' => ucwords($this->input->post('nama')),
                 'inisial' => $this->input->post('inisial'),
                 'saldo_awal' => $this->input->post('saldo_awal'),
                 'kode_induk' => $this->input->post('kode_induk'),

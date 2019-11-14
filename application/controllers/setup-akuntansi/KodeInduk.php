@@ -36,7 +36,7 @@ Class KodeInduk extends CI_Controller{
             //Input Ke Tabel Anggota
             $data = array(
                 'kode_induk' => $this->input->post('kode_induk'),
-                'nama' => $this->input->post('nama'),
+                'nama' => ucwords($this->input->post('nama')),
                 'tipe' => $this->input->post('tipe'),
             );
             $this->M_kode_induk->addKodeInduk($data);
@@ -84,7 +84,7 @@ Class KodeInduk extends CI_Controller{
             $where = array('kode_induk' => $this->input->post('kode'));
             $data = array(
                 'kode_induk' => $this->input->post('new_kode_induk'),
-                'nama' => $this->input->post('nama'),
+                'nama' =>ucwords($this->input->post('nama')),
                 'tipe' => $this->input->post('tipe')
             );
             $this->M_kode_induk->updateKodeInduk($where,$data);
