@@ -19,13 +19,13 @@
       echo $this->session->flashdata("delete_success");
       echo $this->session->flashdata("delete_failed");
       ?>
-      <form method="POST" action="<?php echo base_url() . 'index.php/kelola_kredit/simpanKelolaKredit' ?>">
+      <form method="POST" action="<?php echo base_url() . 'index.php/kredit/simpanKelolaKredit' ?>">
         <div class="row">
           <div class="col-md-4">
             <label for="">No. Rekening Kredit</label>
             <select name="no_rekening_pembiayaan" id="no_rekening_pembiayaan" class="form-control select2_" onchange="manageAjax();" required>
               <option value="">--Pilih--</option>
-              <?php foreach ($kelola_kredit as $k) { ?>
+              <?php foreach ($kredit as $k) { ?>
                 <option value="<?php echo $k->no_rekening_pembiayaan; ?>"><?php echo $k->no_rekening_pembiayaan ?></option>
               <?php } ?>
             </select>
@@ -80,7 +80,7 @@
     var no_rekening_pembiayaan_field = $("#no_rekening_pembiayaan").val()
 
     $.ajax({
-      url: "<?php echo base_url() . 'index.php/kelola_kredit/manageajaxgetdataanggota'; ?>",
+      url: "<?php echo base_url() . 'index.php/kredit/manageAjaxGetNoKredit'; ?>",
       type: "POST",
       data: {
         id: no_rekening_pembiayaan_field

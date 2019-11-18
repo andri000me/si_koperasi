@@ -15,7 +15,7 @@ class Kelola_kredit extends CI_Controller
         $this->load->view('master_template', $data);
     }
 
-    function manageAjaxGetDataAnggota()
+    function manageAjaxGetNoKredit()
     {
         $no_rekening_pembiayaan = $this->input->post('id');
         $data['kelola_kredit'] = $this->M_kelola_kredit->get1noKelolaKredit(array('no_rekening_pembiayaan' => $no_rekening_pembiayaan));

@@ -1,4 +1,4 @@
-<?php foreach ($kelola_kredit as $k) { ?>
+<?php foreach ($kredit as $k) { ?>
     <div class="form-group col-md-4">
         <label for="nama">Atas Nama</label>
         <input type="text" name="no_anggota" class="form-control" id="no_anggota" value="<?php echo $k->no_anggota; ?>" placeholder="Masukan Nama Anda" autofocus>
