@@ -101,7 +101,7 @@
         <div class="row">
           <div class="form-group col-md-4">
             <label for="inputJangkaWaktu">Jangka Waktu</label>
-            <select name="jangka_waktu_bulan" id="jangka_waktu" class="form-control form-control-sm" onchange="manageDate()" required>
+            <select name="jangka_waktu_bulan" id="jangka_waktu_bulan" class="form-control select2_" onchange="manageDate()" required>
               <option value="">--Pilih Jangka Waktu--</option>
               <option value=" 3">3 Bulan</option>
               <option value="6">6 Bulan</option>
