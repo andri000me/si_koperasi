@@ -16,7 +16,7 @@
   // fungsi untuk membuat tanggal menjadi otomatis sesuai jangka waktu pembayaran
   function manageDate() {
     var tgl_pembayaran_field = $("#tgl_pembayaran").val()
-    var jangka_waktu_field = $("#jangka_waktu").val()
+    var jangka_waktu_field = $("#jangka_waktu_bulan").val()
 
     $.ajax({
       url: "<?php echo base_url() . 'index.php/kredit/manageAjaxDate'; ?>",
@@ -38,7 +38,7 @@
   // membuat jumlah pokok menjadi otomatis sesuai dengan jumlah pembiayaan da njangka waktu yang diinginkan
   function getPokok() {
     let jmlPembiayaan = $('#jumlah_pembiayaan').val();
-    let jangkaWaktu = $('#jangka_waktu').val();
+    let jangkaWaktu = $('#jangka_waktu_bulan').val();
     let jmlPokok = parseInt(jmlPembiayaan) / parseInt(jangkaWaktu);
     $('#jml_pokok_bulanan').val(Math.ceil(jmlPokok));
 
@@ -119,7 +119,7 @@
         <div class="row">
           <div class="form-group col-md-4">
             <label for="inputPokok">Pokok</label>
-            <input type="text" name="jml_pokok_bulanan" class="form-control" id="jml_pokok_bulanan" placeholder="Pokok">
+            <input type="text" name="jml_pokok_bulanan" onchange="getPokok()" class="form-control" id="jml_pokok_bulanan" placeholder="Pokok">
           </div>
           <div class="form-group col-md-4">
             <label for="inputAlamat">Bahas</label>
