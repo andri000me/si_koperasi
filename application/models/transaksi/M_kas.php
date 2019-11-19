@@ -15,6 +15,14 @@ Class M_kas extends CI_Model{
         return $this->db->query("SELECT r.kode_rekening, r.nama FROM ak_rekening r JOIN ak_kode_induk i ON i.kode_induk = r.kode_induk WHERE i.nama = 'Kas'")->result();
     }
     
+    // get 1 rekening
+    function getOneRekening($kode){
+        $this->db->select('kode_rekening, nama');
+        $this->db->from('ak_rekening');
+        $this->db->where('kode_rekening', $kode);
+        return $this->db->get()->result();
+    }
+    
     // get rekening kode induk != kas & bank
     function getAllRekening(){
         return $this->db->query("SELECT r.kode_rekening, r.nama FROM ak_rekening r JOIN ak_kode_induk i ON i.kode_induk = r.kode_induk WHERE i.nama != 'Kas'AND i.nama != 'Bank' ")->result();
@@ -47,6 +55,17 @@ Class M_kas extends CI_Model{
     	}else{
     		return FALSE;
     	}
+    }
+
+    function laporanKas($kode, $dari, $sampai)
+    {
+        $this->db->select('d.kode_trx_kas, k.tanggal, k.kode_perkiraan, k.tipe, d.keterangan, d.lawan, d.nominal');
+        $this->db->from('ak_trx_kas k');
+        $this->db->join('ak_detail_trx_kas d', 'd.kode_trx_kas = k.kode_trx_kas');
+        $this->db->where('k.kode_perkiraan', $kode);
+        $this->db->where('tanggal >=', $dari);
+        $this->db->where('tanggal <=', $sampai);
+        return $this->db->get()->result();
     }
     
 }

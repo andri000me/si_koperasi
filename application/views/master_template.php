@@ -205,6 +205,10 @@
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/kas' ?>">Kas</a>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/bank' ?>">Bank</a>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/memorial' ?>">Memorial</a>
+            <div class="dropdown-divider"></div>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/laporankas' ?>">Laporan Kas</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/laporanbank' ?>">Laporan Bank</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/laporanmemorial' ?>">Laporan Memorial</a>
           </div>
         </div>
       </li>

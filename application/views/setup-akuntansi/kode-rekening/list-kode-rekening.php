@@ -86,7 +86,7 @@
                                 <td><?php echo $key->kode_rekening; ?></td>
                                 <td><?php echo $key->nama; ?></td>
                                 <td><?php echo $key->inisial; ?></td>
-                                <td><?php echo $key->saldo_awal; ?></td>
+                                <td><?php echo number_format($key->saldo_awal, 2, ',', '.'); ?></td>
                                 <td><?php echo $key->nama_induk; ?></td>
                                 <td style="text-align:center;">
                                     <!-- <button type="button" class="btn btn-sm btn-success" onclick="edit(<?php echo $key->kode_rekening; ?>)"><i class="icofont-ui-edit"></i></button> -->
