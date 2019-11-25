@@ -14,6 +14,13 @@ Class M_bank extends CI_Model{
     function getRekening(){
         return $this->db->query("SELECT r.kode_rekening, r.nama FROM ak_rekening r JOIN ak_kode_induk i ON i.kode_induk = r.kode_induk WHERE i.nama = 'Bank'")->result();
     }
+
+    function getOneRekening($kode){
+        $this->db->select('kode_rekening, nama');
+        $this->db->from('ak_rekening');
+        $this->db->where('kode_rekening', $kode);
+        return $this->db->get()->result();
+    }
     
     // get rekening kode induk != bank & bank
     function getAllRekening(){
@@ -47,6 +54,17 @@ Class M_bank extends CI_Model{
     	}else{
     		return FALSE;
     	}
+    }
+
+    function laporanBank($kode, $dari, $sampai)
+    {
+        $this->db->select('d.kode_trx_bank, k.tanggal, k.kode_perkiraan, k.tipe, d.keterangan, d.lawan, d.nominal');
+        $this->db->from('ak_trx_bank k');
+        $this->db->join('ak_detail_trx_bank d', 'd.kode_trx_bank = k.kode_trx_bank');
+        $this->db->where('k.kode_perkiraan', $kode);
+        $this->db->where('tanggal >=', $dari);
+        $this->db->where('tanggal <=', $sampai);
+        return $this->db->get()->result();
     }
     
 }

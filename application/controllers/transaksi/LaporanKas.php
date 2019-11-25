@@ -14,7 +14,7 @@ class LaporanKas extends CI_Controller
         $data['rekening'] = $this->M_kas->getRekening();
         
         if (!empty($_GET['kode']) && empty($_GET['rk_sampai'])) {
-            $data['namaRekening'] = $this->M_kas->getOneRekening($_GET['kode']);
+            $data['namaRekening'] = $this->M_kas->getOneRekening($_GET['kode'])[0];
 
             $data['laporanKas'] = $this->M_kas->laporanKas($_GET['kode'], $_GET['dari'], $_GET['sampai']);
         }

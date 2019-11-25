@@ -3,13 +3,13 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?php echo base_url() . 'index.php/dashboard' ?>">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="#">Transaksi</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Laporan Kas</li>
+            <li class="breadcrumb-item active" aria-current="page">Laporan Bank</li>
         </ol>
     </nav>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Laporan Kas</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Laporan Bank</h6>
         </div>
         <div class="card-body">
             <form method="GET" action="">
@@ -49,7 +49,7 @@
                 <br>
                 <center>
                     <h5>Koperasi Madani</h5>
-                    <h6><b> Laporan Kas</b></h6>
+                    <h6><b> Laporan Bank</b></h6>
                     <h6><b><?php echo $namaRekening->nama . ' (' . $namaRekening->kode_rekening . ')' ?></b></h6>
                     <h6><b>Periode : <?php echo date('d-m-Y',strtotime($_GET['dari'])) . ' S/D ' . date('d-m-Y',strtotime($_GET['sampai'])) ?> </b></h6>
                 </center>
@@ -60,7 +60,7 @@
                                 <thead class="text-center bg-primary text-white">
                                     <tr>
                                         <th>Tanggal</th>
-                                        <th>Kode Kas</th>
+                                        <th>Kode Bank</th>
                                         <th>Keterangan</th>
                                         <th>Lawan</th>
                                         <th>Pemasukan</th>
@@ -72,7 +72,7 @@
                                 $ttlMasuk = 0;
                                 $ttlKeluar = 0;
 
-                                foreach ($laporanKas as $key => $value) {
+                                foreach ($laporanBank as $key => $value) {
                                     
                                     if ($value->tipe == 'D') {
                                         $ttlMasuk = $ttlMasuk + $value->nominal;
@@ -84,7 +84,7 @@
                                     echo"
                                     <tr>
                                         <td>".date('d-m-Y', strtotime($value->tanggal))."</td>
-                                        <td>$value->kode_trx_kas</td>
+                                        <td>$value->kode_trx_bank</td>
                                         <td>$value->keterangan</td>
                                         <td>$value->lawan</td>
                                         $nominal
