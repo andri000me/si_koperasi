@@ -45,6 +45,7 @@
                     <thead>
                         <tr>
                             <th class="text-center">No.</th>
+                            <th class="text-center">Tanggal</th>
                             <th class="text-center">Tipe</th>
                             <th class="text-center">No. Rekening</th>
                             <th class="text-center">Debet</th>
@@ -59,6 +60,7 @@
                             ?>
                             <tr>
                                 <td class="text-center"><?php echo $no++."."; ?></td>
+                                <td><?php echo $i->tanggal_input; ?></td>
                                 <td><?php echo $i->tipe; ?></td>
                                 <td><?php echo $i->no_rek; ?></td>
                                 <td class="text-right"><?php echo number_format($i->nominal_debet,0,',','.'); ?></td>

@@ -14,11 +14,13 @@ Class M_simuda extends CI_Model{
         }
     }
     function getMasterSimuda(){
-        $last_month = date('m',strtotime("last month"));
-        $this_month = date('m');
-        $this_year = date('y');
+        $old_month = date('m',strtotime("last month"));
+        $old_year = date('Y',strtotime("last month"));
+        // $this_month = date('m');
+        // $this_year = date('y');
         
-        $query = $this->db->query("CALL perhitungan_tutup_bulan_simuda(".$last_month.",".$this_month.",".$this_year.")");
+        // $query = $this->db->query("CALL perhitungan_tutup_bulan_simuda(".$last_month.",".$this_month.",".$this_year.")");
+        $query = $this->db->query("CALL getNominatifSimuda(".$old_month.",".$old_year.") ");
         $res = $query->result();
         $query->next_result();
         $query->free_result();
@@ -28,7 +30,7 @@ Class M_simuda extends CI_Model{
     function get1MasterSimuda($no_anggota){
         $last_month = date('m',strtotime("last month"));
         $this_month = date('m');
-        $this_year = date('y');
+        $this_year = date('Y');
         $query = $this->db->query("CALL getMasterSimudaByNoAnggota(".$last_month.",".$this_month.",".$this_year.",".$no_anggota.")");
         $res = $query->result();
 
@@ -50,6 +52,7 @@ Class M_simuda extends CI_Model{
         $this->db->where($where);
         return $this->db->get()->result();
     }
+    
     function getJumlahRecordBulanIni($no_rekening_simuda){ 
         $where = array(
             'no_rekening_simuda' => $no_rekening_simuda,
@@ -60,6 +63,31 @@ Class M_simuda extends CI_Model{
         $this->db->from($this->detail_table);
         $this->db->where($where);
         return $this->db->count_all_results();
+    }
+
+    function getSaldoRecordTerakhir($no_rekening_simuda){
+        $where = array( 'no_rekening_simuda' => $no_rekening_simuda );
+        $this->db->select('saldo');
+        $this->db->from($this->detail_table);
+        $this->db->where($where);
+        $this->db->order_by('id_detail_rekening_simuda','DESC');
+        $this->db->limit(1);
+        $data = $this->db->get()->result();
+        foreach($data as $i){
+            return $i->saldo;
+        }
+    }
+    function getSaldoTerendahRecordTerakhir($no_rekening_simuda){
+        $where = array( 'no_rekening_simuda' => $no_rekening_simuda );
+        $this->db->select('saldo_terendah');
+        $this->db->from($this->detail_table);
+        $this->db->where($where);
+        $this->db->order_by('id_detail_rekening_simuda','DESC');
+        $this->db->limit(1);
+        $data = $this->db->get()->result();
+        foreach($data as $i){
+            return $i->saldo_terendah;
+        }
     }
     function getRecordTerakhirBulanIni($no_rekening_simuda){
         $where = array(
@@ -80,8 +108,8 @@ Class M_simuda extends CI_Model{
     function getRecordTerakhirTutupBulanLalu($no_rekening_simuda,$bulan,$tahun){
         $where = array(
             'no_rekening_simuda' => $no_rekening_simuda,
-            'month(tgl_tutup_bulan)' => $bulan, 
-            'year(tgl_tutup_bulan)' => $tahun
+            'month(tgl_tutup_bulan)' => date('m',strtotime('last month')), 
+            'year(tgl_tutup_bulan)' => date('Y',strtotime('last month'))
         );
         $this->db->select('saldo');
         $this->db->from('support_simuda_tutup_bulan');

@@ -16,15 +16,15 @@
             <div class="row">
                 <?php foreach($master_rekening_simuda as $i){ ?>
                 <div class="col-md-4">
-                    <label for="">No. Rekening Simuda</label>
+                    <label for="" class="font-weight-bold">No. Rekening Simuda</label>
                     <input type="text" name="no_rekening" id="no_rekening" class="form-control-plaintext" readonly value="<?php echo $i->no_rekening_simuda ?>">
                 </div>
                 <div class="col-md-4">
-                    <label for="">No. Anggota</label>
+                    <label for="" class="font-weight-bold">No. Anggota</label>
                     <input type="text" name="no_anggota" id="no_anggota" class="form-control-plaintext" readonly value="<?php echo $i->no_anggota ?>">
                 </div>
                 <div class="col-md-4">
-                    <label for="">Nama</label>
+                    <label for="" class="font-weight-bold">Nama</label>
                     <input type="text" name="nama" id="nama" class="form-control-plaintext" readonly value="<?php echo $i->nama; ?>">
                 </div>
                 <?php } ?>
@@ -38,7 +38,6 @@
                             <th>Debet</th>
                             <th>Kredit</th>
                             <th>Saldo</th>
-                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,7 +51,7 @@
                                 <td style="text-align:right;"><?php echo number_format($p->debet,0,',','.'); ?></td>
                                 <td style="text-align:right;"><?php echo number_format($p->kredit,0,',','.'); ?></td>
                                 <td style="text-align:right;"><?php echo number_format($p->saldo,0,',','.'); ?></td>
-                                <td style="text-align:center;"><button type="button" class="btn btn-sm btn-success">Edit</button></td>
+                                <!-- <td style="text-align:center;"><button type="button" class="btn btn-sm btn-success">Edit</button></td> -->
                             </tr>
                         <?php } ?>
                     </tbody>

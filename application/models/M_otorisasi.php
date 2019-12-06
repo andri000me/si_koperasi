@@ -11,6 +11,7 @@ Class M_otorisasi extends CI_Model{
         }
     }
     function getOtorisasi(){
+        $this->db->order_by('id_otorisasi','DESC');
         return $this->db->get($this->table)->result();
     }
     function get1Otorisasi($where){
