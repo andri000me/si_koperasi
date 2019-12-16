@@ -29,34 +29,41 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>No.Rek</th>
-                            <th>Atas Nama</th>
-                            <th>Tgl. Valuta</th>
+                            <th>No. Rekening</th>
+                            <th>No. Anggota</th>
+                            <th>Nama</th>
                             <th>Jumlah</th>
-                            <th>Jangka Waktu</th>
-                            <th>Tgl. Mulai</th>
-                            <th>Tgl. Jatuh Tempo</th>
-                            <th>Prosentase</th>
+                            <th>Tanggal Awal</th>
+                            <th>Tanggal Akhir</th>
+                            <th>Jumlah Bayar Bahas</th>
+                            <th>Pembayaran</th>
+                            <th>Rekening Simuda</th>
+                            <th>Perpanjangan Otomatis</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- php echo foreach -->
+                        <?php
+                        $no = 1;
+                        foreach ($nominatif as $p) {
+                            ?>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td style="text-align:center;">
-                                <button type="button" class="btn btn-sm btn-info" onclick="">Detail</button>
+                            <td><?php echo $no++; ?></td>
+                            <td><?php echo $p->NRSj; ?></td>
+                            <td><?php echo $p->no_anggota;?></td>
+                            <td><?php echo $p->nama; ?></td>
+                            <td><?php echo $p->jumlah_awal; ?></td>
+                            <td><?php echo $p->tanggal_awal; ?></td>
+                            <td><?php echo $p->tanggal_akhir; ?></td>
+                            <td><?php echo $p->presentase_bagi_hasil_bulanan; ?></td>
+                            <td><?php echo $p->pembayaran_bahas; ?></td>
+                            <td><?php echo $p->rekening_simuda; ?></td>
+                            <td><?php echo $p->otomatis_perpanjang; ?></td>
+                            <td class="text-center">
+                                    <a href="<?php echo base_url().'index.php/sijaka/detailRekeningSijaka/'.$p->NRSj; ?>" class="btn btn-sm btn-primary">Detail</a>
                             </td>
                         </tr>
-
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>
