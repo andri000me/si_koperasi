@@ -9,13 +9,6 @@ class Simpanan_wajib extends CI_Controller
         $this->load->model('M_anggota');
         $this->load->model('M_jurnal');
     }
-    // function index()
-    // {
-    //     $data['title'] = 'Simpanan Wajib';
-    //     $data['path'] = "simpanan_wajib/v_simpanan_wajib";
-    //     $data['simpanan_wajib'] = $this->M_simpanan_wajib->getSimpananpokok();
-    //     $this->load->view('master_template', $data);
-    // }
     //Halaman Kelola Rekening
     function kelolaRekening(){
         $data['title'] = 'Kelola Rekening';
