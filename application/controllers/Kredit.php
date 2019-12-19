@@ -52,16 +52,17 @@ class Kredit extends CI_Controller
                 'jml_pokok_bulanan' => $this->input->post('jml_pokok_bulanan'),
                 'jml_bahas_bulanan' => $this->input->post('jml_bahas_bulanan'),
                 'tgl_lunas' => $this->input->post('tgl_lunas'),
-                'tgl_temp' => $this->input->post('tgl_pembayaran'),
+                'tgl_temp' => date("Y-m-d", strtotime("+1 month", strtotime($this->input->post('tgl_pembayaran')))),
+
 
             );
             $this->M_kredit->simpanKredit($data_master);
             $this->session->set_flashdata("input_success", "<div class='alert alert-success'>
-            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data berhasil ditambahkan.<br></div>");
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Pengajuan Berhasil<br></div>");
         } else {
             $gagal = validation_errors();
             $this->session->set_flashdata("input_failed", "<div class='alert alert-danger'>
-            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Gagal Ditambahkan!!<br>" . $gagal . "</div>");
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Pengajuan Gagal<br>" . $gagal . "</div>");
         }
         redirect('kredit/pengajuanRekening');
     }
@@ -70,12 +71,14 @@ class Kredit extends CI_Controller
     function daftarNominatif(){
         $data['title'] = 'Daftar Nominatif Kredit/Pembayaran';
         $data['path'] = "kredit/v_daftar_nominatif_kredit";
-        $data['kredit'] = $this->M_kredit->getNominatifKredit();
+        $data['kredit'] = $this->M_kredit->getNominatifKredit()->result();
         $this->load->view('master_template', $data);
     }
-    function detail(){
+    function detail($id){
         $data['title'] = 'Detail Kredit/Pembiayaan';
         $data['path'] = "kredit/detail_daftar_nominatif_kredit";
+        $data['id'] = $id;
+        $data['detail_kredit'] = $this->M_kredit->getNominatifDetailKredit($id)->result();
         $this->load->view('master_template', $data);
     }
     /////////////////////////////
@@ -83,32 +86,45 @@ class Kredit extends CI_Controller
     function kelolaKredit(){
         $data['title'] = 'Kelola Kredit';
         $data['path'] = "kredit/v_kelola_kredit";
-        $data['kredit'] = $this->M_kredit->getNominatifKredit();
+        $data['kredit'] = $this->M_kredit->getNominatifKredit()->result();
         $this->load->view('master_template', $data);
     }
 
     function manageAjaxGetDataKelolaKredit(){
         $no_rekening_pembiayaan = $this->input->post('id');
         $kredit = $this->M_kredit->get1NominatifKredit(array('no_rekening_pembiayaan' => $no_rekening_pembiayaan));
-        
-        foreach($kredit as $i){
+        if($kredit->num_rows() == 0){
             echo json_encode(   
                 array(
-                    "nama" => $i->nama,
-                    "date" => $i->tgl_temp,
-                    "show_date" => date('m-y',strtotime($i->tgl_temp)),
-                    "pokok" => $i->jml_pokok_bulanan,
-                    "bagi_hasil" => $i->jml_bahas_bulanan
+                    "nama" => "",
+                    "date" => "",
+                    "show_date" => "",
+                    "cicilan_terbayar" => "",
+                    "pokok" => "",
+                    "bagi_hasil" => ""
                 )
             );
+        }else{
+            foreach($kredit->result() as $i){
+                echo json_encode(   
+                    array(
+                        "nama" => $i->nama,
+                        "date" => $i->tgl_temp,
+                        "show_date" => date('m-y',strtotime($i->tgl_temp)),
+                        "cicilan_terbayar" => $i->cicilan_terbayar,
+                        "pokok" => $i->jml_pokok_bulanan,
+                        "bagi_hasil" => $i->jml_bahas_bulanan
+                    )
+                );
+            }
         }
     }
-    //digunakan untuk aksi input ke tabel simpanan pokok
+    //digunakan untuk aksi input ke tabel simpanan Kelola Kredit
     function simpanKelolaKredit(){
         $config = array(
             array('field' => 'no_rekening_pembiayaan', 'label' => 'No. Rekening Pembiayaan', 'rules' => 'required'),
             array('field' => 'tanggal_pembayaran', 'label' => 'Tanggal Pembayaran', 'rules' => 'required'),
-            // array('field' => 'periode_tagihan', 'label' => 'Periode Tagihan', 'rules' => 'required'),
+            array('field' => 'periode_tagihan', 'label' => 'Periode Tagihan', 'rules' => 'required'),
             array('field' => 'jml_pokok', 'label' => 'Jumlah Pokok', 'rules' => 'required'),
             array('field' => 'jml_bahas', 'label' => 'Jumlah Bahas', 'rules' => 'required'),
             array('field' => 'denda', 'label' => 'Denda', 'rules' => 'required'),
@@ -133,8 +149,11 @@ class Kredit extends CI_Controller
             //Update Tabel Rekening Pembiayaan
             $where = array('no_rekening_pembiayaan' => $this->input->post('no_rekening_pembiayaan'));
             $next_month = date('Y-m-d', strtotime("+1 months", strtotime($this->input->post('periode_tagihan'))));//Next Month
+            $cicilan_terbayar = intval($this->input->post('cicilan_terbayar'));
+            $cicilan_terbayar++;
             $data = array(
-                'tgl_temp' => $next_month
+                'tgl_temp' => $next_month,
+                'cicilan_terbayar' => $cicilan_terbayar
             );
             $save2 = $this->M_kredit->updateKredit($where,$data);
 
@@ -149,13 +168,18 @@ class Kredit extends CI_Controller
                 'id_detail' => $this->db->insert_id()
             );
             $save3 = $this->M_jurnal->inputJurnal($data_jurnal);
-            
-            $this->session->set_flashdata("input_success", "<div class='alert alert-success'>
-             <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data berhasil ditambahkan.<br></div>");
+
+            if($save1 == TRUE || $save2 == TRUE || $save3 == TRUE){
+                $this->session->set_flashdata("input_success", "<div class='alert alert-success'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Pembayaran Berhasil<br></div>");
+            }else{
+                $this->session->set_flashdata("input_failed", "<div class='alert alert-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Pembayaran Gagal</div>");
+            }
         } else {
             $gagal = validation_errors();
             $this->session->set_flashdata("input_failed", "<div class='alert alert-danger'>
-             <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Gagal Ditambahkan!!<br>" . $gagal . "</div>");
+             <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Pembayaran Gagal<br>" . $gagal . "</div>");
         }
         redirect('kredit/kelolakredit');
     }

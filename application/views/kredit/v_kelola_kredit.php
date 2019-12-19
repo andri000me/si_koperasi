@@ -8,7 +8,7 @@
   </nav>
   <div class="card shadow mb-4">
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">Form Pengajuan Kelola Kredit</h6>
+      <h6 class="m-0 font-weight-bold text-primary">Form Kelola Kredit</h6>
     </div>
     <div class="card-body">
       <?php
@@ -43,6 +43,7 @@
           <div class="form-group col-md-4">
             <label for="inputSampai">Periode Tagihan</label>
             <input type="hidden" name="periode_tagihan" id="periode_tagihan">
+            <input type="hidden" name="cicilan_terbayar" id="cicilan_terbayar">
             <input type="text" class="form-control" id="show_periode_tagihan" name="show_periode_tagihan" placeholder="Masukan Periode Tagihan" readonly="">
           </div>
         </div>
@@ -92,6 +93,7 @@
         $("#atas_nama").val(obj.nama)
         $("#periode_tagihan").val(obj.date)
         $("#show_periode_tagihan").val(obj.show_date)
+        $("#cicilan_terbayar").val(obj.cicilan_terbayar)
         $("#jml_pokok").val(obj.pokok)
         $("#jml_bahas").val(obj.bagi_hasil)
 

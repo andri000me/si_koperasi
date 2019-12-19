@@ -29,11 +29,7 @@
         $("#tgl_lunas").val(response);
       }
     });
-    // getPokok();
   }
-  // $('#jumlah_pembiayaan').keyup(function(e) {
-  //   getPokok();
-  // });
 
   // membuat jumlah pokok menjadi otomatis sesuai dengan jumlah pembiayaan da njangka waktu yang diinginkan
   function hitungPokokBahas() {
@@ -43,9 +39,8 @@
     var jmlBahas = 0.01 * jmlPokok;
     $('#jml_pokok_bulanan').val(jmlPokok);
     $("#jml_bahas_bulanan"). val(jmlBahas);
-
-    // console.log(jmlPokok);
   }
+
 </script>
 <div class="container-fluid">
   <nav aria-label="breadcrumb">
@@ -89,11 +84,8 @@
         </div>
         <div class="row">
           <div class="form-group col-md-4">
-            <label for="inputTanggalPembayaran">Tanggal Pembayaran</label>
-            <?php
-            $tgl = date('Y-m-d');
-            ?>
-            <input type="date" class="form-control" id="tgl_pembayaran" value="<?php echo $tgl; ?>" name="tgl_pembayaran" placeholder="Tanggal Pembayaran">
+            <label for="inputTanggalPembayaran">Tanggal Pembiayaan</label>
+            <input type="date" class="form-control" id="tgl_pembayaran" value="<?php echo date('Y-m-d'); ?>" name="tgl_pembayaran" placeholder="Tanggal Pembayaran">
           </div>
           <div class="form-group col-md-4">
             <label for="inputJumlah">Jumlah Pembiayaan</label>

@@ -1,21 +1,3 @@
-<!-- <script>
-    function edit(id) {
-        $.ajax({
-            url: "",
-            type: "POST",
-            data: {
-                id: id
-            },
-            success: function(ajaxData) {
-                $("#modaledit").html(ajaxData);
-                $("#modaledit").modal('show', {
-                    backdrop: 'true'
-                });
-            }
-        });
-    }
-</script> -->
-<!-- BreadCumb -->
 
 <!-- Content -->
 <div class="container-fluid">
@@ -44,12 +26,12 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>No.</th>
-                            <th>No.Rek</th>
-                            <th>Atas Nama</th>
-                            <th>Jumlah Pembiayaan</th>
-                            <th>Berjalan</th>
-                            <th>Aksi</th>
+                            <th class="text-center">No.</th>
+                            <th class="text-center">No.Rek</th>
+                            <th class="text-center">Atas Nama</th>
+                            <th class="text-center">Jumlah Pembiayaan</th>
+                            <th class="text-center">Berjalan</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,9 +42,9 @@
                         <tr>
                             <td><?php echo $no++."."; ?></td>
                             <td><?php echo $i->no_rekening_pembiayaan; ?></td>
-                            <td></td>
-                            <td><?php echo "Rp.".number_format($i->jumlah_pembiayaan,0,',','.'); ?></td>
-                            <td><?php echo "0/".$i->jangka_waktu_bulan; ?></td>
+                            <td><?php echo $i->nama; ?></td>
+                            <td class="text-right"><?php echo "Rp.".number_format($i->jumlah_pembiayaan,0,',','.'); ?></td>
+                            <td class="text-center"><?php echo $i->cicilan_terbayar."/".$i->jangka_waktu_bulan; ?></td>
                             <td style="text-align:center;">
                                 <a href="<?php echo base_url().'index.php/kredit/detail/'.$i->no_rekening_pembiayaan; ?>" class="btn btn-primary btn-sm">Detail</a>
                             </td>
