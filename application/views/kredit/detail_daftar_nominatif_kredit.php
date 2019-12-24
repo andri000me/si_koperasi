@@ -3,13 +3,13 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?php echo base_url() . 'index.php/dashboard' ?>">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="#">Kredit / Pembiayaan</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Detail Daftar Nominatif</li>
+            <li class="breadcrumb-item active" aria-current="page">Detail Daftar Nominatif (<?php echo $id; ?>)</li>
         </ol>
     </nav>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Detail Daftar Nominatif</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Detail Daftar Nominatif (<?php echo $id; ?>)</h6>
         </div>
         <div class="card-body">
             <?php
@@ -20,41 +20,36 @@
             echo $this->session->flashdata("delete_success");
             echo $this->session->flashdata("delete_failed");
             ?>
-            <div class="row">
-                <div class="col-2 ml-auto">
-                    <a href="index" class="btn btn-primary" style="margin-left:30px;">Kembali</a>
-                </div>
-            </div><br>
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>No.</th>
-                            <th>No.Rek</th>
-                            <th>Atas Nama</th>
-                            <th>Tanggal Pembayaran</th>
-                            <th>Periode Tagihan</th>
-                            <th>Jumlah Pokok</th>
-                            <th>Jumlah Bahas</th>
-                            <th>Denda</th>
-                            <th>Total</th>
-                            <th>User</th>
+                            <th class="text-center">No.</th>
+                            <th class="text-center">Tgl. Bayar</th>
+                            <th class="text-center">Periode</th>
+                            <th class="text-center">Pokok</th>
+                            <th class="text-center">Bahas</th>
+                            <th class="text-center">Denda</th>
+                            <th class="text-center">Total</th>
+                            <th>Op.</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- php echo foreach -->
+                        <?php 
+                        $no = 1;
+                        foreach($detail_kredit as $data){
+                        ?>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td><?php echo $no++; ?></td>
+                            <td><?php echo $data->tanggal_pembayaran; ?></td>
+                            <td><?php echo $data->periode_tagihan ?></td>
+                            <td class="text-right"><?php echo number_format($data->jml_pokok,0,',','.'); ?></td>
+                            <td class="text-right"><?php echo number_format($data->jml_bahas,0,',','.'); ?></td>
+                            <td class="text-right"><?php echo number_format($data->denda,0,',','.'); ?></td>
+                            <td class="text-right"><?php echo number_format($data->total,0,',','.'); ?></td>
+                            <td><?php echo $data->nama_terang; ?></td>
                         </tr>
+                        <?php } ?>
 
                     </tbody>
                 </table>

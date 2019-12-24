@@ -1,21 +1,3 @@
-<!-- <script>
-    function edit(id) {
-        $.ajax({
-            url: "",
-            type: "POST",
-            data: {
-                id: id
-            },
-            success: function(ajaxData) {
-                $("#modaledit").html(ajaxData);
-                $("#modaledit").modal('show', {
-                    backdrop: 'true'
-                });
-            }
-        });
-    }
-</script> -->
-<!-- BreadCumb -->
 
 <!-- Content -->
 <div class="container-fluid">
@@ -40,38 +22,34 @@
             echo $this->session->flashdata("delete_success");
             echo $this->session->flashdata("delete_failed");
             ?>
-            <!-- <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#myModal" style="margin-bottom:10px;"><i class="icofont-plus-circle"></i> Tambah</button> -->
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>No.</th>
-                            <th>No.Rek</th>
-                            <th>Atas Nama</th>
-                            <th>Jumlah Pembiayaan</th>
-                            <th>Jangka Waktu</th>
-                            <th>Pokok</th>
-                            <th>Bahas</th>
-                            <th>Berjalan</th>
-                            <th>Aksi</th>
+                            <th class="text-center">No.</th>
+                            <th class="text-center">No.Rek</th>
+                            <th class="text-center">Atas Nama</th>
+                            <th class="text-center">Jumlah Pembiayaan</th>
+                            <th class="text-center">Berjalan</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- php echo foreach -->
+                        <?php 
+                        $no = 1;
+                        foreach($kredit as $i){ 
+                        ?>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td><?php echo $no++."."; ?></td>
+                            <td><?php echo $i->no_rekening_pembiayaan; ?></td>
+                            <td><?php echo $i->nama; ?></td>
+                            <td class="text-right"><?php echo "Rp.".number_format($i->jumlah_pembiayaan,0,',','.'); ?></td>
+                            <td class="text-center"><?php echo $i->cicilan_terbayar."/".$i->jangka_waktu_bulan; ?></td>
                             <td style="text-align:center;">
-                                <a href="daftar_nominatif_kredit/detail_daftar_nominatif_kredit.php" class="btn btn-primary">Detail</a>
+                                <a href="<?php echo base_url().'index.php/kredit/detail/'.$i->no_rekening_pembiayaan; ?>" class="btn btn-primary btn-sm">Detail</a>
                             </td>
                         </tr>
-
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>

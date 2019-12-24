@@ -29,21 +29,18 @@
         $("#tgl_lunas").val(response);
       }
     });
-    getPokok();
   }
-  $('#jumlah_pembiayaan').keyup(function(e) {
-    getPokok();
-  });
 
   // membuat jumlah pokok menjadi otomatis sesuai dengan jumlah pembiayaan da njangka waktu yang diinginkan
-  function getPokok() {
-    let jmlPembiayaan = $('#jumlah_pembiayaan').val();
-    let jangkaWaktu = $('#jangka_waktu_bulan').val();
-    let jmlPokok = parseInt(jmlPembiayaan) / parseInt(jangkaWaktu);
-    $('#jml_pokok_bulanan').val(Math.ceil(jmlPokok));
-
-    // console.log(jmlPokok);
+  function hitungPokokBahas() {
+    var jmlPembiayaan = $('#jumlah_pembiayaan').val();
+    var jangkaWaktu = $('#jangka_waktu_bulan').val();
+    var jmlPokok = parseInt(jmlPembiayaan) / parseInt(jangkaWaktu);
+    var jmlBahas = 0.01 * jmlPokok;
+    $('#jml_pokok_bulanan').val(jmlPokok);
+    $("#jml_bahas_bulanan"). val(jmlBahas);
   }
+
 </script>
 <div class="container-fluid">
   <nav aria-label="breadcrumb">
@@ -87,21 +84,18 @@
         </div>
         <div class="row">
           <div class="form-group col-md-4">
-            <label for="inputTanggalPembayaran">Tanggal Pembayaran</label>
-            <?php
-            $tgl = date('Y-m-d');
-            ?>
-            <input type="date" class="form-control" id="tgl_pembayaran" value="<?php echo $tgl; ?>" name="tgl_pembayaran" placeholder="Tanggal Pembayaran">
+            <label for="inputTanggalPembayaran">Tanggal Pembiayaan</label>
+            <input type="date" class="form-control" id="tgl_pembayaran" value="<?php echo date('Y-m-d'); ?>" name="tgl_pembayaran" placeholder="Tanggal Pembayaran">
           </div>
           <div class="form-group col-md-4">
             <label for="inputJumlah">Jumlah Pembiayaan</label>
-            <input type="number" name="jumlah_pembiayaan" class="form-control" id="jumlah_pembiayaan" placeholder="Masukan jumlah pembiayaan" required>
+            <input type="number" name="jumlah_pembiayaan" class="form-control" id="jumlah_pembiayaan" placeholder="Masukan jumlah pembiayaan" onkeyup="hitungPokokBahas()" required>
           </div>
         </div>
         <div class="row">
           <div class="form-group col-md-4">
             <label for="inputJangkaWaktu">Jangka Waktu</label>
-            <select name="jangka_waktu_bulan" id="jangka_waktu_bulan" class="form-control select2_" onchange="manageDate()" required>
+            <select name="jangka_waktu_bulan" id="jangka_waktu_bulan" class="form-control select2_" onchange="manageDate();hitungPokokBahas()" required>
               <option value="">--Pilih Jangka Waktu--</option>
               <option value=" 3">3 Bulan</option>
               <option value="6">6 Bulan</option>
@@ -119,7 +113,7 @@
         <div class="row">
           <div class="form-group col-md-4">
             <label for="inputPokok">Pokok</label>
-            <input type="text" name="jml_pokok_bulanan" onchange="getPokok()" class="form-control" id="jml_pokok_bulanan" placeholder="Pokok">
+            <input type="text" name="jml_pokok_bulanan" onchange="" class="form-control" id="jml_pokok_bulanan" placeholder="Pokok">
           </div>
           <div class="form-group col-md-4">
             <label for="inputAlamat">Bahas</label>
