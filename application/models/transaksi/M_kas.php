@@ -67,5 +67,26 @@ Class M_kas extends CI_Model{
         $this->db->where('tanggal <=', $sampai);
         return $this->db->get()->result();
     }
+
+    public function getKas($kode)
+    {
+        $this->db->select('*');
+        $this->db->from('ak_trx_kas');
+        $this->db->where('kode_trx_kas', $kode);
+        return $this->db->get()->result();
+    }
+    
+    public function getDetailKas($kode)
+    {
+        $this->db->select('*');
+        $this->db->from('ak_detail_trx_kas');
+        $this->db->where('kode_trx_kas', $kode);
+        return $this->db->get()->result();
+    }
+
+    public function updateData($tb,$values,$where)
+    {
+        $this->db->update($tb,$values,$where);
+    }
     
 }

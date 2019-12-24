@@ -132,4 +132,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('general-ledger/M_buku_besar');
+$autoload['model'] = array('general-ledger/M_buku_besar', 'general-ledger/M_neraca_saldo');

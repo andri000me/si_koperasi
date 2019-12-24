@@ -77,7 +77,7 @@
                     </div>
                     <div class="col-6 mb-3">
                       <label for="">Kode Kas</label>
-                      <select name="kode_perkiraan" id="" class="form-control <?php echo form_error('kode_perkiraan') ? 'is-invalid' : '' ?>  ">
+                      <select name="kode_perkiraan" id="" class="form-control select2_ <?php echo form_error('kode_perkiraan') ? 'is-invalid' : '' ?>  ">
                         <option value="">--Pilih Kode Perkiraan Kas--</option>
                         <?php
                         foreach ($rekening as $key) {
@@ -151,7 +151,11 @@
                           <td><?php echo $value['lawan'] ?></td>
                           <td><?php echo $value['keterangan'] ?></td>
                           <td><?php echo number_format($value['nominal'], 2, ',', '.') ?></td>
-                          <td></td>
+                          <td>
+                            <a data-msg="Apakah Anda Yakin?" href="<?php echo base_url()."index.php/transaksi/kas/hapus_session_detail/$key" ?>" class="open-confirm">
+                              <button class="btn btn-danger btn-sm"><i class="icofont-ui-delete"></i></button>
+                            </a>
+                          </td>
                         </tr>
                     <?php
                       }
@@ -192,7 +196,7 @@
                         <div class="row">
                           <div class="col-12 mb-3">
                             <label for="">Lawan</label>
-                            <select name="lawan" id="" class="form-control" required>
+                            <select name="lawan" id="" class="form-control select2_" style="width: 100%" required>
                               <option value="">--Pilih Lawan--</option>
                               <?php
                               foreach ($allRekening as $key) {

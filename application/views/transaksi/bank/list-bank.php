@@ -48,7 +48,9 @@
                                 <td><?php echo $key->tipe == "D" ? 'Debet' : 'Kredit' ; ?></td>
                                 <td><?php echo number_format($key->grand_total, 2, ',', '.'); ?></td>
                                 <td style="text-align:center;">
-                                    <button type="button" class="btn btn-sm btn-success" onclick="edit(<?php echo $key->kode_trx_bank; ?>)"><i class="icofont-ui-edit"></i></button>
+                                    <a href="<?php echo base_url()."index.php/transaksi/bank/createEditSession/$key->kode_trx_bank" ?>" style="text-decoration:none">
+                                        <button class="btn btn-success btn-sm"><i class="icofont-ui-edit"></i></button>
+                                    </a>
                                     <a data-msg="Apakah Anda Yakin?" href="<?php echo base_url()."index.php/transaksi/bank/deleteBank/$key->kode_trx_bank" ?>" class="open-confirm">
                                       <button class="btn btn-danger btn-sm"><i class="icofont-ui-delete"></i></button>
                                     </a>

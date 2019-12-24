@@ -48,5 +48,26 @@ Class M_memorial extends CI_Model{
     		return FALSE;
     	}
     }
+
+    public function getMemorial($kode)
+    {
+        $this->db->select('*');
+        $this->db->from('ak_trx_memorial');
+        $this->db->where('kode_trx_memorial', $kode);
+        return $this->db->get()->result();
+    }
+    
+    public function getDetailMemorial($kode)
+    {
+        $this->db->select('*');
+        $this->db->from('ak_detail_trx_memorial');
+        $this->db->where('kode_trx_memorial', $kode);
+        return $this->db->get()->result();
+    }
+
+    public function updateData($tb,$values,$where)
+    {
+        $this->db->update($tb,$values,$where);
+    }
     
 }

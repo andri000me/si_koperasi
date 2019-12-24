@@ -95,6 +95,13 @@ Class Bank extends CI_Controller{
         $this->load->view('master_template',$data);
         // $this->load->view('transaksi/bank/input-bank');
     }
+
+    public function hapus_session_detail($key='')
+    {
+        // $_SESSION['ttl_detail_kas'] = $_SESSION['ttl_detail_kas'] - $_SESSION['detail_kas'][$key]['jumlah_rp'];
+        unset($_SESSION['detail_bank'][$key]);
+        redirect(base_url().'index.php/transaksi/bank/input');
+    }
     
     // save trx bank
     function save()
@@ -153,11 +160,172 @@ Class Bank extends CI_Controller{
         $session1 = $reset[0];
         $session2 = $reset[1];
         $redirect = $reset[2];
+        $redirect = str_replace(':','/',$redirect);
 
         unset($_SESSION["$session1"]);
         unset($_SESSION["$session2"]);
 
         redirect(base_url()."index.php/transaksi/bank/$redirect");
+    }
+
+    public function createEditSession($kode = null)
+    {
+        if ($kode != null) {
+            $_SESSION['edit_bukti_bank'][$kode] = $this->M_bank->getBank($kode)[0];
+            $_SESSION['detail_edit_bukti_bank'][$kode] = $this->M_bank->getDetailBank($kode);
+            
+            redirect(base_url().'index.php/transaksi/bank/editBank/'.$kode);
+        }
+        else{
+            show_404();
+        }
+    }
+
+    public function editBank($kode="")
+    {
+        if ($kode != "") {
+            $data['title'] = 'Edit Bank';
+            $data['path'] = "transaksi/bank/edit-bank";
+            // $data['nomor'] = $this->M_bank->getNomor(date('Y'), date('m'));
+            $data['rekening'] = $this->M_bank->getRekening();
+            $data['allRekening'] = $this->M_bank->getAllRekening();
+            $data['edit_bukti_bank'] = $_SESSION['edit_bukti_bank'][$kode];                
+            $data['detail_edit_bukti_bank'] = $_SESSION['detail_edit_bukti_bank'][$kode];
+            
+            if (!empty($this->input->post('edit_bukti_bank'))) {
+                $_SESSION['edit_bukti_bank'][$kode]->tanggal = $this->input->post('tanggal');
+                $_SESSION['edit_bukti_bank'][$kode]->kode_perkiraan = $this->input->post('kode_perkiraan');
+                $_SESSION['edit_bukti_bank'][$kode]->tipe = $this->input->post('tipe');
+                redirect(base_url().'index.php/transaksi/bank/editBank/'.$kode);
+            }
+
+            if (!empty($this->input->post('add_detail_bukti_bank'))) {
+
+                $_SESSION['detail_edit_bukti_bank'][$kode][count($_SESSION['detail_edit_bukti_bank'][$kode])]->id_detail_trx_bank = $this->input->post('id_detail_trx_bank');
+
+                $_SESSION['detail_edit_bukti_bank'][$kode][count($_SESSION['detail_edit_bukti_bank'][$kode]) - 1]->keterangan = $this->input->post('keterangan');
+
+                $_SESSION['detail_edit_bukti_bank'][$kode][count($_SESSION['detail_edit_bukti_bank'][$kode]) - 1]->kode_trx_bank = $kode;
+
+                $_SESSION['detail_edit_bukti_bank'][$kode][count($_SESSION['detail_edit_bukti_bank'][$kode]) - 1]->lawan = $this->input->post('lawan');
+
+                $_SESSION['detail_edit_bukti_bank'][$kode][count($_SESSION['detail_edit_bukti_bank'][$kode]) - 1]->nominal = $this->input->post('nominal');
+                
+                redirect(base_url().'index.php/transaksi/bank/editBank/'.$kode);
+            }
+            
+
+            $this->load->view('master_template',$data);
+            
+        }
+    }
+
+    public function deleteSessionDetailEdit($kode, $key)
+    {
+        if($_SESSION['detail_edit_bukti_bank'][$kode][$key]->id_detail_trx_bank != 0){
+            $id = $_SESSION['detail_edit_bukti_bank'][$kode][$key]->id_detail_trx_bank;
+            if(isset($_SESSION['edit_bukti_bank'][$kode]->del_id_detail_trx_bank) && count($_SESSION['edit_bukti_bank'][$kode]->del_id_detail_trx_bank) > 0){
+                array_push($_SESSION['edit_bukti_bank'][$kode]->del_id_detail_trx_bank, $id);
+            }
+            else{
+                $_SESSION['edit_bukti_bank'][$kode]->del_id_detail_trx_bank = [$id];
+            }
+        }
+        
+        unset($_SESSION['detail_edit_bukti_bank'][$kode][$key]);
+        redirect(base_url().'index.php/transaksi/bank/editBank/'.$kode);
+        
+        // echo "<pre>";
+        // print_r ($_SESSION['edit_bukti_bank'][$kode]);
+        // echo "</pre>";
+        
+    }
+
+    public function update($kode)
+    {
+        $edit_bukti_bank = $_SESSION['edit_bukti_bank'][$kode];
+        $ttl = 0;
+        $detail_edit_bukti_bank = $_SESSION['detail_edit_bukti_bank'][$kode];
+        
+        foreach ($detail_edit_bukti_bank as $key => $value) {
+            $ttl = $ttl + $value->nominal;
+
+            if ($value->id_detail_trx_bank == 0) {
+                $newDetail = array(
+                    'kode_trx_bank' => $value->kode_trx_bank,
+                    'keterangan' => $value->keterangan,
+                    'lawan' => $value->lawan,
+                    'nominal' => $value->nominal,
+                );
+                $this->M_bank->insertData('ak_detail_trx_bank', $newDetail);
+                $lastId = $this->M_bank->getLastId()[0];
+
+                $jurnal = array(
+                    'tanggal' => $edit_bukti_bank->tanggal. ' ' . date('H:i:s'),
+                    'kode_transaksi' => $kode,
+                    'keterangan' => $value->keterangan,
+                    'kode' => $edit_bukti_bank->kode_perkiraan,
+                    'lawan' => $value->lawan,
+                    'tipe' => $edit_bukti_bank->tipe,
+                    'nominal' => $value->nominal,
+                    'tipe_trx_koperasi' => 'Bank',
+                    'id_detail' => $lastId['lastId'],
+                );
+                $this->M_bank->insertData('ak_jurnal',$jurnal);
+            }
+            else{
+                $detail = array(
+                    'kode_trx_bank' => $value->kode_trx_bank,
+                    'keterangan' => $value->keterangan,
+                    'lawan' => $value->lawan,
+                    'nominal' => $value->nominal,
+                );
+                $this->M_bank->updateData('ak_detail_trx_bank',$detail, ['id_detail_trx_bank' => $value->id_detail_trx_bank]);
+
+                $jurnal = array(
+                    'tanggal' => $edit_bukti_bank->tanggal. ' ' . date('H:i:s'),
+                    'kode_transaksi' => $kode,
+                    'keterangan' => $value->keterangan,
+                    'kode' => $edit_bukti_bank->kode_perkiraan,
+                    'lawan' => $value->lawan,
+                    'tipe' => $edit_bukti_bank->tipe,
+                    'nominal' => $value->nominal,
+                );
+                $this->M_bank->updateData('ak_jurnal',$jurnal, ['kode_transaksi' => $kode, 'id_detail' => $value->id_detail_trx_bank]);
+            }
+        }
+
+        
+        
+        
+        
+        if(isset($_SESSION['edit_bukti_bank'][$kode]->del_id_detail_trx_bank) && count($_SESSION['edit_bukti_bank'][$kode]->del_id_detail_trx_bank) > 0){
+            foreach ($_SESSION['edit_bukti_bank'][$kode]->del_id_detail_trx_bank as $key => $idDel) {
+                // echo $idDel;
+                $this->M_bank->deleteBank('ak_jurnal', ['kode_transaksi' => $kode, 'id_detail' => $idDel]);
+                $this->M_bank->deleteBank("ak_detail_trx_bank",["id_detail_trx_bank" => $idDel]);
+            }
+        }
+
+        $bank = array(
+            'tanggal' => $edit_bukti_bank->tanggal,
+            'kode_perkiraan' => $edit_bukti_bank->kode_perkiraan,
+            'tipe' => $edit_bukti_bank->tipe,
+            'grand_total' => $ttl
+        );
+        $this->M_bank->updateData('ak_trx_bank',$bank, ['kode_trx_bank' => $kode]);
+
+        unset($_SESSION['edit_bukti_bank'][$kode]);
+        unset($_SESSION['detail_edit_bukti_bank'][$kode]);
+
+        $this->session->set_flashdata("update_success","<div class='alert alert-success'>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data berhasil diperbarui.<br></div>");
+        redirect(base_url().'index.php/transaksi/bank/createEditSession/'.$kode);
+        
+        // echo "<pre>";
+        // print_r ($detail_edit_bukti_bank);
+        // echo "</pre>";
+        
     }
 
     // menghapus transaksi bank

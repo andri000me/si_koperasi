@@ -66,5 +66,26 @@ Class M_bank extends CI_Model{
         $this->db->where('tanggal <=', $sampai);
         return $this->db->get()->result();
     }
+
+    public function getBank($kode)
+    {
+        $this->db->select('*');
+        $this->db->from('ak_trx_bank');
+        $this->db->where('kode_trx_bank', $kode);
+        return $this->db->get()->result();
+    }
+    
+    public function getDetailBank($kode)
+    {
+        $this->db->select('*');
+        $this->db->from('ak_detail_trx_bank');
+        $this->db->where('kode_trx_bank', $kode);
+        return $this->db->get()->result();
+    }
+
+    public function updateData($tb,$values,$where)
+    {
+        $this->db->update($tb,$values,$where);
+    }
     
 }

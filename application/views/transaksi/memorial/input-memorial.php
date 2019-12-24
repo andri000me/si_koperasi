@@ -134,7 +134,11 @@
                           <td><?php echo $value['lawan'] ?></td>
                           <td><?php echo $value['keterangan'] ?></td>
                           <td><?php echo number_format($value['nominal'], 2, ',', '.') ?></td>
-                          <td></td>
+                          <td>
+                            <a data-msg="Apakah Anda Yakin?" href="<?php echo base_url()."index.php/transaksi/memorial/hapus_session_detail/$key" ?>" class="open-confirm">
+                              <button class="btn btn-danger btn-sm"><i class="icofont-ui-delete"></i></button>
+                            </a>
+                          </td>
                         </tr>
                     <?php
                       }
@@ -175,7 +179,7 @@
                         <div class="row">
                           <div class="col-6 mb-3">
                             <label for="">Kode Perkiraan</label>
-                            <select name="kode_perkiraan" id="" class="form-control" required>
+                            <select name="kode_perkiraan" id="" class="form-control select2_" style="width: 100%" required>
                               <option value="">--Pilih Kode Perkiraan--</option>
                               <?php
                               foreach ($allRekening as $key) {
@@ -186,7 +190,7 @@
                           </div>
                           <div class="col-6 mb-3">
                             <label for="">Lawan</label>
-                            <select name="lawan" id="" class="form-control" required>
+                            <select name="lawan" id="" class="form-control select2_" style="width: 100%" required>
                               <option value="">--Pilih Lawan--</option>
                               <?php
                               foreach ($allRekening as $key) {
