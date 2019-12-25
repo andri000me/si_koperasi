@@ -42,7 +42,7 @@ Class Sijaka extends CI_Controller{
             // array('field'=>'otomatis_perpanjangan','label'=>'Perpanjangan Otomatis','rules'=>'required'),
             // array('field'=>'debet','label'=>'','rules'=>'required'),
             // array('field'=>'kredit','label'=>'','rules'=>'required'),
-            // array('field'=>'saldo','label'=>'','rules'=>'required')
+            //array('field'=>'saldo','label'=>'','rules'=>'required')
         );
         $this->form_validation->set_rules($config);
         if($this->form_validation->run() == TRUE){
@@ -63,12 +63,16 @@ Class Sijaka extends CI_Controller{
             );
             $this->M_sijaka->simpanSijaka($data_master);
 
-            // $data_detail = array(
-            //     'NRSj' => $this->input->post('NRSj'),
-            //     'kredit' => $this->input->post('saldo_awal'),
-            //     'saldo' => $this->input->post('saldo_awal'),
-            //     'id_user' => '1' //Sementara
-            // );
+            $datetime = date('Y-m-d h:i:s');
+
+            //simpan ke tabel master detail rekening sijaka
+            $data_detail = array(
+                'NRSj' => $this->input->post('NRSj'),
+                'kredit' => $this->input->post('jumlah'),
+                'saldo' => $this->input->post('jumlah'),
+                'id_user' => '1' //Sementara
+            );
+            $this->M_sijaka->simpanDetailSijaka($data_detail);
 
             $this->session->set_flashdata("input_success","<div class='alert alert-success'>
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Berhasil Ditambahkan!!</div>");
@@ -90,12 +94,13 @@ Class Sijaka extends CI_Controller{
 
     function daftarNominatifSijaka(){
         $data['path'] = 'sijaka/daftar_nominatif_sijaka';
-        $data['nominatif'] = $this->M_sijaka->getMasterSijaka();
+        $data['nominatif'] = $this->M_sijaka->getSemuaMasterSijaka();
         $this->load->view('master_template',$data);
     }
 
     function perhitunganAkhirBulanSijaka(){
         $data['path'] = 'sijaka/perhitungan_akhir_bulan_sijaka';
+        $data['nominatif'] = $this->M_sijaka->getMasterSijaka();
         $this->load->view('master_template',$data);
     }
 
@@ -112,5 +117,6 @@ Class Sijaka extends CI_Controller{
         $data['detail_rekening_sijaka'] = $this->M_sijaka->getDetailSijaka($where);
         $this->load->view('master_template',$data);
     }
+
 }
 ?>

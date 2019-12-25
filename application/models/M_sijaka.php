@@ -12,7 +12,7 @@ Class M_sijaka extends CI_Model{
         }
     }
 
-    function getMasterSijaka(){
+    function getSemuaMasterSijaka(){
         $this->db->join('anggota','master_rekening_sijaka.no_anggota = anggota.no_anggota');
         return $this->db->get($this->master_table)->result();
     }
@@ -38,6 +38,29 @@ Class M_sijaka extends CI_Model{
         $this->db->order_by('id_detail_sijaka','DESC');
         $this->db->where($where);
         return $this->db->get($this->detail_table)->result();
+    }
+
+    //perhitungan akhir bulan
+    function getMasterSijaka($bulan_ini, $tahun){
+        $query = $this->db->query("CALL perhitungan_tutup_bulan_sijaka(".$bulan_ini.",".$tahun.")");
+        $res = $query->result();
+
+        $query->next_result();
+        $query->free_result();
+
+        return $res;
+    }
+
+    function getJumlahRecordBulanIni($NRSj,$bulan,$tahun){
+        $where = array(
+            'NRSj' => $NRSj,
+            'month(datetime)' => $bulan,
+            'year(datetime)' => $tahun
+        );
+        $this->db->select('id_detail_sijaka');
+        $this->db->from($this->detail_table);
+        $this->db->where($where);
+        return $this->db->count_all_result();
     }
 
 }

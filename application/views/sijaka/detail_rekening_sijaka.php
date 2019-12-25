@@ -47,9 +47,9 @@
                             ?>
                             <tr>
                                 <td><?php echo $no++."."; ?></td>
-                                <td ><?php echo $p->debet; ?></td>
-                                <td ><?php echo $p->kredit; ?></td>
-                                <td ><?php echo $p->saldo; ?></td>
+                                <td class="text-right"><?php echo $p->debet; ?></td>
+                                <td class="text-right"><?php echo $p->kredit; ?></td>
+                                <td class="text-right"><?php echo $p->saldo; ?></td>
                                 <td style="text-align:center;"><button type="button" class="btn btn-sm btn-success">Edit</button></td>
                             </tr>
                         <?php } ?>
