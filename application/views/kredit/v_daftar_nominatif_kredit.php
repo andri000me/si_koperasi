@@ -40,10 +40,10 @@
                         foreach($kredit as $i){ 
                         ?>
                         <tr>
-                            <td><?php echo $no++."."; ?></td>
+                            <td class="text-center"><?php echo $no++."."; ?></td>
                             <td><?php echo $i->no_rekening_pembiayaan; ?></td>
                             <td><?php echo $i->nama; ?></td>
-                            <td class="text-right"><?php echo "Rp.".number_format($i->jumlah_pembiayaan,0,',','.'); ?></td>
+                            <td class="text-right"><?php echo number_format($i->jumlah_pembiayaan,0,',','.'); ?></td>
                             <td class="text-center"><?php echo $i->cicilan_terbayar."/".$i->jangka_waktu_bulan; ?></td>
                             <td style="text-align:center;">
                                 <a href="<?php echo base_url().'index.php/kredit/detail/'.$i->no_rekening_pembiayaan; ?>" class="btn btn-primary btn-sm">Detail</a>

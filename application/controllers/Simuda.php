@@ -84,7 +84,7 @@ Class Simuda extends CI_Controller{
     //Form Kelola Rekening
     function kelolaRekening(){
         $data['path'] = 'simuda/kelola_rekening';
-        $data['master_simuda'] = $this->M_simuda->getMasterSimuda(date('m',strtotime("last month")),date('m'),date('y'));
+        $data['master_simuda'] = $this->M_simuda->getMasterSimuda();
         
         foreach($this->M_simuda->getLimitNominalSimuda() as $i){
             $data['limit_debet_simuda'] = $i->nominal;
@@ -205,6 +205,7 @@ Class Simuda extends CI_Controller{
             $this->session->set_flashdata("update_success","<div class='alert alert-success'>
                 <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Berhasil Diubah</div>");
         }else{
+            $gagal = validation_errors();
             $this->session->set_flashdata("update_failed","<div class='alert alert-danger'>
                 <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Gagal Diubah!!<br>".$gagal."</div>");
         }
@@ -213,7 +214,7 @@ Class Simuda extends CI_Controller{
     //Daftar Nominatif
     function daftarNominatif(){ 
         $data['path'] = 'simuda/daftar_nominatif';
-        $data['nominatif'] = $this->M_simuda->getMasterSimuda(date('m',strtotime("last month")),date('m'),date('y'));
+        $data['nominatif'] = $this->M_simuda->getMasterSimuda();
         $this->load->view('master_template',$data);
     }
     //Detail Transaksi Per Rekening
@@ -221,18 +222,18 @@ Class Simuda extends CI_Controller{
         $data['path'] = 'simuda/detail_rekening';
         $data['id'] = $id;
         $where = array('no_rekening_simuda' => $id);
-        $data['master_rekening_simuda'] = $this->M_simuda->get1MasterSimuda($where);
+        $data['master_rekening_simuda'] = $this->M_simuda->getDetailMasterSimuda($where);
         $data['detail_rekening_simuda'] = $this->M_simuda->get1DetailSimuda($where);
         $this->load->view('master_template',$data);
     }
     function perhitunganAkhirBulan(){
         $data['path'] = 'simuda/perhitungan_akhir_bulan';
-        $data['nominatif'] = $this->M_simuda->getMasterSimuda(date('m',strtotime("last month")),date('m'),date('y'));
+        $data['nominatif'] = $this->M_simuda->getMasterSimuda();
         $this->load->view('master_template',$data);
     }
     function previewPerhitunganAkhirBulan(){
         $nominal = $this->input->post('nominal');
-        $nominatif = $this->M_simuda->getMasterSimuda(date('m',strtotime("last month")),date('m'),date('y'));
+        $nominatif = $this->M_simuda->getMasterSimuda();
         
         //Mendapatkan Total Saldo Terendah
         $total_saldo_terendah_akhir_bulan = 0;
@@ -269,7 +270,7 @@ Class Simuda extends CI_Controller{
 
     function simpanPerhitunganAkhirBulan(){
         $nominal = $this->input->post('nominal');
-        $nominatif = $this->M_simuda->getMasterSimuda(date('m',strtotime("last month")),date('m'),date('y'));
+        $nominatif = $this->M_simuda->getMasterSimuda();
         //Mendapatkan Total Saldo Terendah
         $total_saldo_terendah_akhir_bulan = 0;
         foreach($nominatif as $i){

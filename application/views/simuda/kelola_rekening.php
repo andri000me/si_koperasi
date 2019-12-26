@@ -1,7 +1,9 @@
 <script>
     $(document).ready(function(){
         $("#simpan_pengajuan").attr('disabled',true);
+        
     });
+    
     function getNominalSaldo() {
         var no_rekening_simuda = $("#no_rekening_simuda").val()
         $.ajax({
@@ -83,7 +85,7 @@
                     </div>
                     <div class="data-ajax col-md-4">
                         <label for="">Saldo Awal</label>
-                        <input type="number" class="form-control" name="saldo_awal" id="saldo_awal" value="0" readonly required>
+                        <input type="number" class="form-control rupiah" name="saldo_awal" id="saldo_awal" value="0" readonly required>
                     </div>
                 </div>
                 <div class="row">
@@ -102,11 +104,11 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label for="">Jumlah</label>
-                        <input type="number" class="form-control" name="jumlah" id="jumlah" onkeyup="hitungSaldoAkhir();controlButtonPengajuan()"  required>
+                        <input type="number" class="form-control rupiah" name="jumlah" id="jumlah" onkeyup="hitungSaldoAkhir();controlButtonPengajuan()"  required>
                     </div>
                     <div class="col-md-4">
                         <label for="">Saldo Akhir</label>
-                        <input type="number" class="form-control" name="saldo_akhir" id="saldo_akhir" readonly required>
+                        <input type="number" class="form-control rupiah" name="saldo_akhir" id="saldo_akhir" readonly required>
                     </div>
                 </div>
 

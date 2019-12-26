@@ -1,22 +1,3 @@
-<!-- <script>
-    function edit(id) {
-        $.ajax({
-            url: "<?php echo base_url() . 'index.php/simpanan_wajib/edit'; ?> ",
-            type: "POST",
-            data: {
-                id: id
-            },
-            success: function(ajaxData) {
-                $("#modaledit").html(ajaxData);
-                $("#modaledit").modal('show', {
-                    backdrop: 'true'
-                });
-            }
-        });
-    }
-</script> -->
-<!-- BreadCumb -->
-
 <!-- Content -->
 <div class="container-fluid">
     <nav aria-label="breadcrumb">
@@ -36,12 +17,12 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>No.</th>
-                            <th>Tanggal</th>
-                            <th>Debet</th>
-                            <th>Kredit</th>
-                            <th>Saldo</th>
-                            <th>Teller</th>
+                            <th class="text-center">No.</th>
+                            <th class="text-center">Tanggal</th>
+                            <th class="text-center">Debet</th>
+                            <th class="text-center">Kredit</th>
+                            <th class="text-center">Saldo</th>
+                            <th class="text-center">Teller</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,8 +31,8 @@
                         foreach ($simpanan_per_anggota as $i) {
                             ?>
                             <tr>
-                                <td><?php echo $no++; ?></td>
-                                <td><?php echo $i->tgl_pembayaran; ?></td>
+                                <td class="text-center"><?php echo $no++."."; ?></td>
+                                <td ><?php echo $i->tgl_pembayaran; ?></td>
                                 <td class="text-right"><?php echo number_format($i->debet,0,',','.'); ?></td>
                                 <td class="text-right"><?php echo number_format($i->kredit,0,',','.'); ?></td>
                                 <td class="text-right"><?php echo number_format($i->saldo,0,',','.'); ?></td>

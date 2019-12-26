@@ -45,12 +45,12 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>No.</th>
-                            <th>No. Anggota</th>
-                            <th>Nama Terang</th>
-                            <th>Alamat</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
+                            <th class="text-center">No.</th>
+                            <th class="text-center">No. Anggota</th>
+                            <th class="text-center">Nama Terang</th>
+                            <th class="text-center">Alamat</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,17 +59,18 @@
                         foreach ($anggota as $p) {
                             ?>
                             <tr>
-                                <td><?php echo $no++; ?></td>
+                                <td class="text-center"><?php echo $no++."."; ?></td>
                                 <td><?php echo $p->no_anggota; ?></td>
                                 <td><?php echo $p->nama; ?></td>
                                 <td><?php echo $p->alamat; ?></td>
                                 <td><?php if($p->status=="0"){echo "Non Aktif";}else if($p->status=="1"){echo "Aktif";} ?></td>
                                 <td style="text-align:center;">
+                                    <a href="<?php echo base_url().'index.php/anggota/rekeningAnggota/'.$p->no_anggota; ?>" class="btn btn-sm btn-warning"><i class="icofont-eye"></i></a>
                                     <button type="button" class="btn btn-sm btn-success" onclick="edit(<?php echo $p->no_anggota; ?>)"><i class="icofont-ui-edit"></i></button>
                                     <?php if($p->status==1){ ?>
-                                    <a onclick="return confirm('Anda Yakin Ingin Menonaktifkan Anggota?')" href="<?php echo base_url() . 'index.php/user/disableAccount/' . $p->no_anggota; ?>" class="btn btn-sm btn-danger" ><i class="icofont-ui-power"></i></a>
+                                    <a onclick="return confirm('Anda Yakin Ingin Menonaktifkan Anggota?')" href="<?php echo base_url() . 'index.php/anggota/disableAccount/' . $p->no_anggota; ?>" class="btn btn-sm btn-danger" ><i class="icofont-ui-power"></i></a>
                                     <?php }else if($p->status==0){ ?>
-                                    <a onclick="return confirm('Anda Yakin Ingin Mengaktifkan Anggota?')" href="<?php echo base_url() . 'index.php/user/enableAccount/' . $p->no_anggota; ?>" class="btn btn-sm btn-primary" ><i class="icofont-ui-power"></i></a>
+                                    <a onclick="return confirm('Anda Yakin Ingin Mengaktifkan Anggota?')" href="<?php echo base_url() . 'index.php/anggota/enableAccount/' . $p->no_anggota; ?>" class="btn btn-sm btn-primary" ><i class="icofont-ui-power"></i></a>
                                     <?php } ?>
                                 </td>
                             </tr>

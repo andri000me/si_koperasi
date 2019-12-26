@@ -44,12 +44,12 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>No.</th>
-                            <th>Tipe</th>
-                            <th>No. Rekening</th>
-                            <th>Debet</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
+                            <th class="text-center">No.</th>
+                            <th class="text-center">Tipe</th>
+                            <th class="text-center">No. Rekening</th>
+                            <th class="text-center">Debet</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,7 +58,7 @@
                         foreach ($otorisasi as $i) {
                             ?>
                             <tr>
-                                <td><?php echo $no++; ?></td>
+                                <td class="text-center"><?php echo $no++."."; ?></td>
                                 <td><?php echo $i->tipe; ?></td>
                                 <td><?php echo $i->no_rek; ?></td>
                                 <td class="text-right"><?php echo number_format($i->nominal_debet,0,',','.'); ?></td>

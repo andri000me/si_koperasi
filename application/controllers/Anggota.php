@@ -3,7 +3,13 @@ defined("BASEPATH") or die("No Direct Access Allowed");
 Class Anggota extends CI_Controller{
     function __construct(){
         parent::__construct();
-        $this->load->model('M_anggota');    
+        $this->load->model('M_anggota');
+        //Untuk Ke Detail Rekening
+        $this->load->model('M_simpanan_pokok');
+        $this->load->model('M_simpanan_wajib');
+        $this->load->model('M_simuda');
+        $this->load->model('M_sijaka');
+        $this->load->model('M_kredit');    
     }
     function index(){
         $data['title'] = 'Data Anggota';
@@ -46,7 +52,8 @@ Class Anggota extends CI_Controller{
                 'status' => $this->input->post('status')
             );
             $this->M_anggota->addAnggota($data);
-            //Input Ke Tabel Simpanan Pokok
+            $this->session->set_flashdata("input_success", "<div class='alert alert-success'>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data berhasil ditambahkan.<br></div>");
 
         }else{ //Jika validasi Form Gagal
             $gagal = validation_errors();
@@ -94,14 +101,30 @@ Class Anggota extends CI_Controller{
                 'alamat' => $this->input->post('alamat')
             );
             $this->M_anggota->updateAnggota($where,$data);
-            //Input Ke Tabel Simpanan Pokok
-
+            $this->session->set_flashdata("update_success","<div class='alert alert-success'>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Berhasil Diubah!!</div>");
+            
         }else{ //Jika validasi Form Gagal
             $gagal = validation_errors();
             $this->session->set_flashdata("update_failed","<div class='alert alert-danger'>
                 <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Gagal Diubah!!<br>".$gagal."</div>");
         }
         redirect('anggota');
+    }
+
+    function rekeningAnggota($id){
+        $data['title'] = 'Rekening Anggota';
+        $data['path'] = "anggota/v_rekening_anggota";
+        $data['id'] = $id;
+        //Nama Anggota
+        $data['anggota'] = $this->M_anggota->get1Anggota(array('no_anggota'=>$id));
+        //Simpanan Pokok Anggota
+        $data['simpanan_pokok']= $this->M_simpanan_pokok->get1SimpananPokok($id)->result();
+        $data['simpanan_wajib']= $this->M_simpanan_wajib->get1Nominatif($id);
+        $data['simuda'] = $this->M_simuda->get1MasterSimuda($id);
+        $data['sijaka'] = "";
+        $data['kredit']= $this->M_kredit->get1NominatifKredit(array('master_rekening_pembiayaan.no_anggota' => $id))->result();
+        $this->load->view('master_template',$data);
     }
     function disableAccount($id){
         $where = array(
