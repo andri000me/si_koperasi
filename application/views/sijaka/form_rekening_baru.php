@@ -32,6 +32,14 @@
     });
   }
 
+    function manageHitungBahas(){
+      var jumlah = parseInt($("#inputJumlah").val())
+      var bahas = 0.7/100
+
+      var inputJmlBahas = jumlah * bahas;
+      $("#inputJmlBahas").val(inputJmlBahas)
+    }
+
     function manageSimuda(){
       var no_rekening_simuda_field = $("#no_rekening_simuda").val()
       $.ajax({
@@ -45,8 +53,7 @@
         }
       });
     }
-</script>
-<script>
+
     function managePembayaran() {
         var pembayaran_bahas_field = $("#inputPembayaranBahas").val()
         if(pembayaran_bahas_field == "Tunai"){
@@ -54,6 +61,15 @@
         }else if(pembayaran_bahas_field == "Kredit Rekening"){
           $("#no_rekening_simuda").removeAttr("disabled") 
         }      
+    }
+
+    function manageCustom() {
+      var nilai_bahas_field = $("#inputBahas").val()
+      if(nilai_bahas_field == "0.7%"){
+        $("#nilai_custom").attr("disabled","disabled")
+      }else if(nilai_bahas_field == "Custom"){
+        $("#nilai_custom").removeAttr("disabled")
+      }
     }
 </script>
 <!-- BreadCumb -->
@@ -94,7 +110,7 @@
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="inputJumlah">Jumlah</label>
-          <input name="jumlah" type="number" class="form-control" id="inputJumlah" placeholder="85000xxx" required>
+          <input name="jumlah" type="number" class="form-control" id="inputJumlah" placeholder="85000xxx" onkeyup="manageHitungBahas()" required>
         </div>
         <div class="form-group col-md-4">
             <label for="inputTanggalAwal">Tanggal Awal</label>
@@ -137,14 +153,19 @@
       <div class="form-row">
         <div class="form-group col-md-1">
           <label for="inputNilaiBahas">Nilai Bahas</label>
-          <select name="nilai_bahas" id="inputBahas" class="form-control" required>
-            <option selected>0.7%</option>
-            <option>Custom</option>
+          <select name="nilai_bahas" id="inputBahas" class="form-control" onchange="manageCustom()" required>
+            <option value="">--Pilih--</option>
+            <option value="0.7%">0.7%</option>
+            <option value="Custom">Custom</option>
           </select>
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-1">
+          <label for=" ">Custom</label>
+          <input name="nilai_custom" type="text" class="form-control" value="0.7%" id="nilai_custom"  required>
+        </div>
+        <div class="form-group col-md-2">
           <label for="inputJmlNilaiBahas">Jumlah Bayar Bahas</label>
-          <input name="presentase_bagi_hasil_bulanan" type="text" class="form-control" id="inputJmlBahas">
+          <input name="presentase_bagi_hasil_bulanan" type="text" class="form-control" value="" id="inputJmlBahas">
         </div>
         <div class="form-group col-md-1">
           <label for="inputPembayaranBahas">Pembayaran</label>
