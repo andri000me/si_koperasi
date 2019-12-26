@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 26, 2019 at 05:02 PM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.3.9
+-- Waktu pembuatan: 26 Des 2019 pada 17.48
+-- Versi server: 10.1.37-MariaDB
+-- Versi PHP: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 
 DELIMITER $$
 --
--- Procedures
+-- Prosedur
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getMasterSimudaByNoAnggota` (IN `bulan_lalu` INT(2), IN `bulan_ini` INT(2), IN `tahun` YEAR, IN `noAnggota` INT)  NO SQL
 SELECT 
@@ -71,7 +71,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ak_detail_trx_bank`
+-- Struktur dari tabel `ak_detail_trx_bank`
 --
 
 CREATE TABLE `ak_detail_trx_bank` (
@@ -83,7 +83,7 @@ CREATE TABLE `ak_detail_trx_bank` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `ak_detail_trx_bank`
+-- Dumping data untuk tabel `ak_detail_trx_bank`
 --
 
 INSERT INTO `ak_detail_trx_bank` (`id_detail_trx_bank`, `kode_trx_bank`, `keterangan`, `lawan`, `nominal`) VALUES
@@ -93,7 +93,7 @@ INSERT INTO `ak_detail_trx_bank` (`id_detail_trx_bank`, `kode_trx_bank`, `ketera
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ak_detail_trx_kas`
+-- Struktur dari tabel `ak_detail_trx_kas`
 --
 
 CREATE TABLE `ak_detail_trx_kas` (
@@ -105,7 +105,7 @@ CREATE TABLE `ak_detail_trx_kas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `ak_detail_trx_kas`
+-- Dumping data untuk tabel `ak_detail_trx_kas`
 --
 
 INSERT INTO `ak_detail_trx_kas` (`id_detail_trx_kas`, `kode_trx_kas`, `keterangan`, `lawan`, `nominal`) VALUES
@@ -122,7 +122,7 @@ INSERT INTO `ak_detail_trx_kas` (`id_detail_trx_kas`, `kode_trx_kas`, `keteranga
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ak_detail_trx_memorial`
+-- Struktur dari tabel `ak_detail_trx_memorial`
 --
 
 CREATE TABLE `ak_detail_trx_memorial` (
@@ -135,7 +135,7 @@ CREATE TABLE `ak_detail_trx_memorial` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `ak_detail_trx_memorial`
+-- Dumping data untuk tabel `ak_detail_trx_memorial`
 --
 
 INSERT INTO `ak_detail_trx_memorial` (`id_detail_trx_memorial`, `kode_trx_memorial`, `keterangan`, `kode_perkiraan`, `lawan`, `nominal`) VALUES
@@ -144,7 +144,7 @@ INSERT INTO `ak_detail_trx_memorial` (`id_detail_trx_memorial`, `kode_trx_memori
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ak_jurnal`
+-- Struktur dari tabel `ak_jurnal`
 --
 
 CREATE TABLE `ak_jurnal` (
@@ -161,7 +161,7 @@ CREATE TABLE `ak_jurnal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `ak_jurnal`
+-- Dumping data untuk tabel `ak_jurnal`
 --
 
 INSERT INTO `ak_jurnal` (`id_jurnal`, `tanggal`, `kode_transaksi`, `keterangan`, `kode`, `lawan`, `tipe`, `nominal`, `tipe_trx_koperasi`, `id_detail`) VALUES
@@ -177,7 +177,7 @@ INSERT INTO `ak_jurnal` (`id_jurnal`, `tanggal`, `kode_transaksi`, `keterangan`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ak_kode_induk`
+-- Struktur dari tabel `ak_kode_induk`
 --
 
 CREATE TABLE `ak_kode_induk` (
@@ -189,7 +189,7 @@ CREATE TABLE `ak_kode_induk` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ak_rekening`
+-- Struktur dari tabel `ak_rekening`
 --
 
 CREATE TABLE `ak_rekening` (
@@ -201,7 +201,7 @@ CREATE TABLE `ak_rekening` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `ak_rekening`
+-- Dumping data untuk tabel `ak_rekening`
 --
 
 INSERT INTO `ak_rekening` (`kode_rekening`, `nama`, `inisial`, `saldo_awal`, `kode_induk`) VALUES
@@ -211,7 +211,7 @@ INSERT INTO `ak_rekening` (`kode_rekening`, `nama`, `inisial`, `saldo_awal`, `ko
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ak_set_rekening`
+-- Struktur dari tabel `ak_set_rekening`
 --
 
 CREATE TABLE `ak_set_rekening` (
@@ -224,7 +224,7 @@ CREATE TABLE `ak_set_rekening` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ak_trx_bank`
+-- Struktur dari tabel `ak_trx_bank`
 --
 
 CREATE TABLE `ak_trx_bank` (
@@ -237,7 +237,7 @@ CREATE TABLE `ak_trx_bank` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `ak_trx_bank`
+-- Dumping data untuk tabel `ak_trx_bank`
 --
 
 INSERT INTO `ak_trx_bank` (`kode_trx_bank`, `tanggal`, `kode_perkiraan`, `tipe`, `nomor`, `grand_total`) VALUES
@@ -247,7 +247,7 @@ INSERT INTO `ak_trx_bank` (`kode_trx_bank`, `tanggal`, `kode_perkiraan`, `tipe`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ak_trx_kas`
+-- Struktur dari tabel `ak_trx_kas`
 --
 
 CREATE TABLE `ak_trx_kas` (
@@ -260,7 +260,7 @@ CREATE TABLE `ak_trx_kas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `ak_trx_kas`
+-- Dumping data untuk tabel `ak_trx_kas`
 --
 
 INSERT INTO `ak_trx_kas` (`kode_trx_kas`, `tanggal`, `kode_perkiraan`, `tipe`, `nomor`, `grand_total`) VALUES
@@ -277,7 +277,7 @@ INSERT INTO `ak_trx_kas` (`kode_trx_kas`, `tanggal`, `kode_perkiraan`, `tipe`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ak_trx_memorial`
+-- Struktur dari tabel `ak_trx_memorial`
 --
 
 CREATE TABLE `ak_trx_memorial` (
@@ -289,7 +289,7 @@ CREATE TABLE `ak_trx_memorial` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `ak_trx_memorial`
+-- Dumping data untuk tabel `ak_trx_memorial`
 --
 
 INSERT INTO `ak_trx_memorial` (`kode_trx_memorial`, `tanggal`, `tipe`, `nomor`, `grand_total`) VALUES
@@ -298,7 +298,7 @@ INSERT INTO `ak_trx_memorial` (`kode_trx_memorial`, `tanggal`, `tipe`, `nomor`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `anggota`
+-- Struktur dari tabel `anggota`
 --
 
 CREATE TABLE `anggota` (
@@ -310,7 +310,7 @@ CREATE TABLE `anggota` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `anggota`
+-- Dumping data untuk tabel `anggota`
 --
 
 INSERT INTO `anggota` (`no_anggota`, `nama`, `alamat`, `tgl_daftar`, `status`) VALUES
@@ -320,7 +320,7 @@ INSERT INTO `anggota` (`no_anggota`, `nama`, `alamat`, `tgl_daftar`, `status`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `log_activity`
+-- Struktur dari tabel `log_activity`
 --
 
 CREATE TABLE `log_activity` (
@@ -333,7 +333,7 @@ CREATE TABLE `log_activity` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `master_detail_rekening_pembiayaan`
+-- Struktur dari tabel `master_detail_rekening_pembiayaan`
 --
 
 CREATE TABLE `master_detail_rekening_pembiayaan` (
@@ -349,16 +349,24 @@ CREATE TABLE `master_detail_rekening_pembiayaan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `master_detail_rekening_pembiayaan`
+-- Dumping data untuk tabel `master_detail_rekening_pembiayaan`
 --
 
 INSERT INTO `master_detail_rekening_pembiayaan` (`id_detail_rekening_pembiayaan`, `no_rekening_pembiayaan`, `tanggal_pembayaran`, `periode_tagihan`, `jml_pokok`, `jml_bahas`, `denda`, `total`, `id_user`) VALUES
 (5, 20001, '2019-12-03', '12-19', 500000, 5000, 0, 505000, 1);
 
+--
+-- Trigger `master_detail_rekening_pembiayaan`
+--
+DELIMITER $$
+CREATE TRIGGER `after_insert_detail_pembiayaan_trigger` AFTER INSERT ON `master_detail_rekening_pembiayaan` FOR EACH ROW INSERT INTO log_activity(id_user, datetime, keterangan) VALUES (NEW.id_user, now(), CONCAT('Menginput transaksi pembiayaan dari no rekening pembiayaan ', NEW.no_rekening_pembiayaan))
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `master_detail_rekening_sijaka`
+-- Struktur dari tabel `master_detail_rekening_sijaka`
 --
 
 CREATE TABLE `master_detail_rekening_sijaka` (
@@ -370,10 +378,18 @@ CREATE TABLE `master_detail_rekening_sijaka` (
   `id_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Trigger `master_detail_rekening_sijaka`
+--
+DELIMITER $$
+CREATE TRIGGER `after_insert_detail_sijaka_trigger` AFTER INSERT ON `master_detail_rekening_sijaka` FOR EACH ROW INSERT INTO log_activity(id_user, datetime, keterangan) VALUES (NEW.id_user, now(), CONCAT('Menginput transaksi sijaka dari no rekening sijaka ', NEW.NRSj))
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `master_detail_rekening_simuda`
+-- Struktur dari tabel `master_detail_rekening_simuda`
 --
 
 CREATE TABLE `master_detail_rekening_simuda` (
@@ -387,7 +403,7 @@ CREATE TABLE `master_detail_rekening_simuda` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `master_detail_rekening_simuda`
+-- Dumping data untuk tabel `master_detail_rekening_simuda`
 --
 
 INSERT INTO `master_detail_rekening_simuda` (`id_detail_rekening_simuda`, `no_rekening_simuda`, `datetime`, `debet`, `kredit`, `saldo`, `id_user`) VALUES
@@ -400,10 +416,18 @@ INSERT INTO `master_detail_rekening_simuda` (`id_detail_rekening_simuda`, `no_re
 (11, 1002, '2019-11-10 10:29:24', 0, 1666.67, 63333.4, 1),
 (13, 1001, '2019-12-26 11:12:00', 0, 50000, 376666, 1);
 
+--
+-- Trigger `master_detail_rekening_simuda`
+--
+DELIMITER $$
+CREATE TRIGGER `after_insert_detail_simuda_trigger` AFTER INSERT ON `master_detail_rekening_simuda` FOR EACH ROW INSERT INTO log_activity(id_user, datetime, keterangan) VALUES (NEW.id_user, now(), CONCAT('Menginput transaksi simuda dari no rekening', NEW.no_rekening_simuda))
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `master_rekening_pembiayaan`
+-- Struktur dari tabel `master_rekening_pembiayaan`
 --
 
 CREATE TABLE `master_rekening_pembiayaan` (
@@ -420,7 +444,7 @@ CREATE TABLE `master_rekening_pembiayaan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `master_rekening_pembiayaan`
+-- Dumping data untuk tabel `master_rekening_pembiayaan`
 --
 
 INSERT INTO `master_rekening_pembiayaan` (`no_rekening_pembiayaan`, `no_anggota`, `tgl_pembayaran`, `jumlah_pembiayaan`, `jangka_waktu_bulan`, `jml_pokok_bulanan`, `jml_bahas_bulanan`, `tgl_lunas`, `tgl_temp`, `cicilan_terbayar`) VALUES
@@ -429,7 +453,7 @@ INSERT INTO `master_rekening_pembiayaan` (`no_rekening_pembiayaan`, `no_anggota`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `master_rekening_sijaka`
+-- Struktur dari tabel `master_rekening_sijaka`
 --
 
 CREATE TABLE `master_rekening_sijaka` (
@@ -449,7 +473,7 @@ CREATE TABLE `master_rekening_sijaka` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `master_rekening_simuda`
+-- Struktur dari tabel `master_rekening_simuda`
 --
 
 CREATE TABLE `master_rekening_simuda` (
@@ -458,7 +482,7 @@ CREATE TABLE `master_rekening_simuda` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `master_rekening_simuda`
+-- Dumping data untuk tabel `master_rekening_simuda`
 --
 
 INSERT INTO `master_rekening_simuda` (`no_rekening_simuda`, `no_anggota`) VALUES
@@ -468,7 +492,7 @@ INSERT INTO `master_rekening_simuda` (`no_rekening_simuda`, `no_anggota`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `master_simpanan_pokok`
+-- Struktur dari tabel `master_simpanan_pokok`
 --
 
 CREATE TABLE `master_simpanan_pokok` (
@@ -480,16 +504,24 @@ CREATE TABLE `master_simpanan_pokok` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `master_simpanan_pokok`
+-- Dumping data untuk tabel `master_simpanan_pokok`
 --
 
 INSERT INTO `master_simpanan_pokok` (`id_simpanan_pokok`, `no_anggota`, `tanggal_pembayaran`, `jumlah`, `id_user`) VALUES
 (3, 1212, '2019-11-06', 5000000, 1);
 
+--
+-- Trigger `master_simpanan_pokok`
+--
+DELIMITER $$
+CREATE TRIGGER `after_insert_simp_pokok_trigger` AFTER INSERT ON `master_simpanan_pokok` FOR EACH ROW INSERT INTO log_activity(id_user, datetime, keterangan) VALUES (NEW.id_user, now(), CONCAT('Menginput simpanan pokok dari no anggota ', NEW.no_anggota, ' dengan nominal ', NEW.jumlah))
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `master_simpanan_wajib`
+-- Struktur dari tabel `master_simpanan_wajib`
 --
 
 CREATE TABLE `master_simpanan_wajib` (
@@ -504,16 +536,24 @@ CREATE TABLE `master_simpanan_wajib` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `master_simpanan_wajib`
+-- Dumping data untuk tabel `master_simpanan_wajib`
 --
 
 INSERT INTO `master_simpanan_wajib` (`id_simpanan_wajib`, `no_anggota`, `tgl_temp`, `tgl_pembayaran`, `debet`, `kredit`, `saldo`, `id_user`) VALUES
 (127, 1212, '2019-11-01', '2019-11-10 10:22:00', 0, 25000, 25000, 1);
 
+--
+-- Trigger `master_simpanan_wajib`
+--
+DELIMITER $$
+CREATE TRIGGER `after_insert_simp_wajib_trigger` AFTER INSERT ON `master_simpanan_wajib` FOR EACH ROW INSERT INTO log_activity(id_user, datetime, keterangan) VALUES (NEW.id_user, now(), CONCAT('Menginput simpanan wajib dari no anggota ', NEW.no_anggota))
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `otorisasi`
+-- Struktur dari tabel `otorisasi`
 --
 
 CREATE TABLE `otorisasi` (
@@ -525,7 +565,7 @@ CREATE TABLE `otorisasi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `otorisasi`
+-- Dumping data untuk tabel `otorisasi`
 --
 
 INSERT INTO `otorisasi` (`id_otorisasi`, `tipe`, `no_rek`, `nominal_debet`, `status`) VALUES
@@ -534,7 +574,7 @@ INSERT INTO `otorisasi` (`id_otorisasi`, `tipe`, `no_rek`, `nominal_debet`, `sta
 -- --------------------------------------------------------
 
 --
--- Table structure for table `support_limit_simuda`
+-- Struktur dari tabel `support_limit_simuda`
 --
 
 CREATE TABLE `support_limit_simuda` (
@@ -543,7 +583,7 @@ CREATE TABLE `support_limit_simuda` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `support_limit_simuda`
+-- Dumping data untuk tabel `support_limit_simuda`
 --
 
 INSERT INTO `support_limit_simuda` (`id_limit_simuda`, `nominal`) VALUES
@@ -552,7 +592,7 @@ INSERT INTO `support_limit_simuda` (`id_limit_simuda`, `nominal`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `support_simuda_tutup_bulan`
+-- Struktur dari tabel `support_simuda_tutup_bulan`
 --
 
 CREATE TABLE `support_simuda_tutup_bulan` (
@@ -563,7 +603,7 @@ CREATE TABLE `support_simuda_tutup_bulan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `support_simuda_tutup_bulan`
+-- Dumping data untuk tabel `support_simuda_tutup_bulan`
 --
 
 INSERT INTO `support_simuda_tutup_bulan` (`id_support_simuda_tutup_bulan`, `no_rekening_simuda`, `tgl_tutup_bulan`, `saldo`) VALUES
@@ -573,7 +613,7 @@ INSERT INTO `support_simuda_tutup_bulan` (`id_support_simuda_tutup_bulan`, `no_r
 -- --------------------------------------------------------
 
 --
--- Table structure for table `support_temp_tgl_simpanan_wajib`
+-- Struktur dari tabel `support_temp_tgl_simpanan_wajib`
 --
 
 CREATE TABLE `support_temp_tgl_simpanan_wajib` (
@@ -585,7 +625,7 @@ CREATE TABLE `support_temp_tgl_simpanan_wajib` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
 CREATE TABLE `user` (
@@ -598,7 +638,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`id_user`, `nama_terang`, `username`, `password`, `level`, `status`) VALUES
@@ -607,44 +647,44 @@ INSERT INTO `user` (`id_user`, `nama_terang`, `username`, `password`, `level`, `
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_simpanan_wajib`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `v_simpanan_wajib`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_simpanan_wajib` (
 `no_anggota` int(11)
 ,`nama` varchar(30)
-,`saldo` float
+,`saldo` double
 );
 
 -- --------------------------------------------------------
 
 --
--- Structure for view `v_simpanan_wajib`
+-- Struktur untuk view `v_simpanan_wajib`
 --
 DROP TABLE IF EXISTS `v_simpanan_wajib`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_simpanan_wajib`  AS  select distinct `a`.`no_anggota` AS `no_anggota`,`a`.`nama` AS `nama`,(select `w`.`saldo` from `master_simpanan_wajib` `w` where `w`.`no_anggota` = `m`.`no_anggota` order by `w`.`id_simpanan_wajib` desc limit 1) AS `saldo` from (`anggota` `a` left join `master_simpanan_wajib` `m` on(`m`.`no_anggota` = `a`.`no_anggota`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_simpanan_wajib`  AS  select distinct `a`.`no_anggota` AS `no_anggota`,`a`.`nama` AS `nama`,(select `w`.`saldo` from `master_simpanan_wajib` `w` where (`w`.`no_anggota` = `m`.`no_anggota`) order by `w`.`id_simpanan_wajib` desc limit 1) AS `saldo` from (`anggota` `a` left join `master_simpanan_wajib` `m` on((`m`.`no_anggota` = `a`.`no_anggota`))) ;
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `ak_detail_trx_bank`
+-- Indeks untuk tabel `ak_detail_trx_bank`
 --
 ALTER TABLE `ak_detail_trx_bank`
   ADD PRIMARY KEY (`id_detail_trx_bank`),
   ADD KEY `lawan` (`lawan`);
 
 --
--- Indexes for table `ak_detail_trx_kas`
+-- Indeks untuk tabel `ak_detail_trx_kas`
 --
 ALTER TABLE `ak_detail_trx_kas`
   ADD PRIMARY KEY (`id_detail_trx_kas`),
   ADD KEY `lawan` (`lawan`);
 
 --
--- Indexes for table `ak_detail_trx_memorial`
+-- Indeks untuk tabel `ak_detail_trx_memorial`
 --
 ALTER TABLE `ak_detail_trx_memorial`
   ADD PRIMARY KEY (`id_detail_trx_memorial`),
@@ -652,7 +692,7 @@ ALTER TABLE `ak_detail_trx_memorial`
   ADD KEY `kode_perkiraan` (`kode_perkiraan`);
 
 --
--- Indexes for table `ak_jurnal`
+-- Indeks untuk tabel `ak_jurnal`
 --
 ALTER TABLE `ak_jurnal`
   ADD PRIMARY KEY (`id_jurnal`),
@@ -661,52 +701,52 @@ ALTER TABLE `ak_jurnal`
   ADD KEY `kode_transaksi` (`kode_transaksi`);
 
 --
--- Indexes for table `ak_rekening`
+-- Indeks untuk tabel `ak_rekening`
 --
 ALTER TABLE `ak_rekening`
   ADD PRIMARY KEY (`kode_rekening`),
   ADD KEY `kode_induk` (`kode_induk`);
 
 --
--- Indexes for table `ak_set_rekening`
+-- Indeks untuk tabel `ak_set_rekening`
 --
 ALTER TABLE `ak_set_rekening`
   ADD PRIMARY KEY (`id_ak_set_rekening`);
 
 --
--- Indexes for table `ak_trx_bank`
+-- Indeks untuk tabel `ak_trx_bank`
 --
 ALTER TABLE `ak_trx_bank`
   ADD PRIMARY KEY (`kode_trx_bank`),
   ADD KEY `kode_perkiraan` (`kode_perkiraan`);
 
 --
--- Indexes for table `ak_trx_kas`
+-- Indeks untuk tabel `ak_trx_kas`
 --
 ALTER TABLE `ak_trx_kas`
   ADD PRIMARY KEY (`kode_trx_kas`),
   ADD KEY `kode_perkiraan` (`kode_perkiraan`);
 
 --
--- Indexes for table `ak_trx_memorial`
+-- Indeks untuk tabel `ak_trx_memorial`
 --
 ALTER TABLE `ak_trx_memorial`
   ADD PRIMARY KEY (`kode_trx_memorial`);
 
 --
--- Indexes for table `anggota`
+-- Indeks untuk tabel `anggota`
 --
 ALTER TABLE `anggota`
   ADD PRIMARY KEY (`no_anggota`);
 
 --
--- Indexes for table `log_activity`
+-- Indeks untuk tabel `log_activity`
 --
 ALTER TABLE `log_activity`
   ADD PRIMARY KEY (`id_log_activity`);
 
 --
--- Indexes for table `master_detail_rekening_pembiayaan`
+-- Indeks untuk tabel `master_detail_rekening_pembiayaan`
 --
 ALTER TABLE `master_detail_rekening_pembiayaan`
   ADD PRIMARY KEY (`id_detail_rekening_pembiayaan`),
@@ -714,14 +754,14 @@ ALTER TABLE `master_detail_rekening_pembiayaan`
   ADD KEY `id_user` (`id_user`);
 
 --
--- Indexes for table `master_detail_rekening_sijaka`
+-- Indeks untuk tabel `master_detail_rekening_sijaka`
 --
 ALTER TABLE `master_detail_rekening_sijaka`
   ADD PRIMARY KEY (`id_detail_sijaka`),
   ADD KEY `NRSj` (`NRSj`);
 
 --
--- Indexes for table `master_detail_rekening_simuda`
+-- Indeks untuk tabel `master_detail_rekening_simuda`
 --
 ALTER TABLE `master_detail_rekening_simuda`
   ADD PRIMARY KEY (`id_detail_rekening_simuda`),
@@ -729,14 +769,14 @@ ALTER TABLE `master_detail_rekening_simuda`
   ADD KEY `no_rekening_simuda` (`no_rekening_simuda`);
 
 --
--- Indexes for table `master_rekening_pembiayaan`
+-- Indeks untuk tabel `master_rekening_pembiayaan`
 --
 ALTER TABLE `master_rekening_pembiayaan`
   ADD PRIMARY KEY (`no_rekening_pembiayaan`),
   ADD KEY `no_anggota` (`no_anggota`);
 
 --
--- Indexes for table `master_rekening_sijaka`
+-- Indeks untuk tabel `master_rekening_sijaka`
 --
 ALTER TABLE `master_rekening_sijaka`
   ADD PRIMARY KEY (`NRSj`),
@@ -744,14 +784,14 @@ ALTER TABLE `master_rekening_sijaka`
   ADD KEY `rekening_simuda` (`rekening_simuda`);
 
 --
--- Indexes for table `master_rekening_simuda`
+-- Indeks untuk tabel `master_rekening_simuda`
 --
 ALTER TABLE `master_rekening_simuda`
   ADD PRIMARY KEY (`no_rekening_simuda`),
   ADD KEY `no_anggota` (`no_anggota`);
 
 --
--- Indexes for table `master_simpanan_pokok`
+-- Indeks untuk tabel `master_simpanan_pokok`
 --
 ALTER TABLE `master_simpanan_pokok`
   ADD PRIMARY KEY (`id_simpanan_pokok`),
@@ -759,7 +799,7 @@ ALTER TABLE `master_simpanan_pokok`
   ADD KEY `id_user` (`id_user`);
 
 --
--- Indexes for table `master_simpanan_wajib`
+-- Indeks untuk tabel `master_simpanan_wajib`
 --
 ALTER TABLE `master_simpanan_wajib`
   ADD PRIMARY KEY (`id_simpanan_wajib`),
@@ -767,201 +807,201 @@ ALTER TABLE `master_simpanan_wajib`
   ADD KEY `id_user` (`id_user`);
 
 --
--- Indexes for table `otorisasi`
+-- Indeks untuk tabel `otorisasi`
 --
 ALTER TABLE `otorisasi`
   ADD PRIMARY KEY (`id_otorisasi`),
   ADD KEY `no_rek` (`no_rek`);
 
 --
--- Indexes for table `support_limit_simuda`
+-- Indeks untuk tabel `support_limit_simuda`
 --
 ALTER TABLE `support_limit_simuda`
   ADD PRIMARY KEY (`id_limit_simuda`);
 
 --
--- Indexes for table `support_simuda_tutup_bulan`
+-- Indeks untuk tabel `support_simuda_tutup_bulan`
 --
 ALTER TABLE `support_simuda_tutup_bulan`
   ADD PRIMARY KEY (`id_support_simuda_tutup_bulan`),
   ADD KEY `no_rekening_simuda` (`no_rekening_simuda`);
 
 --
--- Indexes for table `support_temp_tgl_simpanan_wajib`
+-- Indeks untuk tabel `support_temp_tgl_simpanan_wajib`
 --
 ALTER TABLE `support_temp_tgl_simpanan_wajib`
   ADD PRIMARY KEY (`id_temp_simpanan_wajib`),
   ADD KEY `no_anggota` (`no_anggota`);
 
 --
--- Indexes for table `user`
+-- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `ak_detail_trx_bank`
+-- AUTO_INCREMENT untuk tabel `ak_detail_trx_bank`
 --
 ALTER TABLE `ak_detail_trx_bank`
   MODIFY `id_detail_trx_bank` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `ak_detail_trx_kas`
+-- AUTO_INCREMENT untuk tabel `ak_detail_trx_kas`
 --
 ALTER TABLE `ak_detail_trx_kas`
   MODIFY `id_detail_trx_kas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `ak_detail_trx_memorial`
+-- AUTO_INCREMENT untuk tabel `ak_detail_trx_memorial`
 --
 ALTER TABLE `ak_detail_trx_memorial`
   MODIFY `id_detail_trx_memorial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `ak_jurnal`
+-- AUTO_INCREMENT untuk tabel `ak_jurnal`
 --
 ALTER TABLE `ak_jurnal`
   MODIFY `id_jurnal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
--- AUTO_INCREMENT for table `ak_set_rekening`
+-- AUTO_INCREMENT untuk tabel `ak_set_rekening`
 --
 ALTER TABLE `ak_set_rekening`
   MODIFY `id_ak_set_rekening` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `anggota`
+-- AUTO_INCREMENT untuk tabel `anggota`
 --
 ALTER TABLE `anggota`
   MODIFY `no_anggota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30012213;
 
 --
--- AUTO_INCREMENT for table `log_activity`
+-- AUTO_INCREMENT untuk tabel `log_activity`
 --
 ALTER TABLE `log_activity`
   MODIFY `id_log_activity` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `master_detail_rekening_pembiayaan`
+-- AUTO_INCREMENT untuk tabel `master_detail_rekening_pembiayaan`
 --
 ALTER TABLE `master_detail_rekening_pembiayaan`
   MODIFY `id_detail_rekening_pembiayaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `master_detail_rekening_sijaka`
+-- AUTO_INCREMENT untuk tabel `master_detail_rekening_sijaka`
 --
 ALTER TABLE `master_detail_rekening_sijaka`
   MODIFY `id_detail_sijaka` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `master_detail_rekening_simuda`
+-- AUTO_INCREMENT untuk tabel `master_detail_rekening_simuda`
 --
 ALTER TABLE `master_detail_rekening_simuda`
   MODIFY `id_detail_rekening_simuda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `master_simpanan_pokok`
+-- AUTO_INCREMENT untuk tabel `master_simpanan_pokok`
 --
 ALTER TABLE `master_simpanan_pokok`
   MODIFY `id_simpanan_pokok` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `master_simpanan_wajib`
+-- AUTO_INCREMENT untuk tabel `master_simpanan_wajib`
 --
 ALTER TABLE `master_simpanan_wajib`
   MODIFY `id_simpanan_wajib` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 
 --
--- AUTO_INCREMENT for table `otorisasi`
+-- AUTO_INCREMENT untuk tabel `otorisasi`
 --
 ALTER TABLE `otorisasi`
   MODIFY `id_otorisasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `support_limit_simuda`
+-- AUTO_INCREMENT untuk tabel `support_limit_simuda`
 --
 ALTER TABLE `support_limit_simuda`
   MODIFY `id_limit_simuda` tinyint(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `support_simuda_tutup_bulan`
+-- AUTO_INCREMENT untuk tabel `support_simuda_tutup_bulan`
 --
 ALTER TABLE `support_simuda_tutup_bulan`
   MODIFY `id_support_simuda_tutup_bulan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `support_temp_tgl_simpanan_wajib`
+-- AUTO_INCREMENT untuk tabel `support_temp_tgl_simpanan_wajib`
 --
 ALTER TABLE `support_temp_tgl_simpanan_wajib`
   MODIFY `id_temp_simpanan_wajib` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
   MODIFY `id_user` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `master_detail_rekening_pembiayaan`
+-- Ketidakleluasaan untuk tabel `master_detail_rekening_pembiayaan`
 --
 ALTER TABLE `master_detail_rekening_pembiayaan`
   ADD CONSTRAINT `master_detail_rekening_pembiayaan_ibfk_1` FOREIGN KEY (`no_rekening_pembiayaan`) REFERENCES `master_rekening_pembiayaan` (`no_rekening_pembiayaan`),
   ADD CONSTRAINT `master_detail_rekening_pembiayaan_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
 
 --
--- Constraints for table `master_detail_rekening_sijaka`
+-- Ketidakleluasaan untuk tabel `master_detail_rekening_sijaka`
 --
 ALTER TABLE `master_detail_rekening_sijaka`
   ADD CONSTRAINT `master_detail_rekening_sijaka_ibfk_1` FOREIGN KEY (`NRSj`) REFERENCES `master_rekening_sijaka` (`NRSj`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `master_detail_rekening_simuda`
+-- Ketidakleluasaan untuk tabel `master_detail_rekening_simuda`
 --
 ALTER TABLE `master_detail_rekening_simuda`
   ADD CONSTRAINT `master_detail_rekening_simuda_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
   ADD CONSTRAINT `master_detail_rekening_simuda_ibfk_3` FOREIGN KEY (`no_rekening_simuda`) REFERENCES `master_rekening_simuda` (`no_rekening_simuda`);
 
 --
--- Constraints for table `master_rekening_pembiayaan`
+-- Ketidakleluasaan untuk tabel `master_rekening_pembiayaan`
 --
 ALTER TABLE `master_rekening_pembiayaan`
   ADD CONSTRAINT `master_rekening_pembiayaan_ibfk_1` FOREIGN KEY (`no_anggota`) REFERENCES `anggota` (`no_anggota`);
 
 --
--- Constraints for table `master_rekening_sijaka`
+-- Ketidakleluasaan untuk tabel `master_rekening_sijaka`
 --
 ALTER TABLE `master_rekening_sijaka`
   ADD CONSTRAINT `master_rekening_sijaka_ibfk_1` FOREIGN KEY (`no_anggota`) REFERENCES `anggota` (`no_anggota`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `master_rekening_simuda`
+-- Ketidakleluasaan untuk tabel `master_rekening_simuda`
 --
 ALTER TABLE `master_rekening_simuda`
   ADD CONSTRAINT `master_rekening_simuda_ibfk_1` FOREIGN KEY (`no_anggota`) REFERENCES `anggota` (`no_anggota`);
 
 --
--- Constraints for table `master_simpanan_pokok`
+-- Ketidakleluasaan untuk tabel `master_simpanan_pokok`
 --
 ALTER TABLE `master_simpanan_pokok`
   ADD CONSTRAINT `master_simpanan_pokok_ibfk_1` FOREIGN KEY (`no_anggota`) REFERENCES `anggota` (`no_anggota`),
   ADD CONSTRAINT `master_simpanan_pokok_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
 
 --
--- Constraints for table `master_simpanan_wajib`
+-- Ketidakleluasaan untuk tabel `master_simpanan_wajib`
 --
 ALTER TABLE `master_simpanan_wajib`
   ADD CONSTRAINT `master_simpanan_wajib_ibfk_1` FOREIGN KEY (`no_anggota`) REFERENCES `anggota` (`no_anggota`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `support_temp_tgl_simpanan_wajib`
+-- Ketidakleluasaan untuk tabel `support_temp_tgl_simpanan_wajib`
 --
 ALTER TABLE `support_temp_tgl_simpanan_wajib`
   ADD CONSTRAINT `support_temp_tgl_simpanan_wajib_ibfk_1` FOREIGN KEY (`no_anggota`) REFERENCES `anggota` (`no_anggota`);
