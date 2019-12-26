@@ -42,7 +42,7 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Nam User</th>
+                            <th>Nama User</th>
                             <th>Waktu</th>
                             <th>Keterangan</th>
                         </tr>

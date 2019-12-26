@@ -8,6 +8,7 @@ Class Simuda extends CI_Controller{
         $this->load->model('M_anggota');
         $this->load->model('M_jurnal');    
         $this->load->model('M_otorisasi');
+        $this->load->model('M_log_activity');
     }
     //-----------Halaman Form Buka Rekening---------------------------------------------------------
 
@@ -44,8 +45,16 @@ Class Simuda extends CI_Controller{
                 'no_anggota' => $this->input->post('no_anggota')
             );
             $this->M_simuda->simpanRekeningBaru($data_master);
+            
+            $datetime = date('Y-m-d H:i:s');
+            // simpan ke log activity
+            $activity = array(
+                'id_user' => '1', //sementara
+                'datetime' => $datetime,
+                'keterangan' => 'Menginput buka rekening simuda dengan no rekening simuda ' . $this->input->post('no_rekening_simuda') . ' dengan no anggota ' . $this->input->post('no_anggota'),
+            );
+            $this->M_log_activity->insertActivity($activity);
 
-            $datetime = date('Y-m-d h:i:s');
             //Simpan Ke Tabel Master Detail Rekening Simuda
             $data_detail = array(
                 'no_rekening_simuda' => $this->input->post('no_rekening_simuda'),

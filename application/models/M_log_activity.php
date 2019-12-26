@@ -44,4 +44,9 @@ Class M_log_activity extends CI_Model{
       $query = $this->db->get(); 
       return $query->result();
     }
+
+    public function insertActivity($values)
+    {
+      $this->db->insert('log_activity', $values);
+    }
 }
