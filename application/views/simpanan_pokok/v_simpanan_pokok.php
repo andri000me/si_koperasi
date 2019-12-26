@@ -26,7 +26,7 @@
             <li class="breadcrumb-item active" aria-current="page">Simpanan Pokok</li>
         </ol>
     </nav>
-    <!-- DataTales Example -->
+    <!-- Simpanan Pokok -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Data Simpanan Pokok</h6>
@@ -45,13 +45,13 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>No.</th>
-                            <th>No. Anggota</th>
-                            <th>Nama Anggota</th>
-                            <th>Tanggal</th>
-                            <th>Jumlah</th>
-                            <th>Teller</th>
-                            <th>Aksi</th>
+                            <th class="text-center">No.</th>
+                            <th class="text-center">No. Anggota</th>
+                            <th class="text-center">Nama Anggota</th>
+                            <th class="text-center">Tanggal</th>
+                            <th class="text-center">Jumlah</th>
+                            <th class="text-center">Teller</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,11 +60,11 @@
                         foreach ($simpanan_pokok as $s) {
                             ?>
                             <tr>
-                                <td><?php echo $no++; ?></td>
+                                <td class="text-center"><?php echo $no++."."; ?></td>
                                 <td><?php echo $s->no_anggota; ?></td>
                                 <td><?php echo $s->nama; ?></td>
                                 <td><?php echo $s->tanggal_pembayaran; ?></td>
-                                <td><?php echo $s->jumlah; ?></td>
+                                <td class="text-right"><?php echo number_format($s->jumlah,0,',','.'); ?></td>
                                 <td><?php echo $s->nama_terang; ?></td>
                                 <td style="text-align:center;">
                                     <button type="button" class="btn btn-sm btn-success" onclick="edit(<?php echo $s->id_simpanan_pokok; ?>)"><i class="icofont-ui-edit"></i></button>
@@ -79,6 +79,7 @@
             </div>
         </div>
     </div>
+    
 
 </div>
 <!-- The Modal -->

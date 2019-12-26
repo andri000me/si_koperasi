@@ -9,11 +9,13 @@ class M_simpanan_wajib extends CI_Model
     function getNominatif(){
         return $this->db->get($this->_v_table)->result();
     }
+    function get1Nominatif($no_anggota){
+        $where = array( 'no_anggota' => $no_anggota);
+        return $this->db->get_where($this->_v_table,$where)->result();
+    }
 
     function getSaldoPerAnggota($no_anggota){
-        $where = array(
-            'no_anggota' => $no_anggota
-        );
+        $where = array( 'no_anggota' => $no_anggota);
         $this->db->select('saldo');
         return $this->db->get_where($this->_v_table,$where)->result();
     }

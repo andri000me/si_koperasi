@@ -13,8 +13,23 @@ Class M_simuda extends CI_Model{
             return FALSE;
         }
     }
-    function getMasterSimuda($bulan_lalu, $bulan_ini, $tahun){
-        $query = $this->db->query("CALL perhitungan_tutup_bulan_simuda(".$bulan_lalu.",".$bulan_ini.",".$tahun.")");
+    function getMasterSimuda(){
+        $last_month = date('m',strtotime("last month"));
+        $this_month = date('m');
+        $this_year = date('y');
+        
+        $query = $this->db->query("CALL perhitungan_tutup_bulan_simuda(".$last_month.",".$this_month.",".$this_year.")");
+        $res = $query->result();
+        $query->next_result();
+        $query->free_result();
+
+        return $res;
+    }
+    function get1MasterSimuda($no_anggota){
+        $last_month = date('m',strtotime("last month"));
+        $this_month = date('m');
+        $this_year = date('y');
+        $query = $this->db->query("CALL getMasterSimudaByNoAnggota(".$last_month.",".$this_month.",".$this_year.",".$no_anggota.")");
         $res = $query->result();
 
         $query->next_result();
@@ -28,7 +43,7 @@ Class M_simuda extends CI_Model{
         return $this->db->get($this->master_table)->result();
     }
 
-    function get1MasterSimuda($where){
+    function getDetailMasterSimuda($where){
         $this->db->select('no_rekening_simuda,master_rekening_simuda.no_anggota,nama');
         $this->db->from($this->master_table);
         $this->db->join('anggota','master_rekening_simuda.no_anggota = anggota.no_anggota');

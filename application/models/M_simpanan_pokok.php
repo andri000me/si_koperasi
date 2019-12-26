@@ -3,15 +3,24 @@ defined("BASEPATH") or die("No Direct Access Allowed");
 class M_simpanan_pokok extends CI_Model
 {
     private $_table = 'master_simpanan_pokok';
+    private $_table_anggota = 'anggota';
+    private $_table_user = 'user';
 
-    function getSimpananpokok()
-    {
-        return $this->db->query('select * from anggota inner join master_simpanan_pokok on master_simpanan_pokok.no_anggota=anggota.no_anggota join user on master_simpanan_pokok.id_user = user.id_user')->result();
+    function getSimpananpokok(){
+        $this->db->select('master_simpanan_pokok.id_simpanan_pokok, master_simpanan_pokok.no_anggota, anggota.nama, master_simpanan_pokok.tanggal_pembayaran, master_simpanan_pokok.jumlah, master_simpanan_pokok.id_user, user.nama_terang');
+        $this->db->from($this->_table);
+        $this->db->join($this->_table_anggota, 'master_simpanan_pokok.no_anggota=anggota.no_anggota');
+        $this->db->join($this->_table_user, 'master_simpanan_pokok.id_user = user.id_user');
+        return $this->db->get();
     }
 
-    function get1Anggota($where)
-    {
-        return $this->db->get_where($this->_table, $where)->result();
+    function get1SimpananPokok($id){
+        $this->db->select('master_simpanan_pokok.id_simpanan_pokok, master_simpanan_pokok.no_anggota, anggota.nama, master_simpanan_pokok.tanggal_pembayaran, master_simpanan_pokok.jumlah, master_simpanan_pokok.id_user, user.nama_terang');
+        $this->db->from($this->_table);
+        $this->db->join($this->_table_anggota, 'master_simpanan_pokok.no_anggota=anggota.no_anggota');
+        $this->db->join($this->_table_user, 'master_simpanan_pokok.id_user = user.id_user');
+        $this->db->where(array('master_simpanan_pokok.no_anggota' => $id));
+        return $this->db->get();
     }
 
     function addSimpananpokok($data)

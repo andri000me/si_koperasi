@@ -14,7 +14,7 @@
                         <div class="col-md-6">
                             <div class="form-group-inner">
                                 <label for="" class="pull-left">No. Anggota</label>
-                                <input type="text" name="no_anggota" class="form-control form-control-sm" placeholder="Masukkan Nama" value="<?php echo $i->no_anggota; ?>" required>
+                                <input type="text" name="no_anggota" class="form-control form-control-sm" placeholder="Masukkan Nama" value="<?php echo $i->no_anggota; ?>" readonly>
                             </div>
                         </div>
                         <div class="col-md-6">

@@ -11,7 +11,7 @@ class Simpanan_pokok extends CI_Controller
     {
         $data['title'] = 'Simpanan Pokok';
         $data['path'] = "simpanan_pokok/v_simpanan_pokok";
-        $data['simpanan_pokok'] = $this->M_simpanan_pokok->getSimpananpokok();
+        $data['simpanan_pokok'] = $this->M_simpanan_pokok->getSimpananpokok()->result();
         $this->load->view('master_template', $data);
     }
     //function add() digunakan untuk aksi input ke tabel simpanan pokok
