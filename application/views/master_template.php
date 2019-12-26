@@ -97,7 +97,7 @@
         </a>
         <div id="navMonitoring" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="#">Log Activity</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/LogActivity'; ?>">Log Activity</a>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/otorisasi'; ?>">Otorisasi</a>
           </div>
         </div>
