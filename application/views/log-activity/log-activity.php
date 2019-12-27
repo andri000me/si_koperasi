@@ -17,7 +17,7 @@
         </div>
         <br>
         <div class="row">
-            <div class="col-5 ml-auto">
+            <div class="ml-auto" style="margin-right: 3%;">
                 <form action="" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                   <input type="date" name="tanggal" id="tanggal" class="form-control border-1 small" placeholder="Berdasarkan tanggal.." aria-label="Search" aria-describedby="basic-addon2" value="<?php echo !empty($_GET['tanggal']) ? $_GET['tanggal'] : '' ?>">
                   <select name="user" id="user" class="form-control select2_ bg-light border-1  small">

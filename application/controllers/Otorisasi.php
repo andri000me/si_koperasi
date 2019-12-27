@@ -5,6 +5,7 @@ Class Otorisasi extends CI_Controller{
         $this->load->model('M_otorisasi');
         $this->load->model('M_simuda');
         $this->load->model('M_jurnal');
+        $this->load->model('M_log_activity');
     }
     //Halaman Index Otorisasi
     function index(){
@@ -22,13 +23,20 @@ Class Otorisasi extends CI_Controller{
     function updateStatus(){
         $id = $this->input->post('id_otorisasi');
         $status = $this->input->post('status');
-        $datetime = date('Y-m-d h:i:s');
+        $datetime = date('Y-m-d H:i:s');
 
         //Update Tabel Otorisasi
         $data_otorisasi = array(
             'status' => $status
         );
         $this->M_otorisasi->updateOtorisasi(array('id_otorisasi' => $id),$data_otorisasi);
+
+        $activity = array(
+            'id_user' => '1', //sementara
+            'datetime' => $datetime,
+            'keterangan' => 'Melakukan otorisasi dengan status ' . $this->input->post('status'),
+        );
+        $this->M_log_activity->insertActivity($activity);
         
         //Melakukan Operasi Ketika Otorisasi Disetujui
         if($status == 'Accepted'){
