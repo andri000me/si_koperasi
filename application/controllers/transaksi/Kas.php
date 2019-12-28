@@ -4,6 +4,7 @@ Class Kas extends CI_Controller{
     function __construct(){
         parent::__construct();
         $this->load->model('transaksi/M_kas');
+        $this->load->model('M_log_activity');
     }
     function index(){
         $data['title'] = 'Kas';
@@ -144,6 +145,14 @@ Class Kas extends CI_Controller{
 
             $this->M_kas->insertData('ak_jurnal',$jurnal);
         }
+
+        $datetime = date('Y-m-d H:i:s');
+        $activity = array(
+            'id_user' => '1', //sementara
+            'datetime' => $datetime,
+            'keterangan' => 'Menginput bukti kas dengan kode ' . $bukti_kas['kode_trx_kas'],
+        );
+        $this->M_log_activity->insertActivity($activity);
 
         unset($_SESSION['bukti_kas']);
         unset($_SESSION['detail_kas']);
@@ -315,6 +324,15 @@ Class Kas extends CI_Controller{
         );
         $this->M_kas->updateData('ak_trx_kas',$kas, ['kode_trx_kas' => $kode]);
 
+        $datetime = date('Y-m-d H:i:s');
+        $activity = array(
+            'id_user' => '1', //sementara
+            'datetime' => $datetime,
+            'keterangan' => 'Mengedit bukti kas dengan kode ' . $kode,
+        );
+        $this->M_log_activity->insertActivity($activity);
+
+
         unset($_SESSION['edit_bukti_kas'][$kode]);
         unset($_SESSION['detail_edit_bukti_kas'][$kode]);
 
@@ -334,6 +352,15 @@ Class Kas extends CI_Controller{
         $this->M_kas->deleteKas('ak_jurnal', ['kode_transaksi' => $kode]);
         $this->M_kas->deleteKas('ak_detail_trx_kas', ['kode_trx_kas' => $kode]);
         $this->M_kas->deleteKas('ak_trx_kas', ['kode_trx_kas' => $kode]);
+
+        $datetime = date('Y-m-d H:i:s');
+        $activity = array(
+            'id_user' => '1', //sementara
+            'datetime' => $datetime,
+            'keterangan' => 'Menghapus bukti kas dengan kode ' . $kode,
+        );
+        $this->M_log_activity->insertActivity($activity);
+
 
         $this->session->set_flashdata("delete_success","<div class='alert alert-success'>
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data berhasil dihapus.<br></div>");

@@ -123,4 +123,11 @@ Class M_simuda extends CI_Model{
     function simpanTutupBulanSimuda($data){
         $this->db->insert($this->tutup_bulan_simuda,$data);
     }
+
+    public function getTtlRek()
+    {
+        $this->db->select('COUNT(no_rekening_simuda) ttlRekSimuda');
+        $this->db->from($this->master_table);
+        return $this->db->get()->result();
+    }
 }

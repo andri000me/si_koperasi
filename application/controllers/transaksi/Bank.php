@@ -4,6 +4,7 @@ Class Bank extends CI_Controller{
     function __construct(){
         parent::__construct();
         $this->load->model('transaksi/M_bank');
+        $this->load->model('M_log_activity');
     }
     function index(){
         $data['title'] = 'Bank';
@@ -144,6 +145,14 @@ Class Bank extends CI_Controller{
 
             $this->M_bank->insertData('ak_jurnal',$jurnal);
         }
+
+        $datetime = date('Y-m-d H:i:s');
+        $activity = array(
+            'id_user' => '1', //sementara
+            'datetime' => $datetime,
+            'keterangan' => 'Menginput bukti bank dengan kode ' . $bukti_bank['kode_trx_bank'],
+        );
+        $this->M_log_activity->insertActivity($activity);
 
         unset($_SESSION['bukti_bank']);
         unset($_SESSION['detail_bank']);
@@ -315,6 +324,14 @@ Class Bank extends CI_Controller{
         );
         $this->M_bank->updateData('ak_trx_bank',$bank, ['kode_trx_bank' => $kode]);
 
+        $datetime = date('Y-m-d H:i:s');
+        $activity = array(
+            'id_user' => '1', //sementara
+            'datetime' => $datetime,
+            'keterangan' => 'Mengedit bukti bank dengan kode ' . $kode,
+        );
+        $this->M_log_activity->insertActivity($activity);
+
         unset($_SESSION['edit_bukti_bank'][$kode]);
         unset($_SESSION['detail_edit_bukti_bank'][$kode]);
 
@@ -334,6 +351,14 @@ Class Bank extends CI_Controller{
         $this->M_bank->deleteBank('ak_jurnal', ['kode_transaksi' => $kode]);
         $this->M_bank->deleteBank('ak_detail_trx_bank', ['kode_trx_bank' => $kode]);
         $this->M_bank->deleteBank('ak_trx_bank', ['kode_trx_bank' => $kode]);
+
+        $datetime = date('Y-m-d H:i:s');
+        $activity = array(
+            'id_user' => '1', //sementara
+            'datetime' => $datetime,
+            'keterangan' => 'Menghapus bukti bank dengan kode ' . $kode,
+        );
+        $this->M_log_activity->insertActivity($activity);
 
         $this->session->set_flashdata("delete_success","<div class='alert alert-success'>
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data berhasil dihapus.<br></div>");

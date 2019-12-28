@@ -41,4 +41,11 @@ class M_anggota extends CI_Model
             return FALSE;
         }
     }
+
+    public function getTtlAnggota()
+    {
+        $this->db->select('COUNT(no_anggota) ttlAnggota');
+        $this->db->from($this->_table);
+        return $this->db->get()->result();
+    }
 }
