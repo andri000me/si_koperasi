@@ -6,6 +6,7 @@ Class Sijaka extends CI_Controller{
         $this->load->model('M_sijaka');
         $this->load->model('M_anggota');
         $this->load->model('M_simuda');
+        $this->load->model('M_jurnal');
     }
 
     function bukaRekeningSijaka(){
@@ -27,7 +28,7 @@ Class Sijaka extends CI_Controller{
     function simpanRekeningBaruSijaka(){
         $config = array(
             //array('field'=>'name view','label'=>'nama label','rules'=>'required')
-            array('field'=>'NRSj','label'=>'No. Rekening','rules'=>'required'),
+            array('field'=>'NRSj','label'=>'No. Rekening','rules'=>'required|is_unique[master_rekening_sijaka.NRSj]'),
             array('field'=>'no_anggota','label'=>'No. Anggota','rules'=>'required'),
             array('field'=>'jumlah','label'=>'Jumlah','rules'=>'required'),
             //array('field'=>'jumlah_sekarang','label'=>'Jumlah','rules'=>'required'),
@@ -65,14 +66,25 @@ Class Sijaka extends CI_Controller{
 
             $datetime = date('Y-m-d h:i:s');
 
-            //simpan ke tabel master detail rekening sijaka
-            $data_detail = array(
-                'NRSj' => $this->input->post('NRSj'),
-                'kredit' => $this->input->post('jumlah'),
-                'saldo' => $this->input->post('jumlah'),
-                'id_user' => '1' //Sementara
+            $data_jurnal = array(
+                'tanggal' => $datetime,
+                'kode' => '', //Belum Dikasih
+                'lawan' => '',
+                'tipe' => 'K',
+                'nominal' => $this->input->post('jumlah'),
+                'tipe_trx_koperasi' => 'Sijaka',
+                'id_detail' => $this->db->insert_id()
             );
-            $this->M_sijaka->simpanDetailSijaka($data_detail);
+            $this->M_jurnal->inputJurnal($data_jurnal);
+
+            //simpan ke tabel master detail rekening sijaka
+            // $data_detail = array(
+            //     'NRSj' => $this->input->post('NRSj'),
+            //     'kredit' => $this->input->post('jumlah'),
+            //     'saldo' => $this->input->post('jumlah'),
+            //     'id_user' => '1' //Sementara
+            // );
+            // $this->M_sijaka->simpanDetailSijaka($data_detail);
 
             $this->session->set_flashdata("input_success","<div class='alert alert-success'>
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Berhasil Ditambahkan!!</div>");
@@ -98,10 +110,49 @@ Class Sijaka extends CI_Controller{
         $this->load->view('master_template',$data);
     }
 
+    //perhitungan akhir bulan sijaka
     function perhitunganAkhirBulanSijaka(){
         $data['path'] = 'sijaka/perhitungan_akhir_bulan_sijaka';
-        $data['nominatif'] = $this->M_sijaka->getMasterSijaka();
+        $data['akhir_bulan'] = $this->M_sijaka->getSijakaBerjalan();
         $this->load->view('master_template',$data);
+    }
+
+    function updatePerhitunganAkhirBulanSijaka(){
+        $sijakaBerjalan = $this->M_sijaka->getSijakaBerjalan();
+        // echo "<pre>";
+        // print_r($sijakaBerjalan);
+        // echo "</pre>";
+        foreach ($sijakaBerjalan as $value) {
+            $nrsj = $value->NRSj;
+            $jumlah_awal = $value->jumlah_awal;
+            $bahas = $value->presentase_bagi_hasil_bulanan;
+            $ttl_bahas = $value->total_bahas;
+            $bulan_berjalan = $value->bulan_berjalan + 1;
+            $total_bahas = $ttl_bahas + $bahas;
+            // echo $total_bahas . "<br>";
+            $data = array(
+                'total_bahas' => $total_bahas,
+                'grandtotal' => $jumlah_awal + $total_bahas,
+                'bulan_berjalan' => $bulan_berjalan
+            );
+            $where = array('NRSj' => $nrsj);
+
+            $this->M_sijaka->updateSijakaBerjalan($where,$data);
+
+        }
+
+        // $NRSj = $this->input->post('NRSj');
+        // $total_bahas = $this->input->post('total_bahas'); //presentase_bagi_hasil_bulanan * (bulan_berjalan + 1)
+        // $grandtotal = $this->input->post('grandtotal'); // jumlah_sekarang + total_bahas 
+        // //$jumlah_sekarang = $this->input->('jumlah_sekarang'); //jumlah_awal + total_bahas
+        // $berjalan = $bulan_berjalan + 1;
+        // $data = array(
+        //     'total_bahas' => $presentase_bagi_hasil_bulanan * $berjalan,
+        //     'grandtotal' => $jumlah_awal + $total_bahas
+        // );
+        // $where = array('NRSj'=>$NRSj);
+        // $this->m_sijaka->updateSijakaBerjalan($data,$where);
+        redirect('sijaka/perhitunganAkhirBulanSijaka');
     }
 
     function kelolaRekeningSijaka(){
@@ -116,6 +167,13 @@ Class Sijaka extends CI_Controller{
         $data['master_rekening_sijaka'] = $this->M_sijaka->get1MasterSijaka($where);
         $data['detail_rekening_sijaka'] = $this->M_sijaka->getDetailSijaka($where);
         $this->load->view('master_template',$data);
+    }
+
+    //Get Saldo Awal Di Form Kelola Rekening
+    function getNominalSaldoSijaka(){
+        $NRSj = $this->input->post('id');
+        $data_nominal = $this->M_sijaka->getJumlahRecordBulanIni($NRSj, date('m'), date('Y'));
+
     }
 
 }
