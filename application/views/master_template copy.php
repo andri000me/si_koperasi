@@ -97,17 +97,23 @@
         </a>
         <div id="navMonitoring" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/LogActivity'; ?>">Log Activity</a>
+            <a class="collapse-item" href="#">Log Activity</a>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/otorisasi'; ?>">Otorisasi</a>
           </div>
         </div>
       </li>
       <!-- Simpanan Pokok -->
       <li class="nav-item">
-        <a class="nav-link" href="<?php base_url() . 'index.php/simpanan_pokok' ?>">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#navPokok" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-cog"></i>
           <span>Simpanan Pokok</span>
         </a>
+        <div id="navPokok" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="<?= base_url() . 'index.php/simpanan_pokok' ?>">Simpanan Pokok</a>
+            <!-- <a class="collapse-item" href="#">Pengaturan Limit</a> -->
+          </div>
+        </div>
       </li>
       <!-- Simpanan Wajib -->
       <li class="nav-item">
@@ -117,8 +123,8 @@
         </a>
         <div id="navWajib" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php base_url() . 'index.php/simpanan_wajib/kelolaRekening' ?>">Kelola Rekening</a>
-            <a class="collapse-item" href="<?php base_url() . 'index.php/simpanan_wajib/nominatif' ?>">Nominatif</a>
+            <a class="collapse-item" href="<?= base_url() . 'index.php/simpanan_wajib/kelolaRekening' ?>">Kelola Rekening</a>
+            <a class="collapse-item" href="<?= base_url() . 'index.php/simpanan_wajib/nominatif' ?>">Nominatif</a>
           </div>
         </div>
       </li>
@@ -148,10 +154,10 @@
         </a>
         <div id="navSijaka" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/bukaRekeningSijaka'; ?>">Form Sijaka</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/kelolaRekeningSijaka'; ?>">Kelola Rekening</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/daftarNominatifSijaka'; ?>">Daftar Nominatif</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/perhitunganAkhirBulanSijaka'; ?>">Perhitungan Akhir Bulan</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/Sijaka'; ?>">Form Sijaka</a>
+            <a class="collapse-item" href="#">Kelola Rekening</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/Daftar_nominatif_sijaka'; ?>">Daftar Nominatif</a>
+            <a class="collapse-item" href="#">Perhitungan Akhir Bulan</a>
 
           </div>
         </div>
@@ -164,9 +170,9 @@
         </a>
         <div id="navKredit" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo  base_url() . 'index.php/kredit/pengajuanRekening' ?> ">Form Kredit</a>
-            <a class="collapse-item" href="<?php echo  base_url() . 'index.php/kredit/kelolakredit' ?>">Kelola Kredit</a>
-            <a class="collapse-item" href="<?php echo  base_url() . 'index.php/kredit/daftarNominatif' ?>">Daftar Nominatif</a>
+            <a class="collapse-item" href="<?= base_url() . 'index.php/kredit/pengajuanRekening' ?> ">Form Kredit</a>
+            <a class="collapse-item" href="<?= base_url() . 'index.php/kelola_kredit' ?> ">Kelola Kredit</a>
+            <a class="collapse-item" href="<?= base_url() . 'index.php/kredit/daftarNominatif' ?>">Daftar Nominatif</a>
           </div>
         </div>
       </li>
@@ -183,8 +189,8 @@
         </a>
         <div id="generalLedger" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/general-ledger/bukubesar'; ?>">Buku Besar</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/general-ledger/neracasaldo'; ?>">Neraca Saldo</a>
+            <a class="collapse-item" href="">Buku Besar</a>
+            <a class="collapse-item" href="">Neraca Saldo</a>
             <a class="collapse-item" href="">Laba/Rugi</a>
           </div>
         </div>
@@ -196,13 +202,9 @@
         </a>
         <div id="transaksiAkuntansi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/kas' ?>">Kas</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/bank' ?>">Bank</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/memorial' ?>">Memorial</a>
-            <div class="dropdown-divider"></div>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/laporankas' ?>">Laporan Kas</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/laporanbank' ?>">Laporan Bank</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/laporanmemorial' ?>">Laporan Memorial</a>
+            <a class="collapse-item" href="">Kas</a>
+            <a class="collapse-item" href="">Bank</a>
+            <a class="collapse-item" href="">Memorial</a>
           </div>
         </div>
       </li>

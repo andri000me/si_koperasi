@@ -45,13 +45,13 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>No.</th>
-                            <th>No. Anggota</th>
-                            <th>Nama Anggota</th>
-                            <th>Tanggal</th>
-                            <th>Jumlah</th>
-                            <th>Teller</th>
-                            <th>Aksi</th>
+                            <th class="text-center">No.</th>
+                            <th class="text-center">No. Anggota</th>
+                            <th class="text-center">Nama Anggota</th>
+                            <th class="text-center">Tanggal</th>
+                            <th class="text-center">Jumlah</th>
+                            <th class="text-center">Teller</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>

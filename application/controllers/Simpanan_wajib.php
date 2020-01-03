@@ -62,11 +62,6 @@ class Simpanan_wajib extends CI_Controller
                 'rules' => 'required'
             ),
             array(
-                'field' => 'tgl_pembayaran',
-                'label' => 'Tanggal Pembayaran',
-                'rules' => 'required'
-            ),
-            array(
                 'field' => 'tipe',
                 'label' => 'Tipe',
                 'rules' => 'required'
@@ -86,11 +81,12 @@ class Simpanan_wajib extends CI_Controller
         $this->form_validation->set_rules($config);
         if ($this->form_validation->run() == TRUE) {
             // jika validasi berhasil maka input ke tabel simpanan Wajib
+            $datetime = date('Y-m-d H:i:s');
             if($this->input->post('tipe') == "K"){ //Jika Tipe Kredit
                 $data = array(
                     'no_anggota' => $this->input->post('no_anggota'),
                     'tgl_temp' => $this->input->post('tgl_temp'),
-                    'tgl_pembayaran' => $this->input->post('tgl_pembayaran'),
+                    'tgl_pembayaran' => $datetime,
                     'kredit' => $this->input->post('jumlah'),
                     'saldo' => $this->input->post('saldo_akhir'),
                     'id_user' => '1'
@@ -99,7 +95,7 @@ class Simpanan_wajib extends CI_Controller
                 $data = array(
                     'no_anggota' => $this->input->post('no_anggota'),
                     'tgl_temp' => $this->input->post('tgl_temp'),
-                    'tgl_pembayaran' => $this->input->post('tgl_pembayaran'),
+                    'tgl_pembayaran' => $datetime,
                     'debet' => $this->input->post('jumlah'),
                     'saldo' => $this->input->post('saldo_akhir'),
                     'id_user' => '1'
@@ -109,7 +105,7 @@ class Simpanan_wajib extends CI_Controller
 
             //Insert Ke Tabel Jurnal
             $data_jurnal = array(
-                'tanggal' => $this->input->post('tgl_pembayaran'),
+                'tanggal' => $datetime,
                 'kode' => '', //Belum Dikasih
                 'lawan' => '',
                 'tipe' => $this->input->post('tipe'),
@@ -129,66 +125,6 @@ class Simpanan_wajib extends CI_Controller
         }
         redirect('Simpanan_wajib/nominatif');
     }
-
-
-    // function delete($id)
-    // {
-    //     // $id = $this->input->post('id');
-    //     $where = array('id_simpanan_wajib' => $id);
-    //     $this->M_simpanan_wajib->hapus_data($where, 'master_simpanan_wajib');
-    //     redirect('Simpanan_wajib');
-    // }
-    // function edit()
-    // {
-    //     $id_simpanan_wajib = $this->input->post('id');
-    //     $data['simpanan_wajib'] = $this->M_simpanan_wajib->get1Anggota(array('id_simpanan_wajib' => $id_simpanan_wajib));
-    //     $this->load->view('simpanan_wajib/edit_simpanan_wajib', $data);
-    // }
-
-    // function update()
-    // {
-    //     $config = array(
-    //         array(
-    //             'field' => 'temp_id_simpanan_wajib',
-    //             'label' => 'Temp',
-    //             'rules' => 'required'
-    //         ),
-    //         array(
-    //             'field' => 'no_anggota',
-    //             'label' => 'No anggota',
-    //             'rules' => 'required'
-    //         ),
-    //         array(
-    //             'field' => 'tgl_pembayaran',
-    //             'label' => 'Tanggal Pembayaran',
-    //             'rules' => 'required'
-    //         ),
-    //         array(
-    //             'field' => 'jumlah',
-    //             'label' => 'Jumlah',
-    //             'rules' => 'required'
-    //         )
-    //     );
-
-    //     $this->form_validation->set_rules($config);
-    //     if ($this->form_validation->run() == TRUE) {
-    //         $where = array('id_simpanan_wajib' => $this->input->post('temp_id_simpanan_wajib'));
-    //         $data = array(
-    //             'id_simpanan_wajib' => $this->input->post('id_simpanan_wajib'),
-    //             'no_anggota' => $this->input->post('no_anggota'),
-    //             'tgl_pembayaran' => $this->input->post('tgl_pembayaran'),
-    //             'jumlah' => $this->input->post('jumlah')
-    //         );
-    //         $this->M_simpanan_wajib->updateAnggota($where, $data);
-    //         $this->session->set_flashdata("update_success", "<div class='alert alert-success'>
-    //         <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Berhasil Diperbarui.</div>");
-    //     } else {
-    //         $gagal = validation_errors();
-    //         $this->session->set_flashdata("update_failed", "<div class='alert alert-danger'>
-    //         <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Gagal Diubah!!<br>" . $gagal . "</div>");
-    //     }
-    //     redirect('simpanan_wajib');
-    // }
 
     //Daftar Nominatif
     function nominatif(){

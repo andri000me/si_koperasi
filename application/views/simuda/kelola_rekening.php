@@ -90,22 +90,18 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="">Datetime</label>
-                        <input type="datetime-local" class="form-control" name="datetime" id="datetime" value="<?php echo date('Y-m-d h:i'); ?>" required>
-                    </div>
-                    <div class="col-md-4">
                         <label for="">Tipe</label>
                         <select name="tipe" id="tipe" class="form-control" onchange="hitungSaldoAkhir();controlButtonPengajuan()" required>
                             <option value="K">Kredit</option>
                             <option value="D">Debit</option>
                         </select>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-md-4">
                         <label for="">Jumlah</label>
                         <input type="number" class="form-control rupiah" name="jumlah" id="jumlah" onkeyup="hitungSaldoAkhir();controlButtonPengajuan()"  required>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-md-4">
                         <label for="">Saldo Akhir</label>
                         <input type="number" class="form-control rupiah" name="saldo_akhir" id="saldo_akhir" readonly required>

@@ -102,18 +102,12 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        <label for="">Datetime</label>
-                        <input type="datetime-local" class="form-control" name="tgl_pembayaran" id="datetime" value="<?php echo date('Y-m-d h:i'); ?>" required>
-                    </div>
-                    <div class="col-md-3">
                         <label for="">Tipe</label>
                         <select name="tipe" id="tipe" class="form-control" onchange="hitungSaldoAkhir();controlButtonPengajuan()" required>
                             <option value="K">Kredit</option>
                             <option value="D">Debit</option>
                         </select>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-md-3">
                         <label for="">Jumlah</label>
                         <input type="number" class="form-control" name="jumlah" id="jumlah" onkeyup="hitungSaldoAkhir();controlButtonPengajuan()"  required>

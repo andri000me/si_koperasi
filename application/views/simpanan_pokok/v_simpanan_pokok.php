@@ -1,7 +1,26 @@
 <script>
-    function edit(id) {
+    // function ambilUang(id){
+        // if (window.confirm('Anda Yakin Untuk Mencairkan Uang?')){
+        //     $.ajax({
+    //         url: "<?php echo base_url() . 'index.php/simpanan_pokok/edit'; ?>",
+    //         type: "POST",
+    //         data: {
+    //             id: id
+    //         },
+    //         success: function(ajaxData) {
+    //             $("#modaledit").html(ajaxData);
+    //             $("#modaledit").modal('show', {
+    //                 backdrop: 'true'
+    //             });
+    //         }
+    //     });
+        // }else{
+            // They clicked no
+        // }
+    // }
+    function ambilUang(id) {
         $.ajax({
-            url: "<?php echo base_url() . 'index.php/simpanan_pokok/edit'; ?>",
+            url: "<?php echo base_url() . 'index.php/simpanan_pokok/ambilUang'; ?>",
             type: "POST",
             data: {
                 id: id
@@ -22,7 +41,6 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?php echo base_url() . 'index.php/dashboard' ?>">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="#">Pokok dan Wajib</a></li>
             <li class="breadcrumb-item active" aria-current="page">Simpanan Pokok</li>
         </ol>
     </nav>
@@ -50,6 +68,7 @@
                             <th class="text-center">Nama Anggota</th>
                             <th class="text-center">Tanggal</th>
                             <th class="text-center">Jumlah</th>
+                            <th class="text-center">Status Dana</th>
                             <th class="text-center">Teller</th>
                             <th class="text-center">Aksi</th>
                         </tr>
@@ -65,12 +84,19 @@
                                 <td><?php echo $s->nama; ?></td>
                                 <td><?php echo $s->tanggal_pembayaran; ?></td>
                                 <td class="text-right"><?php echo number_format($s->jumlah,0,',','.'); ?></td>
+                                <td class="text-center">
+                                    <?php
+                                        if($s->status_dana == "Aktif"){
+                                            echo "<span class='badge badge-primary'>Aktif</span>";
+                                        }else if($s->status_dana == "Diambil"){
+                                            echo "<span class='badge badge-danger'>Diambil</span>";
+                                        }
+                                    ?> 
+                                </td>
                                 <td><?php echo $s->nama_terang; ?></td>
                                 <td style="text-align:center;">
-                                    <button type="button" class="btn btn-sm btn-success" onclick="edit(<?php echo $s->id_simpanan_pokok; ?>)"><i class="icofont-ui-edit"></i></button>
-                                    <a onclick="confirm('Apakah anda yakin ?')" href="<?= base_url('index.php/') . 'Simpanan_pokok/delete/' . $s->id_simpanan_pokok ?>">
-                                        <button class="btn btn-danger btn-sm"><i class="icofont-ui-delete"></i></button>
-                                    </a>
+                                    
+                                    <button type="button" class="btn btn-sm btn-success" onclick="ambilUang(<?php echo $s->id_simpanan_pokok; ?>)" <?php if($s->status_dana == "Diambil"){echo "disabled";} ?>><i class="icofont-money"></i></button>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -127,4 +153,5 @@
     </div>
 </div>
 <div class="modal" id="modaledit">
+    
 </div>

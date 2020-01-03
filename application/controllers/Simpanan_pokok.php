@@ -6,6 +6,7 @@ class Simpanan_pokok extends CI_Controller
     {
         parent::__construct();
         $this->load->model('M_simpanan_pokok');
+        $this->load->model('M_jurnal');
     }
     function index()
     {
@@ -64,12 +65,47 @@ class Simpanan_pokok extends CI_Controller
         redirect('Simpanan_pokok');
     }
 
-    function edit()
-    {
-        $id_simpanan_pokok = $this->input->post('id');
-        $data['simpanan_pokok'] = $this->M_simpanan_pokok->get1Anggota(array('id_simpanan_pokok' => $id_simpanan_pokok));
-        $this->load->view('simpanan_pokok/edit_simpanan_pokok', $data);
+    // function edit()
+    // {
+    //     $id_simpanan_pokok = $this->input->post('id');
+    //     $data['simpanan_pokok'] = $this->M_simpanan_pokok->get1Anggota(array('id_simpanan_pokok' => $id_simpanan_pokok));
+    //     $this->load->view('simpanan_pokok/edit_simpanan_pokok', $data);
+    // }
+
+    function ambilUang(){
+        $data['id'] = $this->input->post('id');
+        $data['simpanan_pokok'] = $this->M_simpanan_pokok->getSimpananPokok($data['id'])->result();
+        $this->load->view('simpanan_pokok/pencairan_simpanan_pokok',$data);
     }
+    function prosesPencairanDana(){
+        //Ubah Status Dana
+        $where = array('id_simpanan_pokok' => $this->input->post('id_simpanan_pokok'));
+        $data = array(
+            'status_dana' => 'Diambil'
+        );
+        $save1 = $this->M_simpanan_pokok->updateSimpananpokok($where, $data);
+        //Input Jurnal
+        $data_jurnal = array(
+            'tanggal' => date('Y-m-d H:i:s'),
+            'kode' => '', //Belum Dikasih
+            'lawan' => '',
+            'tipe' => 'D',
+            'nominal' => $this->input->post('jumlah'),
+            'tipe_trx_koperasi' => 'Simuda',
+            'id_detail' => $this->db->insert_id()
+        );
+        $save2 = $this->M_jurnal->inputJurnal($data_jurnal);
+        if($save1 AND $save2){
+            $this->session->set_flashdata("update_success", "<div class='alert alert-success'>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Berhasil Diperbarui.</div>");
+        }else{
+            $gagal = validation_errors();
+            $this->session->set_flashdata("update_failed", "<div class='alert alert-danger'>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Gagal Diubah!!<br>" . $gagal . "</div>");
+        }
+        redirect('simpanan_pokok');
+    }
+
 
     function update()
     {
