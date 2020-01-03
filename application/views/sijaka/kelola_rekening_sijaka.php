@@ -3,18 +3,20 @@
         $("#simpan_pengajuan").attr('disabled',true);
     });
     function getNominalSaldo() {
-        var no_rekening_simuda = $("#no_rekening_simuda").val()
+        var NRSj = $("#NRSj").val()
         $.ajax({
-            url: "<?php echo base_url() . 'index.php/simuda/getNominalSaldo'; ?>",
+            url: "<?php echo base_url() . 'index.php/sijaka/getNominalSaldoSijaka'; ?>",
             type: "POST",
             data: {
-                id : no_rekening_simuda
+                id : NRSj
             },
             success: function(ajaxData) {
                 $('.data-ajax').html(ajaxData);
             }
         });
     }
+
+    //tanya perhitungan algoritma saldo
     function hitungSaldoAkhir(){
            var saldo_awal = parseInt($("#saldo_awal").val())
            var tipe = $("#tipe").find(":selected").val()
@@ -69,15 +71,15 @@
             echo $this->session->flashdata("delete_success");
             echo $this->session->flashdata("delete_failed");
             ?>
-            <form method="POST" action="<?php echo base_url().'index.php/simuda/simpanKelolaRekening' ?>">
+            <form method="POST" action="<?php echo base_url().'index.php/sijaka/simpanKelolaRekeningSijaka' ?>">
                <!-- <input type="hidden" name="limit_debet" id="limit_debet" value="<?php echo $limit_debet_simuda; ?>"> -->
                 <div class="row">
                     <div class="col-md-4">
                         <label for="">No. Rekening</label>
-                        <select name="no_rekening_simuda" id="no_rekening_simuda" class="form-control select2_" onchange="getNominalSaldo();controlButtonPengajuan()" required>
+                        <select name="NRSj" id="NRSj" class="form-control select2_" onchange="getNominalSaldo();controlButtonPengajuan()" required>
                             <option value="">--Pilih--</option>
-                            <?php foreach($master_simuda as $i){ ?>
-                            <option value="<?php echo $i->no_rekening_simuda; ?>"><?php echo $i->no_rekening_simuda.' - '.$i->nama; ?></option>
+                            <?php foreach($master_sijaka as $i){ ?>
+                            <option value="<?php echo $i->NRSj; ?>"><?php echo $i->NRSj.' - '.$i->nama; ?></option>
                             <?php } ?>
                         </select>
                     </div>

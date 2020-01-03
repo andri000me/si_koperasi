@@ -77,4 +77,10 @@ Class M_sijaka extends CI_Model{
         return $this->db->count_all_result();
     }
 
+    public function getTtlRekSijaka()
+    {
+        $this->db->select('COUNT(NRSj) ttlRekSijaka');
+        $this->db->from($this->master_table);
+        return $this->db->get()->result();
+    }
 }

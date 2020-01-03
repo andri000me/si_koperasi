@@ -7,6 +7,7 @@ Class Sijaka extends CI_Controller{
         $this->load->model('M_anggota');
         $this->load->model('M_simuda');
         $this->load->model('M_jurnal');
+        $this->load->model('M_otorisasi');
     }
 
     function bukaRekeningSijaka(){
@@ -155,11 +156,6 @@ Class Sijaka extends CI_Controller{
         redirect('sijaka/perhitunganAkhirBulanSijaka');
     }
 
-    function kelolaRekeningSijaka(){
-        $data['path'] = 'sijaka/kelola_rekening_sijaka';
-        $this->load->view('master_template',$data);
-    }
-
     function detailRekeningSijaka($id){
         $data['path'] = 'sijaka/detail_rekening_sijaka';
         $data['id'] = $id;
@@ -169,11 +165,96 @@ Class Sijaka extends CI_Controller{
         $this->load->view('master_template',$data);
     }
 
-    //Get Saldo Awal Di Form Kelola Rekening
+    //-----Halaman Form Buka Rekening----------------
+    //Form Kelola Rekening
+    function kelolaRekeningSijaka(){
+        $data['path'] = 'sijaka/kelola_rekening_sijaka';
+        $data['master_sijaka'] = $this->M_sijaka->getSemuaMasterSijaka();
+        $this->load->view('master_template',$data);
+    }
+
+    //get saldo awal di form kelola rekening
+    //cari algoritma get nominal sijaka dulu
     function getNominalSaldoSijaka(){
         $NRSj = $this->input->post('id');
         $data_nominal = $this->M_sijaka->getJumlahRecordBulanIni($NRSj, date('m'), date('Y'));
+    }
 
+    //digunakan untuk memproses rekening / kirim ke halaman otorisasi
+    function simpanKelolaRekeningSijaka(){
+        //melakukan form validasi
+        $config = array(
+            array('field'=>'NRSj','label'=>'No. Rekening','rules'=>'required'),
+            array('field'=>'datetime','label'=>'Datetime','rules'=>'required'),
+            array('field'=>'tipe','label'=>'Tipe','rules'=>'required'),
+            array('field'=>'jumlah','label'=>'Jumlah','rules'=>'required'),
+            array('field'=>'saldo_akhir','label'=>'saldo_akhir','rules'=>'required'),
+        );
+        $this->form_validation->set_rules($config);
+        if($this->form_validation->run() == TRUE){
+            //Jika yang diklik adalah tombol proses, maka :
+            if($this->input->post('simpan_') == "proses"){
+                //input ke table detai sijaka
+                if($this->input->post('tipe') == "K"){
+                    //jika tipe kredit
+                    $data = array(
+                        'NRSj' => $this->input->post('NRSj'),
+                        'datetime' => $this->input->post('datetime'),
+                        'kredit' => $this->input->post('jumlah'),
+                        'saldo' => $this->input->post('saldo_akhir'),
+                        'id_user' => 1
+                    );
+                }else if($this->input->post('tipe') == "D"){
+                    //jika tipe debet
+                    $data = array(
+                        'NRSj' => $this->input->post('NRSj'),
+                        'datetime' => $this->input->post('datetime'),
+                        'debet' => $this->input->post('jumlah'),
+                        'saldo' => $this->input->post('saldo_akhir'),
+                        'id_user' => 1
+                    );
+                }
+                $save1 = $this->M_simuda->simpanDetailSijaka($data);
+
+                //insert ke table jurnal
+                $data_jurnal = array(
+                    'tanggal' => $datetime,
+                    'kode' => '', //Belum Dikasih
+                    'lawan' => '',
+                    'tipe' => 'K',
+                    'nominal' => $this->input->post('jumlah'),
+                    'tipe_trx_koperasi' => 'Sijaka',
+                    'id_detail' => $this->db->insert_id()
+                );
+                $save2 = $this->M_jurnal->inputJurnal($data_jurnal);
+                if($save1 == TRUE && $save2 == TRUE){
+                    $this->session->set_flashdata("input_success","<div class='alert alert-success'>
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Berhasil Ditambahkan!!</div>");
+                }else{
+                    $this->session->set_flashdata("input_failed","<div class='alert alert-danger'>
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Gagal Ditambahkan!!</div>");
+                }
+            }else if($this->input->post('simpan_') == "pengajuan"){
+                //jika yang diklik adalah tombol pengajuan
+                //input ke tabel otorisasi
+                $data_otorisasi = array(
+                    'tipe' => 'Sijaka',
+                    'NRSj' => $this->input->post('NRSj'),
+                    'nominal_debet' => $this->input->post('jumlah'),
+                    'status' => 'Open'
+                );
+                if($this->M_otorisasi->saveOtorisasi($data_otorisasi) == TRUE){
+                    $this->session->set_flashdata("input_success","<div class='alert alert-success'>
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Berhasil Ditambahkan!!</div>");
+                }
+            }
+        }else{
+            $gagal = validation_errors();
+            $this->session->set_flashdata("input_failed","<div class='alert alert-danger'>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Gagal Ditambahkan!!<br>".$gagal."</div>");
+        }
+        //redirect ke halaman kelola rekening
+        redirect('Sijaka/kelolaRekeningSijaka');
     }
 
 }
