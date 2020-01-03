@@ -34,9 +34,9 @@
 
     function manageHitungBahas(){
       var jumlah = parseInt($("#inputJumlah").val())
-      var bahas = 0.7/100
-
-      var inputJmlBahas = jumlah * bahas;
+      //var nilai_bahas = parseInt($("#nilai_bahas").val())
+      var nilai_bahas = 0.7/100
+      var inputJmlBahas = jumlah * nilai_bahas
       $("#inputJmlBahas").val(inputJmlBahas)
     }
 
@@ -66,11 +66,23 @@
     function manageCustom() {
       var nilai_bahas_field = $("#inputBahas").val()
       if(nilai_bahas_field == "0.7%"){
-        $("#nilai_custom").attr("disabled","disabled")
+        $("#inputJmlBahas").attr("readonly")
       }else if(nilai_bahas_field == "Custom"){
-        $("#nilai_custom").removeAttr("disabled")
+        $("#inputJmlBahas").removeAttr("readonly")
       }
     }
+    $(document).ready(function () {
+      $("#inputJmlBahas").attr("readonly", true);
+      $('#inputBahas').change(function (e) {
+        if ($(this).val() == 'Custom') {
+          $("#inputJmlBahas").removeAttr("readonly")
+        }
+        else{
+          $("#inputJmlBahas").attr("readonly", true)
+        }
+      });
+    
+    });
 </script>
 <!-- BreadCumb -->
 
@@ -103,15 +115,15 @@
               <?php } ?>
           </select>
         </div>
+        <div class="form-group col-md-4">
+          <label for="inputJumlah">Jumlah</label>
+          <input name="jumlah" type="number" class="form-control" id="inputJumlah" placeholder="85000xxx" onkeyup="manageHitungBahas()" required>
+        </div>
       </div>
       <div class='row data-ajax'>
 
       </div>
       <div class="form-row">
-        <div class="form-group col-md-4">
-          <label for="inputJumlah">Jumlah</label>
-          <input name="jumlah" type="number" class="form-control" id="inputJumlah" placeholder="85000xxx" onkeyup="manageHitungBahas()" required>
-        </div>
         <div class="form-group col-md-4">
             <label for="inputTanggalAwal">Tanggal Awal</label>
             <?php
@@ -119,15 +131,9 @@
             ?>
             <input name="tanggal_awal" type="date" class="form-control" id="tgl_awal" value="<?php echo $tgl; ?>" name="tgl_awal" placeholder="Tanggal Awal">
         </div>
-        <!-- <div class="form-group col-md-4">
-          <label for="inputJangkaWaktu">Jangka Waktu</label>
-          <input name="jangka_waktu" type="number" class="form-control" id="inputJangkaWaktu" placeholder="Bulan" required>
-        </div> -->
-      </div>
-      <div class="form-row">
         <div class="form-group col-md-4">
           <label for="inputJangkaWaktu">Jangka Waktu</label>
-            <select name="jangka_waktu" id="jangka_waktu" class="form-control form-control-sm" onchange="manageDate()" required>
+            <select name="jangka_waktu" id="jangka_waktu" class="form-control select2_" onchange="manageDate()" required>
               <option value="">--Pilih Jangka Waktu--</option>
               <option value="3">3 Bulan</option>
               <option value="6">6 Bulan</option>
@@ -139,8 +145,14 @@
         </div>
         <div class="form-group col-md-4">
             <label for="inputTanggalAkhir">Tanggal Akhir</label>
-            <input type="date" name="tanggal_akhir" class="form-control" id="tgl_akhir" placeholder="Tanggal Akhir">
+            <input type="date" name="tanggal_akhir" class="form-control" id="tgl_akhir" placeholder="Tanggal Akhir" readonly>
         </div>
+        <!-- <div class="form-group col-md-4">
+          <label for="inputJangkaWaktu">Jangka Waktu</label>
+          <input name="jangka_waktu" type="number" class="form-control" id="inputJangkaWaktu" placeholder="Bulan" required>
+        </div> -->
+      </div>
+      <div class="form-row">
         <!-- <div class="form-group col-md-4">
           <label for="tanggalAwal">Mulai</label>
           <input name="tanggal_awal" type="date" class="form-control" id="tanggal_awal" placeholder="Bulan" required>
@@ -150,24 +162,31 @@
           <input name="tanggal_akhir" type="date" class="form-control" id="tanggalAkhir" placeholder="Sampai" required>
         </div> -->
       </div>
-      <div class="form-row">
-        <div class="form-group col-md-1">
+       <div class="form-row">
+        <div class="form-group col-md-2">
           <label for="inputNilaiBahas">Nilai Bahas</label>
-          <select name="nilai_bahas" id="inputBahas" class="form-control" onchange="manageCustom()" required>
-            <option value="">--Pilih--</option>
-            <option value="0.7%">0.7%</option>
+          <select name="nilai_bahas" id="inputBahas" class="form-control" required>
+            <option value="0.7%" selected>0.7%</option>
             <option value="Custom">Custom</option>
           </select>
         </div>
-        <div class="form-group col-md-1">
+        <!-- <div class="form-group col-md-2">
           <label for=" ">Custom</label>
-          <input name="nilai_custom" type="text" class="form-control" value="0.7%" id="nilai_custom"  required>
-        </div>
+          <input name="nilai_bahas" type="text" class="form-control" value="0.7%" id="nilai_bahas"  required>
+        </div> -->
         <div class="form-group col-md-2">
           <label for="inputJmlNilaiBahas">Jumlah Bayar Bahas</label>
-          <input name="presentase_bagi_hasil_bulanan" type="text" class="form-control" value="" id="inputJmlBahas">
+          <input name="presentase_bagi_hasil_bulanan" type="number" class="form-control" value="" id="inputJmlBahas">
         </div>
-        <div class="form-group col-md-1">
+        <div class="form-group col-md-2">
+          <label for="perpanjanganOtomatis">Perpanjangan Otomatis</label>
+          <select name="perpanjangan_otomatis" id="perpanjanganOtomatis" class="form-control" required>
+            <option>--Pilih--</option>
+            <option>Y</option>
+            <option>N</option>
+          </select>
+        </div>
+        <div class="form-group col-md-2">
           <label for="inputPembayaranBahas">Pembayaran</label>
           <select name="pembayaran_bahas" id="inputPembayaranBahas" class="form-control" onchange="managePembayaran()" required>
           <option value="">--Pilih--</option>
@@ -175,7 +194,7 @@
             <option value="Kredit Rekening">Kredit Rekening</option>
           </select>
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
             <label for="">Rekening Simuda</label>
             <select name="no_rekening_simuda" id="no_rekening_simuda" class="form-control select2_" required>
                 <option value="">--Pilih--</option>
@@ -190,14 +209,6 @@
         </div> -->
       </div>
       <div>
-        <div class="form-group col-md-1">
-          <label for="perpanjanganOtomatis">Perpanjangan Otomatis</label>
-          <select name="perpanjangan_otomatis" id="perpanjanganOtomatis" class="form-control" required>
-            <option>Pilih</option>
-            <option>Y</option>
-            <option>N</option>
-          </select>
-        </div>
         <div class="row mt-2">
           <div class="col-md-4">
               <button type="submit" class="btn btn-primary mr-1">Simpan</button>

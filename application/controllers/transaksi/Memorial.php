@@ -4,6 +4,7 @@ Class Memorial extends CI_Controller{
     function __construct(){
         parent::__construct();
         $this->load->model('transaksi/M_memorial');
+        $this->load->model('M_log_activity');
     }
     function index(){
         $data['title'] = 'Memorial';
@@ -138,6 +139,14 @@ Class Memorial extends CI_Controller{
 
             $this->M_memorial->insertData('ak_jurnal',$jurnal);
         }
+
+        $datetime = date('Y-m-d H:i:s');
+        $activity = array(
+            'id_user' => '1', //sementara
+            'datetime' => $datetime,
+            'keterangan' => 'Menginput bukti memorial dengan kode ' . $bukti_memorial['kode_trx_memorial'],
+        );
+        $this->M_log_activity->insertActivity($activity);
 
         unset($_SESSION['bukti_memorial']);
         unset($_SESSION['detail_memorial']);
@@ -313,6 +322,14 @@ Class Memorial extends CI_Controller{
         );
         $this->M_memorial->updateData('ak_trx_memorial',$memorial, ['kode_trx_memorial' => $kode]);
 
+        $datetime = date('Y-m-d H:i:s');
+        $activity = array(
+            'id_user' => '1', //sementara
+            'datetime' => $datetime,
+            'keterangan' => 'Mengedit bukti memorial dengan kode ' . $kode,
+        );
+        $this->M_log_activity->insertActivity($activity);
+
         unset($_SESSION['edit_bukti_memorial'][$kode]);
         unset($_SESSION['detail_edit_bukti_memorial'][$kode]);
 
@@ -332,6 +349,15 @@ Class Memorial extends CI_Controller{
         $this->M_memorial->deleteMemorial('ak_jurnal', ['kode_transaksi' => $kode]);
         $this->M_memorial->deleteMemorial('ak_detail_trx_memorial', ['kode_trx_memorial' => $kode]);
         $this->M_memorial->deleteMemorial('ak_trx_memorial', ['kode_trx_memorial' => $kode]);
+
+        $datetime = date('Y-m-d H:i:s');
+        $activity = array(
+            'id_user' => '1', //sementara
+            'datetime' => $datetime,
+            'keterangan' => 'Menghapus bukti memorial dengan kode ' . $kode,
+        );
+        $this->M_log_activity->insertActivity($activity);
+
 
         $this->session->set_flashdata("delete_success","<div class='alert alert-success'>
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data berhasil dihapus.<br></div>");

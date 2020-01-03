@@ -5,6 +5,6 @@
 </div>
 <div class="col-md-4">
     <label for="">Alamat</label>
-    <textarea name="alamat" class="form-control" style="height:100px;max-height:100px;" required readonly><?php echo $a->alamat; ?></textarea>
+    <textarea name="alamat" class="form-control" style="height:40px;max-height:40px;" required readonly><?php echo $a->alamat; ?></textarea>
 </div>
 <?php } ?>

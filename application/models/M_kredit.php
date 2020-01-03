@@ -62,4 +62,11 @@ class M_kredit extends CI_Model
             return FALSE;
         }
     }
+
+    public function getTtlRekKredit()
+    {
+        $this->db->select('COUNT(no_rekening_pembiayaan) ttlRekKredit');
+        $this->db->from($this->master_table);
+        return $this->db->get()->result();
+    }
 }

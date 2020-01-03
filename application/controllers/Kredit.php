@@ -7,6 +7,7 @@ class Kredit extends CI_Controller
         $this->load->model('M_kredit');
         $this->load->model('M_anggota');
         $this->load->model('M_jurnal');
+        $this->load->model('M_log_activity');
     }
     ///////////////////////////////
     //Pengajuan Rekening
@@ -57,6 +58,15 @@ class Kredit extends CI_Controller
 
             );
             $this->M_kredit->simpanKredit($data_master);
+
+            $datetime = date('Y-m-d H:i:s');
+            $activity = array(
+                'id_user' => '1', //sementara
+                'datetime' => $datetime,
+                'keterangan' => 'Menginput pembiayaan dengan no rekening ' . $this->input->post('no_rekening_pembiayaan') . ' dari anggota ' .$this->input->post('no_anggota') . ' dengan nominal ' . $this->input->post('jumlah_pembiayaan'),
+            );
+            $this->M_log_activity->insertActivity($activity);
+
             $this->session->set_flashdata("input_success", "<div class='alert alert-success'>
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Pengajuan Berhasil<br></div>");
         } else {
