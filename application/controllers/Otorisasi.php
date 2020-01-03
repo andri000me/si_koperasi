@@ -22,10 +22,11 @@ Class Otorisasi extends CI_Controller{
     function updateStatus(){
         $id = $this->input->post('id_otorisasi');
         $status = $this->input->post('status');
-        $datetime = date('Y-m-d h:i:s');
+        $datetime = date('Y-m-d H:i:s');
 
         //Update Tabel Otorisasi
         $data_otorisasi = array(
+            'tanggal_persetujuan' => $datetime,
             'status' => $status
         );
         $this->M_otorisasi->updateOtorisasi(array('id_otorisasi' => $id),$data_otorisasi);
@@ -44,12 +45,12 @@ Class Otorisasi extends CI_Controller{
                     //Mengambil Saldo Terakhir
                     //Jika Record Lebih dari 0 Maka saldo Mengambil dari bulan ini, jika tidak maka mengambil dari hasil tutup buku bulan lalu
                     $data_nominal = 0;
-                    if($this->M_simuda->getJumlahRecordBulanIni(array('no_rekening_simuda' => $no_rek, 'month(datetime)' => date('m'), 'year(datetime)' => date('Y'))) > 0){
+                    if($this->M_simuda->getJumlahRecordBulanIni($no_rek) > 0){
                         //Mengambil Record Terakhir Bulan Ini
-                        $data_nominal = $this->M_simuda->getRecordTerakhirBulanIni(array('no_rekening_simuda' => $no_rek, 'month(datetime)' => date('m'), 'year(datetime)' => date('Y')));
+                        $data_nominal = $this->M_simuda->getRecordTerakhirBulanIni($no_rek);
                     }else{
                         //Mengambil Hasil Tutup Buku Bulan Lalu
-                        $data_nominal = $this->M_simuda->getRecordTerakhirTutupBulanLalu(array('no_rekening_simuda' => $no_rek, 'month(tgl_tutup_bulan)' => date('m',strtotime('last month')), 'year(tgl_tutup_bulan)' => date('Y')));
+                        $data_nominal = $this->M_simuda->getRecordTerakhirTutupBulanLalu($no_rek);
                     }
 
                     //Input Ke Tabel Simuda

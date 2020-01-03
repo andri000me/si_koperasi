@@ -121,10 +121,10 @@ Class Simuda extends CI_Controller{
 
     //Digunakan Untuk Memproses Rekening / Kirim Ke Halaman Otorisasi
     function simpanKelolaRekening(){
+        $datetime = date('Y-m-d H:i:s');
         //Melakukan Form Validasi
         $config = array(
             array('field'=>'no_rekening_simuda','label'=>'No. Rekening','rules'=>'required'),
-            array('field'=>'datetime','label'=>'Datetime','rules'=>'required'),
             array('field'=>'tipe','label'=>'Tipe','rules'=>'required'),
             array('field'=>'jumlah','label'=>'Jumlah','rules'=>'required'),
             array('field'=>'saldo_akhir','label'=>'saldo_akhir','rules'=>'required'),
@@ -137,7 +137,7 @@ Class Simuda extends CI_Controller{
                 if($this->input->post('tipe') == "K"){ //Jika Tipe Kredit
                     $data = array(
                         'no_rekening_simuda' => $this->input->post('no_rekening_simuda'),
-                        'datetime' => $this->input->post('datetime'),
+                        'datetime' => $datetime,
                         'kredit' => $this->input->post('jumlah'),
                         'saldo' => $this->input->post('saldo_akhir'),
                         'id_user' => 1
@@ -146,7 +146,7 @@ Class Simuda extends CI_Controller{
                 }else if($this->input->post('tipe') == "D"){ //Jika Tipe Debet
                     $data = array(
                         'no_rekening_simuda' => $this->input->post('no_rekening_simuda'),
-                        'datetime' => $this->input->post('datetime'),
+                        'datetime' => $datetime,
                         'debet' => $this->input->post('jumlah'),
                         'saldo' => $this->input->post('saldo_akhir'),
                         'id_user' => 1
@@ -156,7 +156,7 @@ Class Simuda extends CI_Controller{
                 
                 //Insert Ke Tabel Jurnal
                 $data_jurnal = array(
-                    'tanggal' => $this->input->post('datetime'),
+                    'tanggal' => $datetime,
                     'kode' => '', //Belum Dikasih
                     'lawan' => '',
                     'tipe' => $this->input->post('tipe'),
@@ -176,13 +176,14 @@ Class Simuda extends CI_Controller{
                 //Input Ke Tabel Otorisasi
                 $data_otorisasi = array(
                     'tipe' => 'Simuda',
+                    'tanggal_input' => $datetime,
                     'no_rek' => $this->input->post('no_rekening_simuda'),
                     'nominal_debet' => $this->input->post('jumlah'),
                     'status' => 'Open'
                 );
                 if($this->M_otorisasi->saveOtorisasi($data_otorisasi) == TRUE){
                     $this->session->set_flashdata("input_success","<div class='alert alert-success'>
-                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Berhasil Ditambahkan!!</div>");
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Pengajuan Debet Selesai, Menunggu Konfirmasi Manager</div>");
                 }                    
             }
         }else{
