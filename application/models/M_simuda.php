@@ -50,22 +50,22 @@ Class M_simuda extends CI_Model{
         $this->db->where($where);
         return $this->db->get()->result();
     }
-    function getJumlahRecordBulanIni($no_rekening_simuda,$bulan,$tahun){ 
+    function getJumlahRecordBulanIni($no_rekening_simuda){ 
         $where = array(
             'no_rekening_simuda' => $no_rekening_simuda,
-            'month(datetime)' => $bulan, 
-            'year(datetime)' => $tahun
+            'month(datetime)' => date('m'), 
+            'year(datetime)' => date('Y')
         );
         $this->db->select('id_detail_rekening_simuda');
         $this->db->from($this->detail_table);
         $this->db->where($where);
         return $this->db->count_all_results();
     }
-    function getRecordTerakhirBulanIni($no_rekening_simuda,$bulan,$tahun){
+    function getRecordTerakhirBulanIni($no_rekening_simuda){
         $where = array(
             'no_rekening_simuda' => $no_rekening_simuda,
-            'month(datetime)' => $bulan, 
-            'year(datetime)' => $tahun
+            'month(datetime)' => date('m'), 
+            'year(datetime)' => date('Y')
         );
         $this->db->select('saldo');
         $this->db->from($this->detail_table);
