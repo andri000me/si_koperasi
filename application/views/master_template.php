@@ -185,7 +185,8 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/general-ledger/bukubesar'; ?>">Buku Besar</a>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/general-ledger/neracasaldo'; ?>">Neraca Saldo</a>
-            <a class="collapse-item" href="">Laba/Rugi</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/general-ledger/labarugi'; ?>">Laba/Rugi Harian</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/general-ledger/labarugi/lrbulanan'; ?>">Laba/Rugi Bulanan</a>
           </div>
         </div>
       </li>
