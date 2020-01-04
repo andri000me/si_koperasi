@@ -28,11 +28,6 @@ Class KodeRekening extends CI_Controller{
                 'rules' => 'required'
             ),
             array(
-                'field' => 'inisial',
-                'label' => 'Inisial',
-                'rules' => 'max_length[3]'
-            ),
-            array(
                 'field' => 'saldo_awal',
                 'label' => 'Saldo Awal',
                 'rules' => ''
@@ -49,7 +44,6 @@ Class KodeRekening extends CI_Controller{
             $data = array(
                 'kode_rekening' => $this->input->post('kode_induk'). '.' .$this->input->post('kode_rekening'),
                 'nama' => ucwords($this->input->post('nama')),
-                'inisial' => $this->input->post('inisial'),
                 'saldo_awal' => $this->input->post('saldo_awal'),
                 'kode_induk' => $this->input->post('kode_induk'),
             );
@@ -106,7 +100,6 @@ Class KodeRekening extends CI_Controller{
             $data = array(
                 'kode_rekening' => $this->input->post('kode_induk').'.'.$this->input->post('new_kode_rekening'),
                 'nama' => ucwords($this->input->post('nama')),
-                'inisial' => $this->input->post('inisial'),
                 'saldo_awal' => $this->input->post('saldo_awal'),
                 'kode_induk' => $this->input->post('kode_induk'),
             );

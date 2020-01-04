@@ -4,7 +4,7 @@ Class M_kode_rekening extends CI_Model{
     private $_table = 'ak_rekening';
 
     function getAll(){
-        $this->db->select('r.kode_rekening, r.nama, r.inisial, r.saldo_awal, i.nama nama_induk')
+        $this->db->select('r.kode_rekening, r.nama, r.saldo_awal, i.nama nama_induk')
                  ->from('ak_rekening r')
                  ->join('ak_kode_induk i', 'i.kode_induk = r.kode_induk');
         

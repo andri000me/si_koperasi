@@ -17,7 +17,7 @@
                         <div class="col-md-6 mb-3">
                           <div class="form-group-inner">
                               <label for="" class="pull-left">Kode Induk</label>
-                              <select name="kode_induk" id="" class="form-control form-control-sm" required>
+                              <select name="kode_induk" id="" class="form-control form-control-sm" required style="width: 100%">
                                   <option value="">--Pilih Kode Induk--</option>
                                   <?php
                                   foreach ($kodeInduk as $keyInduk) {
@@ -39,12 +39,6 @@
                             <div class="form-group-inner">
                                 <label for="" class="pull-left">Nama Kode Rekening</label>
                                 <input type="text" name="nama" class="form-control form-control-sm" placeholder="Masukkan Nama" value="<?php echo $key->nama; ?>"required>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <div class="form-group-inner">
-                                <label for="" class="pull-left">Inisial</label>
-                                <input type="text" name="inisial" class="form-control form-control-sm" placeholder="Masukkan Inisial" value="<?php echo $key->inisial; ?>">
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">

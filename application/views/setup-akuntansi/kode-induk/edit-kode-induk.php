@@ -26,7 +26,7 @@
                         <div class="col-md-6 mb-3">
                             <div class="form-group-inner">
                                 <label for="" class="pull-left">Tipe</label>
-                                <select name="tipe" id="" class="form-control form-control-sm" required>
+                                <select name="tipe" id="" class="form-control select2_ form-control-sm" required style="width: 100%">
                                     <option value="">--Pilih Tipe--</option>
                                     <option value="D" <?= $key->tipe == 'D' ? 'selected' : '' ?>>Debet</option>
                                     <option value="K" <?= $key->tipe == 'K' ? 'selected' : '' ?>>Kredit</option>

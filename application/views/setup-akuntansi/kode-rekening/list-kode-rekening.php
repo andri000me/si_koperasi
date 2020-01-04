@@ -69,7 +69,6 @@
                             <th>No.</th>
                             <th>Kode Rekening</th>
                             <th>Nama</th>
-                            <th>Inisial</th>
                             <th>Saldo Awal</th>
                             <th>Kode Induk</th>
                             <th>Aksi</th>
@@ -85,7 +84,6 @@
                                 <td><?php echo $no++; ?></td>
                                 <td><?php echo $key->kode_rekening; ?></td>
                                 <td><?php echo $key->nama; ?></td>
-                                <td><?php echo $key->inisial; ?></td>
                                 <td><?php echo number_format($key->saldo_awal, 2, ',', '.'); ?></td>
                                 <td><?php echo $key->nama_induk; ?></td>
                                 <td style="text-align:center;">
@@ -120,7 +118,7 @@
                         <div class="col-md-6 mb-3">
                             <div class="form-group-inner">
                                 <label for="" class="pull-left">Kode Induk</label><br>
-                                <select name="kode_induk" id="" class="form-control form-control-sm select2_" required>
+                                <select name="kode_induk" id="" class="form-control form-control-sm select2_" required style="width: 100%">
                                     <option value="">--Pilih Kode Induk--</option>
                                     <?php
                                     foreach ($kodeInduk as $key) {
@@ -142,12 +140,6 @@
                             <div class="form-group-inner">
                                 <label for="" class="pull-left">Nama Kode Rekening</label>
                                 <input type="text" name="nama" class="form-control form-control-sm" placeholder="Masukkan Nama Kode Rekening">
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <div class="form-group-inner">
-                                <label for="" class="pull-left">Inisial</label>
-                                <input type="text" name="inisial" class="form-control form-control-sm" placeholder="Masukkan Inisial Kode Rekening">
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">

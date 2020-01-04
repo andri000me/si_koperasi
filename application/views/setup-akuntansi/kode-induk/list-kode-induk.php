@@ -120,7 +120,7 @@
                         <div class="col-md-6 mb-3">
                             <div class="form-group-inner">
                                 <label for="" class="pull-left">Tipe</label>
-                                <select name="tipe" id="" class="form-control form-control-sm select2_" required>
+                                <select name="tipe" id="" class="form-control form-control-sm select2_" required style="width: 100%">
                                     <option value="">--Pilih Tipe--</option>
                                     <option value="D">Debet</option>
                                     <option value="K">kredit</option>
