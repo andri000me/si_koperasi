@@ -52,7 +52,7 @@ Class KodeInduk extends CI_Controller{
         redirect(base_url('index.php/setup-akuntansi/kodeinduk'));
     }
     function edit($kode){
-        $data['kodeInduk'] = $this->M_kode_induk->getOne(array('kode_induk' => $kode));
+        $data['kodeInduk'] = $this->M_kode_induk->getOne(array('kode_induk' => $kode));    
         $this->load->view('setup-akuntansi/kode-induk/edit-kode-induk',$data);
     }
 

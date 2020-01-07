@@ -11,7 +11,7 @@
                   <div class="row">
                     <?php foreach($kodeRekening as $key){
                       $kode_rek = explode('.', $key->kode_rekening);
-                      $kode_rek = $kode_rek[1];
+                      $kode_rek = $kode_rek[2];
                     ?>
                         <input type="hidden" name="kode" value="<?= $key->kode_rekening ?>">
                         <div class="col-md-6 mb-3">

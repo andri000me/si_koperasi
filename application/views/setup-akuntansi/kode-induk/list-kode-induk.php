@@ -78,7 +78,7 @@
                                 <td><?php echo $key->nama; ?></td>
                                 <td><?php echo $key->tipe == "D" ? 'Debet' : 'Kredit' ; ?></td>
                                 <td style="text-align:center;">
-                                    <button type="button" class="btn btn-sm btn-success" onclick="edit(<?php echo $key->kode_induk; ?>)"><i class="icofont-ui-edit"></i></button>
+                                    <button type="button" class="btn btn-sm btn-success" onclick="edit('<?php echo $key->kode_induk; ?>')"><i class="icofont-ui-edit"></i></button>
                                     <a onclick="confirm('Apakah anda yakin?')" href="<?= base_url('index.php/setup-akuntansi/kodeinduk/delete/'.$key->kode_induk) ?>">
                                       <button class="btn btn-danger btn-sm"><i class="icofont-ui-delete"></i></button>
                                     </a>
