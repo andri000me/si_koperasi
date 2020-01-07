@@ -147,20 +147,8 @@
             <label for="inputTanggalAkhir">Tanggal Akhir</label>
             <input type="date" name="tanggal_akhir" class="form-control" id="tgl_akhir" placeholder="Tanggal Akhir" readonly>
         </div>
-        <!-- <div class="form-group col-md-4">
-          <label for="inputJangkaWaktu">Jangka Waktu</label>
-          <input name="jangka_waktu" type="number" class="form-control" id="inputJangkaWaktu" placeholder="Bulan" required>
-        </div> -->
       </div>
       <div class="form-row">
-        <!-- <div class="form-group col-md-4">
-          <label for="tanggalAwal">Mulai</label>
-          <input name="tanggal_awal" type="date" class="form-control" id="tanggal_awal" placeholder="Bulan" required>
-        </div>
-        <div class="form-group col-md-4">
-          <label for="tanggalAkhir">Sampai</label>
-          <input name="tanggal_akhir" type="date" class="form-control" id="tanggalAkhir" placeholder="Sampai" required>
-        </div> -->
       </div>
        <div class="form-row">
         <div class="form-group col-md-2">
@@ -170,10 +158,6 @@
             <option value="Custom">Custom</option>
           </select>
         </div>
-        <!-- <div class="form-group col-md-2">
-          <label for=" ">Custom</label>
-          <input name="nilai_bahas" type="text" class="form-control" value="0.7%" id="nilai_bahas"  required>
-        </div> -->
         <div class="form-group col-md-2">
           <label for="inputJmlNilaiBahas">Jumlah Bayar Bahas</label>
           <input name="presentase_bagi_hasil_bulanan" type="number" class="form-control" value="" id="inputJmlBahas">
@@ -203,10 +187,6 @@
                 <?php } ?>
             </select>
         </div>  
-        <!-- <div class="form-group col-md-3">
-          <label for="inputJmlBayarBahas">Jumlah Bayar</label>
-          <input name="jumlah_bayar" type="text" class="form-control" id="inputJmlPembayaranBahas" required>
-        </div> -->
       </div>
       <div>
         <div class="row mt-2">

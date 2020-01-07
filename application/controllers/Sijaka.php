@@ -32,19 +32,12 @@ Class Sijaka extends CI_Controller{
             array('field'=>'NRSj','label'=>'No. Rekening','rules'=>'required|is_unique[master_rekening_sijaka.NRSj]'),
             array('field'=>'no_anggota','label'=>'No. Anggota','rules'=>'required'),
             array('field'=>'jumlah','label'=>'Jumlah','rules'=>'required'),
-            //array('field'=>'jumlah_sekarang','label'=>'Jumlah','rules'=>'required'),
             array('field'=>'jangka_waktu','label'=>'Jangka Waktu','rules'=>'required'),
             array('field'=>'tanggal_awal','label'=>'Tanggal Awal','rules'=>'required'),
             array('field'=>'tanggal_akhir','label'=>'Tanggal Akhir','rules'=>'required'),
             array('field'=>'presentase_bagi_hasil_bulanan','label'=>'Jumlah Bayar Bahas','rules'=>'required'),
             array('field'=>'pembayaran_bahas','label'=>'Pembayaran','rules'=>'required'),
-            //array('field'=>'no_rekening_simuda','label'=>'Rekening Simuda','rules'=>'required'),
             array('field'=>'perpanjangan_otomatis','label'=>'Perpanjangan Otomatis','rules'=>'required')
-            // array('field'=>'rekening_simuda','label'=>'Jumlah Bayar','rules'=>'required'),
-            // array('field'=>'otomatis_perpanjangan','label'=>'Perpanjangan Otomatis','rules'=>'required'),
-            // array('field'=>'debet','label'=>'','rules'=>'required'),
-            // array('field'=>'kredit','label'=>'','rules'=>'required'),
-            //array('field'=>'saldo','label'=>'','rules'=>'required')
         );
         $this->form_validation->set_rules($config);
         if($this->form_validation->run() == TRUE){
@@ -54,7 +47,6 @@ Class Sijaka extends CI_Controller{
                 'NRSj' => $this->input->post('NRSj'),
                 'no_anggota' => $this->input->post('no_anggota'),
                 'jumlah_awal' => $this->input->post('jumlah'),
-                'jumlah_sekarang' => 0, //muncul ketika anggota sudah gabung sijaka sudah lama
                 'jangka_waktu' => $this->input->post('jangka_waktu'),
                 'tanggal_awal' => $this->input->post('tanggal_awal'),
                 'tanggal_akhir' => $this->input->post('tanggal_akhir'),
@@ -141,18 +133,6 @@ Class Sijaka extends CI_Controller{
             $this->M_sijaka->updateSijakaBerjalan($where,$data);
 
         }
-
-        // $NRSj = $this->input->post('NRSj');
-        // $total_bahas = $this->input->post('total_bahas'); //presentase_bagi_hasil_bulanan * (bulan_berjalan + 1)
-        // $grandtotal = $this->input->post('grandtotal'); // jumlah_sekarang + total_bahas 
-        // //$jumlah_sekarang = $this->input->('jumlah_sekarang'); //jumlah_awal + total_bahas
-        // $berjalan = $bulan_berjalan + 1;
-        // $data = array(
-        //     'total_bahas' => $presentase_bagi_hasil_bulanan * $berjalan,
-        //     'grandtotal' => $jumlah_awal + $total_bahas
-        // );
-        // $where = array('NRSj'=>$NRSj);
-        // $this->m_sijaka->updateSijakaBerjalan($data,$where);
         redirect('sijaka/perhitunganAkhirBulanSijaka');
     }
 
@@ -174,10 +154,15 @@ Class Sijaka extends CI_Controller{
     }
 
     //get saldo awal di form kelola rekening
-    //cari algoritma get nominal sijaka dulu
     function getNominalSaldoSijaka(){
         $NRSj = $this->input->post('id');
-        $data_nominal = $this->M_sijaka->getJumlahRecordBulanIni($NRSj, date('m'), date('Y'));
+        $grandtotal = $this->M_sijaka->getJumlahSaldo($NRSj);
+        // echo "<pre>";
+        // print_r($grandtotal);
+        // echo "</pre>";
+
+        echo "<label>Saldo Awal</label>";
+        echo "<input type='number' name='saldo_awal' id='saldo_awal' class='form-control' value='".$grandtotal."' readonly />";
     }
 
     //digunakan untuk memproses rekening / kirim ke halaman otorisasi

@@ -54,27 +54,16 @@ Class M_sijaka extends CI_Model{
         return $this->db->get($this->detail_table)->result();
     }
 
-    //perhitungan akhir bulan
-    // function getMasterSijaka($bulan_ini, $tahun){
-    //     $query = $this->db->query("CALL perhitungan_tutup_bulan_sijaka(".$bulan_ini.",".$tahun.")");
-    //     $res = $query->result();
-
-    //     $query->next_result();
-    //     $query->free_result();
-
-    //     return $res;
-    // }
-
-    function getJumlahRecordBulanIni($NRSj,$bulan,$tahun){
+    function getJumlahSaldo($NRSj){
         $where = array(
-            'NRSj' => $NRSj,
-            'month(datetime)' => $bulan,
-            'year(datetime)' => $tahun
+            'NRSj' => $NRSj
         );
-        $this->db->select('id_detail_sijaka');
-        $this->db->from($this->detail_table);
+        $this->db->select('grandtotal');
+        $this->db->from($this->master_table);
         $this->db->where($where);
-        return $this->db->count_all_result();
+        foreach($this->db->get()->result() as $data){ //ngeluarkan data
+            return $data->grandtotal; 
+        }
     }
 
     public function getTtlRekSijaka()

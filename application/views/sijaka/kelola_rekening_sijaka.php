@@ -2,7 +2,7 @@
     $(document).ready(function(){
         $("#simpan_pengajuan").attr('disabled',true);
     });
-    function getNominalSaldo() {
+    function getNominalSaldoSijaka() {
         var NRSj = $("#NRSj").val()
         $.ajax({
             url: "<?php echo base_url() . 'index.php/sijaka/getNominalSaldoSijaka'; ?>",
@@ -72,11 +72,10 @@
             echo $this->session->flashdata("delete_failed");
             ?>
             <form method="POST" action="<?php echo base_url().'index.php/sijaka/simpanKelolaRekeningSijaka' ?>">
-               <!-- <input type="hidden" name="limit_debet" id="limit_debet" value="<?php echo $limit_debet_simuda; ?>"> -->
                 <div class="row">
                     <div class="col-md-4">
                         <label for="">No. Rekening</label>
-                        <select name="NRSj" id="NRSj" class="form-control select2_" onchange="getNominalSaldo();controlButtonPengajuan()" required>
+                        <select name="NRSj" id="NRSj" class="form-control select2_" onchange="getNominalSaldoSijaka();controlButtonPengajuan()" required>
                             <option value="">--Pilih--</option>
                             <?php foreach($master_sijaka as $i){ ?>
                             <option value="<?php echo $i->NRSj; ?>"><?php echo $i->NRSj.' - '.$i->nama; ?></option>
@@ -90,22 +89,18 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="">Datetime</label>
-                        <input type="datetime-local" class="form-control" name="datetime" id="datetime" value="<?php echo date('Y-m-d h:i'); ?>" required>
-                    </div>
-                    <div class="col-md-4">
                         <label for="">Tipe</label>
                         <select name="tipe" id="tipe" class="form-control" onchange="hitungSaldoAkhir();controlButtonPengajuan()" required>
                             <option value="K">Kredit</option>
                             <option value="D">Debit</option>
                         </select>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-md-4">
                         <label for="">Jumlah</label>
                         <input type="number" class="form-control" name="jumlah" id="jumlah" onkeyup="hitungSaldoAkhir();controlButtonPengajuan()"  required>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-md-4">
                         <label for="">Saldo Akhir</label>
                         <input type="number" class="form-control" name="saldo_akhir" id="saldo_akhir" readonly required>
