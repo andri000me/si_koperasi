@@ -51,14 +51,22 @@ Class Otorisasi extends CI_Controller{
                 //Memilih Transaksi Berdasarkan Tipe
                 if($tipe == "Simuda"){ //Input Ke Tabel Detail Simuda
                     //Mengambil Saldo Terakhir
-                    //Jika Record Lebih dari 0 Maka saldo Mengambil dari bulan ini, jika tidak maka mengambil dari hasil tutup buku bulan lalu
-                    $data_nominal = 0;
-                    if($this->M_simuda->getJumlahRecordBulanIni($no_rek) > 0){
-                        //Mengambil Record Terakhir Bulan Ini
-                        $data_nominal = $this->M_simuda->getRecordTerakhirBulanIni($no_rek);
-                    }else{
-                        //Mengambil Hasil Tutup Buku Bulan Lalu
-                        $data_nominal = $this->M_simuda->getRecordTerakhirTutupBulanLalu($no_rek);
+                    $data_nominal = $this->M_simuda->getSaldoRecordTerakhir($no_rek);
+
+                    //Saldo
+                    $saldo_akhir = $data_nominal - $nominal_debet;                    
+
+                    //Saldo Terendah
+                    $saldo_terendah = 0;
+                    if($this->M_simuda->getJumlahRecordBulanIni($no_rek) >0){ //Jika Bulan Ini Ada Transaksi, Maka Menggunakan Pengolahan ini
+                        $record_terakhir_db = $this->M_simuda->getSaldoTerendahRecordTerakhir($no_rek);
+                        if($nominal_debet <= $record_terakhir_db){
+                            $saldo_terendah = $saldo_akhir;
+                        }else{
+                            $saldo_terendah = $record_terakhir_db;
+                        }
+                    }else{ //Jika Bulan Ini Tidak Ada Transaksi, Maka Menggunakan Pengolahan ini
+                        $saldo_terendah = $saldo_akhir;
                     }
 
                     //Input Ke Tabel Simuda
@@ -66,7 +74,8 @@ Class Otorisasi extends CI_Controller{
                         'no_rekening_simuda' => $no_rek,
                         'datetime' => $datetime,
                         'debet' => $nominal_debet,
-                        'saldo' => $data_nominal - $nominal_debet,
+                        'saldo' => $saldo_akhir,
+                        'saldo_terendah' => $saldo_terendah,
                         'id_user' => '1' //Sementara
                     );
                     $this->M_simuda->simpanDetailSimuda($data_detail);

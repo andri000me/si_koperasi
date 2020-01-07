@@ -135,7 +135,7 @@
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/daftarnominatif'; ?>">Daftar Nominatif</a>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/daftartrxotorisasi'; ?>">Daftar Trx Otorisasi</a>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/stellimitdebet'; ?>">Setel Limit Debet Simuda</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/perhitunganakhirbulan'; ?>">Perhitungan Akhir Bulan</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/bagihasil'; ?>">Perhitungan Bagi Hasil</a>
             
           </div>
         </div>
