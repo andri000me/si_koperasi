@@ -104,7 +104,7 @@
       </li>
       <!-- Simpanan Pokok -->
       <li class="nav-item">
-        <a class="nav-link" href="<?php base_url() . 'index.php/simpanan_pokok' ?>">
+        <a class="nav-link" href="<?php echo base_url() . 'index.php/simpanan_pokok' ?>">
           <i class="fas fa-fw fa-cog"></i>
           <span>Simpanan Pokok</span>
         </a>
@@ -117,8 +117,8 @@
         </a>
         <div id="navWajib" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php base_url() . 'index.php/simpanan_wajib/kelolaRekening' ?>">Kelola Rekening</a>
-            <a class="collapse-item" href="<?php base_url() . 'index.php/simpanan_wajib/nominatif' ?>">Nominatif</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simpanan_wajib/kelolaRekening' ?>">Kelola Rekening</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simpanan_wajib/nominatif' ?>">Nominatif</a>
           </div>
         </div>
       </li>

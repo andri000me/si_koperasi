@@ -33,6 +33,20 @@
             }
         });
     }
+
+    function manageAjax() {
+        var no_anggota_field = $("#no_anggota").val()
+        $.ajax({
+            url: "<?php echo base_url() . 'index.php/simpanan_pokok/manageajaxgetdataanggota'; ?>",
+            type: "POST",
+            data: {
+                id: no_anggota_field
+            },
+            success: function(ajaxData) {
+                $('.data-ajax').html(ajaxData);
+            }
+        });
+    }
 </script>
 <!-- BreadCumb -->
 
@@ -124,9 +138,17 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group-inner">
-                                <label for="" class="pull-left">No. Anggota</label>
-                                <input type="text" name="no_anggota" class="form-control form-control-sm" placeholder="Masukkan No anggota" required>
+                                <label for="">No. Anggota</label>
+                                <select name="no_anggota" style="width: 100%" id="no_anggota" class="form-control select2_" onchange="manageAjax()" required>
+                                    <option value="">--Pilih--</option>
+                                    <?php foreach ($anggota as $a) { ?>
+                                        <option value="<?php echo $a->no_anggota; ?>"><?php echo $a->no_anggota . ' - ' . $a->nama ?></option>
+                                    <?php } ?>
+                                </select>
                             </div>
+                        </div>
+                        <div class="col-md-6 data-ajax">
+
                         </div>
                         <div class="col-md-6">
                             <div class="form-group-inner">
@@ -155,3 +177,10 @@
 <div class="modal" id="modaledit">
     
 </div>
+<script>
+    $(document).ready(function() {
+        $('.select2_').select2({
+            theme: 'bootstrap4',
+        });
+    });
+</script>
