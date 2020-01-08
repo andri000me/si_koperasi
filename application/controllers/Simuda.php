@@ -140,7 +140,7 @@ Class Simuda extends CI_Controller{
 
             //Jika Yang Diklik adalah tombol Proses, Maka :
             if($this->input->post('simpan_') == "proses"){
-                //Mendapatkan Saldo Terakhir
+                //Mendapatkan Saldo Terendah
                 if($this->M_simuda->getJumlahRecordBulanIni($no_rekening_simuda) >0){ //Jika Bulan Ini Ada Transaksi, Maka Menggunakan Pengolahan ini
                     $record_terakhir_db = $this->M_simuda->getSaldoTerendahRecordTerakhir($no_rekening_simuda);
                     if($saldo_akhir_form <= $record_terakhir_db){
@@ -282,6 +282,7 @@ Class Simuda extends CI_Controller{
             echo "<td>".$i->nama."</td>";
             echo "<td class='text-right'>".number_format($i->saldo_bulan_lalu,0,',','.')."</td>";
             echo "<td class='text-right'>".number_format($i->saldo_terendah_bulan_lalu,0,',','.')."</td>";
+            echo "<td class='text-right'>".number_format($i->saldo_bulan_ini,0,',','.')."</td>";
             //Perhitungan Data Saldo Terendah
             $nilai_bagi_hasil = $i->saldo_terendah_bulan_lalu / $total_saldo_terendah_akhir_bulan * $nominal;
             echo "<td class='text-right'>".number_format($nilai_bagi_hasil,0,',','.')."</td>";
@@ -292,64 +293,70 @@ Class Simuda extends CI_Controller{
         }
     }
 
-    function simpanPerhitunganAkhirBulan(){
+    function simpanPerhitunganBagiHasil(){
         $nominal = $this->input->post('nominal');
         $nominatif = $this->M_simuda->getMasterSimuda();
+
+        //Insert Ke Tabel Jurnal
+        $data_jurnal = array(
+            'tanggal' => date('Y-m-d H:i:s'),
+            'kode' => '', //Belum Dikasih
+            'lawan' => '',
+            'tipe' => 'K',
+            'nominal' => $nominal,
+            'tipe_trx_koperasi' => 'Simuda',
+            'id_detail' => NULL
+        );
+        $this->M_jurnal->inputJurnal($data_jurnal);
+        
         //Mendapatkan Total Saldo Terendah
         $total_saldo_terendah_akhir_bulan = 0;
         foreach($nominatif as $i){
-            $total_saldo_terendah_akhir_bulan += $i->saldo_terendah; 
+            $total_saldo_terendah_akhir_bulan += $i->saldo_terendah_bulan_lalu; 
         }
+        
 
         //Perhitungan Dan Simpan Data
         foreach($nominatif as $i){
-            //Mendapatkan Nilai Bagi Hasil
-            $nilai_bagi_hasil = $i->saldo_terendah / $total_saldo_terendah_akhir_bulan * $nominal;
+            $no_rekening_simuda = $i->no_rekening_simuda;
+            $saldo_terendah_bulan_lalu = $i->saldo_terendah_bulan_lalu;
+            $saldo_terakhir_db = $i->saldo_bulan_ini;
+            $saldo_terendah = 0;
 
-            //Perhitungan Data Saldo
-            if($this->M_simuda->getJumlahRecordBulanIni($i->no_rekening_simuda) > 0){
-                //Mengambil Record Terakhir Bulan Ini
-                $data_saldo = $this->M_simuda->getRecordTerakhirBulanIni($i->no_rekening_simuda) + $nilai_bagi_hasil;
-            }else{
-                //Mengambil Hasil Tutup Buku Bulan Lalu
-                $data_saldo = $this->M_simuda->getRecordTerakhirTutupBulanLalu($i->no_rekening_simuda) + $nilai_bagi_hasil;
+            //Mendapatkan Nilai Bagi Hasil
+            $nilai_bagi_hasil = $saldo_terendah_bulan_lalu / $total_saldo_terendah_akhir_bulan * $nominal;
+
+            //Perhitungan Data Saldo Terbaru
+            $saldo_baru = $saldo_terakhir_db + $nilai_bagi_hasil;
+
+            //Perhitungan Saldo Terendah
+            if($this->M_simuda->getJumlahRecordBulanIni($no_rekening_simuda) >0){ //Jika Bulan Ini Ada Transaksi, Maka Menggunakan Pengolahan ini
+                $record_terakhir_db = $this->M_simuda->getSaldoTerendahRecordTerakhir($no_rekening_simuda);
+                if($saldo_baru <= $record_terakhir_db){
+                    $saldo_terendah = $saldo_baru;
+                }else{
+                    $saldo_terendah = $record_terakhir_db;
+                }
+            }else{ //Jika Bulan Ini Tidak Ada Transaksi, Maka Menggunakan Pengolahan ini
+                $saldo_terendah = $saldo_baru;
             }
 
-            $datetime = date('Y-m-d H:i:s');
             //Insert Ke Tabel Master Detail Simuda
             $data_detail_simuda = array(
                 'no_rekening_simuda' => $i->no_rekening_simuda,
-                'datetime' => $datetime,
+                'datetime' => date('Y-m-d H:i:s'),
                 'kredit' => $nilai_bagi_hasil,
-                'saldo' => $data_saldo,
+                'saldo' => $saldo_baru,
+                'saldo_terendah' => $saldo_terendah,
                 'id_user' => 1
             );
             $this->M_simuda->simpanDetailSimuda($data_detail_simuda);
 
-            //Tutup Bulan
-            $data_tutup_bulan = array(
-               'no_rekening_simuda' => $i->no_rekening_simuda,
-               'tgl_tutup_bulan' => $datetime,
-               'saldo' => $data_saldo
-
-            );
-            $this->M_simuda->simpanTutupBulanSimuda($data_tutup_bulan);
-
-            //Insert Ke Tabel Jurnal
-            $data_jurnal = array(
-                'tanggal' => $datetime,
-                'kode' => '', //Belum Dikasih
-                'lawan' => '',
-                'tipe' => 'K',
-                'nominal' => $nilai_bagi_hasil,
-                'tipe_trx_koperasi' => 'Simuda',
-                'id_detail' => $this->db->insert_id()
-            );
-            $this->M_jurnal->inputJurnal($data_jurnal);
+            
         }
         $this->session->set_flashdata("input_success","<div class='alert alert-success'>
                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Operasi Perhitungan Akhir Bulan Sukses</div>");
-        redirect('simuda/perhitunganakhirbulan');
+        redirect('simuda/bagiHasil');
     }
 
     //Daftar Otorisasi
