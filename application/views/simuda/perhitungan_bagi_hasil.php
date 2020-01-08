@@ -40,7 +40,7 @@
             echo $this->session->flashdata("delete_success");
             echo $this->session->flashdata("delete_failed");
             ?>
-            <form name="perhitungan_akhir_bulan" method="POST" action="<?php echo base_url().'index.php/simuda/simpanPerhitunganAkhirBulan'; ?>">
+            <form name="perhitungan_akhir_bulan" method="POST" action="<?php echo base_url().'index.php/simuda/simpanPerhitunganBagiHasil'; ?>">
                 <div class="form-group row">
                     <div class="col-md-2">
                         <label for="" class="font-weight-bold">Bulan</label>
@@ -72,6 +72,7 @@
                             <th>Nama</th>
                             <th>Saldo</th>
                             <th>Saldo Terendah</th>
+                            <th>Saldo Terkini</th>
                             <th>Bagi Hasil</th>
                             <th>Nominal</th>
                         </tr>
@@ -86,10 +87,11 @@
                             <td><?php echo $i->no_rekening_simuda; ?></td>
                             <td><?php echo $i->no_anggota; ?></td>
                             <td><?php echo $i->nama; ?></td>
+                            <td class="text-right"><?php echo number_format($i->saldo_bulan_lalu,0,',','.'); ?></td>
+                            <td class="text-right"><?php echo number_format($i->saldo_terendah_bulan_lalu,0,',','.'); ?></td>
                             <td class="text-right"><?php echo number_format($i->saldo_bulan_ini,0,',','.'); ?></td>
-                            <td class="text-right"><?php echo number_format($i->saldo_terendah,0,',','.'); ?></td>
-                            <td><?php ?></td>
-                            <td><?php ?></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                         <?php } ?>
                     </tbody>

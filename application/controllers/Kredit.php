@@ -48,6 +48,7 @@ class Kredit extends CI_Controller
                 'no_rekening_pembiayaan' => $this->input->post('no_rekening_pembiayaan'),
                 'no_anggota' => $this->input->post('no_anggota'),
                 'tgl_pembayaran' => $this->input->post('tgl_pembayaran'),
+                'tipe_pembiayaan' => $this->input->post('tipe_pembiayaan'),
                 'jumlah_pembiayaan' => $this->input->post('jumlah_pembiayaan'),
                 'jangka_waktu_bulan' => $this->input->post('jangka_waktu_bulan'),
                 'jml_pokok_bulanan' => $this->input->post('jml_pokok_bulanan'),

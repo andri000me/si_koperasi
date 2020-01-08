@@ -36,7 +36,7 @@
     var jmlPembiayaan = $('#jumlah_pembiayaan').val();
     var jangkaWaktu = $('#jangka_waktu_bulan').val();
     var jmlPokok = parseInt(jmlPembiayaan) / parseInt(jangkaWaktu);
-    var jmlBahas = 0.01 * jmlPokok;
+    var jmlBahas = 0.015 * jmlPokok;
     $('#jml_pokok_bulanan').val(jmlPokok);
     $("#jml_bahas_bulanan"). val(jmlBahas);
   }
@@ -88,11 +88,20 @@
             <input type="date" class="form-control" id="tgl_pembayaran" value="<?php echo date('Y-m-d'); ?>" name="tgl_pembayaran" placeholder="Tanggal Pembayaran">
           </div>
           <div class="form-group col-md-4">
-            <label for="inputJumlah">Jumlah Pembiayaan</label>
-            <input type="number" name="jumlah_pembiayaan" class="form-control" id="jumlah_pembiayaan" placeholder="Masukan jumlah pembiayaan" onkeyup="hitungPokokBahas()" required>
+              <label for="">Tipe Pembiayaan</label>
+              <select name="tipe_pembiayaan" id="jenis_pembiayaan" class="form-control" required>
+                <option value="">--Pilih Tipe Pembiayaan--</option>
+                <option value="Mudharobah">Mudharobah</option>
+                <option value="Murabahah">Murabahah</option>
+              </select>
           </div>
         </div>
         <div class="row">
+          <div class="form-group col-md-4">
+            <label for="inputJumlah">Jumlah Pembiayaan</label>
+            <input type="number" name="jumlah_pembiayaan" class="form-control" id="jumlah_pembiayaan" placeholder="Masukan jumlah pembiayaan" onkeyup="hitungPokokBahas()" required>
+          </div>
+        
           <div class="form-group col-md-4">
             <label for="inputJangkaWaktu">Jangka Waktu</label>
             <select name="jangka_waktu_bulan" id="jangka_waktu_bulan" class="form-control select2_" onchange="manageDate();hitungPokokBahas()" required>
@@ -105,16 +114,18 @@
               <option value="30">30 Bulan</option>
             </select>
           </div>
+        </div>
+        <div class="row">
           <div class="form-group col-md-4">
             <label for="inputSampai">Tanggal Lunas</label>
             <input type="date" name="tgl_lunas" class="form-control" id="tgl_lunas" placeholder="Tanggal Lunas">
           </div>
-        </div>
-        <div class="row">
           <div class="form-group col-md-4">
             <label for="inputPokok">Pokok</label>
             <input type="text" name="jml_pokok_bulanan" onchange="" class="form-control" id="jml_pokok_bulanan" placeholder="Pokok">
           </div>
+        </div>
+        <div class="row">
           <div class="form-group col-md-4">
             <label for="inputAlamat">Bahas</label>
             <input type="number" name="jml_bahas_bulanan" class="form-control" id="jml_bahas_bulanan" placeholder="Bahas">
@@ -124,6 +135,5 @@
           <button type="submit" class="btn btn-sm btn-primary mr-1">Simpan</button>
           <button type="reset" class="btn btn-sm btn-default btn-danger">Reset</button>
         </div>
-
       </form>
     </div>
