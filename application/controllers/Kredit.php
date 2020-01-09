@@ -68,6 +68,24 @@ class Kredit extends CI_Controller
             );
             $this->M_log_activity->insertActivity($activity);
 
+            if ($this->input->post('tipe_pembiayaan') == 'Mudharobah') {
+                $kode_rek = '01.120.10';
+            }else{
+                $kode_rek = '01.120.30';
+            }
+
+            $data_jurnal = array(
+                'tanggal' => $datetime,
+                'keterangan' => 'Buka rekening Pembiayaan no rekening ' . $this->input->post('no_rekening_pembiayaan'),
+                'kode' => $kode_rek, //Belum Dikasih
+                'lawan' => '01.100.20',
+                'tipe' => 'D',
+                'nominal' => $this->input->post('jumlah_pembiayaan'),
+                'tipe_trx_koperasi' => 'Pembiayaan',
+                'id_detail' => NULL
+            );
+            $this->M_jurnal->inputJurnal($data_jurnal);
+
             $this->session->set_flashdata("input_success", "<div class='alert alert-success'>
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Pengajuan Berhasil<br></div>");
         } else {
@@ -168,19 +186,41 @@ class Kredit extends CI_Controller
             );
             $save2 = $this->M_kredit->updateKredit($where,$data);
 
+            if ($this->M_kredit->getTipeKredit(array('no_rekening_pembiayaan' => $this->input->post('no_rekening_pembiayaan')))->tipe_pembiayaan == 'Mudharobah') {
+                $lawan_pokok = '01.120.10';
+                $lawan_bahas = '02.120.10';
+            }
+            else{
+                $lawan_pokok = '01.120.30';
+                $lawan_bahas = '02.120.20';
+            }
             //Simpan Ke Tabel Jurnal
-            $data_jurnal = array(
+            $data_jurnal_pokok = array(
                 'tanggal' => $this->input->post('tanggal_pembayaran'),
-                'kode' => '', //Belum Dikasih
-                'lawan' => '',
-                'tipe' => 'K',
-                'nominal' => $this->input->post('total'),
-                'tipe_trx_koperasi' => 'Kredit',
-                'id_detail' => $this->db->insert_id()
+                'keterangan' => 'Pembayaran pembiayaan dari no rekening ' . $this->input->post('no_rekening_pembiayaan'),
+                'kode' => '01.100.20',
+                'lawan' => $lawan_pokok,
+                'tipe' => 'D',
+                'nominal' => $this->input->post('jml_pokok'),
+                'tipe_trx_koperasi' => 'Pembiayaan',
+                'id_detail' => NULL
             );
-            $save3 = $this->M_jurnal->inputJurnal($data_jurnal);
-
-            if($save1 == TRUE || $save2 == TRUE || $save3 == TRUE){
+            $save3 = $this->M_jurnal->inputJurnal($data_jurnal_pokok);
+            
+            //Simpan Ke Tabel Jurnal
+            $data_jurnal_bahas = array(
+                'tanggal' => $this->input->post('tanggal_pembayaran'),
+                'keterangan' => 'Pembayaran bagi hasil pembiayaan dari no rekening ' . $this->input->post('no_rekening_pembiayaan'),
+                'kode' => '01.100.20', //Belum Dikasih
+                'lawan' => $lawan_bahas,
+                'tipe' => 'D',
+                'nominal' => $this->input->post('jml_bahas'),
+                'tipe_trx_koperasi' => 'Pembiayaan',
+                'id_detail' => NULL
+            );
+            $save4 = $this->M_jurnal->inputJurnal($data_jurnal_bahas);
+            
+            if($save1 == TRUE || $save2 == TRUE || $save3 == TRUE || $save4 == TRUE){
                 $this->session->set_flashdata("input_success", "<div class='alert alert-success'>
                 <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Pembayaran Berhasil<br></div>");
             }else{
@@ -192,6 +232,6 @@ class Kredit extends CI_Controller
             $this->session->set_flashdata("input_failed", "<div class='alert alert-danger'>
              <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Pembayaran Gagal<br>" . $gagal . "</div>");
         }
-        redirect('kredit/kelolakredit');
+        sredirect('kredit/kelolakredit');
     }
 }

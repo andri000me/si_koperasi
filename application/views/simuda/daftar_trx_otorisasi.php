@@ -28,6 +28,8 @@
                             <th>No.</th>
                             <th>No. Rekening</th>
                             <th>Debet</th>
+                            <th>Tanggal Pengajuan</th>
+                            <th>Tanggal Otorisasi</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -40,6 +42,8 @@
                                 <td><?php echo $no++; ?></td>
                                 <td><?php echo $i->no_rek; ?></td>
                                 <td class="text-right"><?php echo number_format($i->nominal_debet,0,',','.'); ?></td>
+                                <td><?php echo date('d-m-Y', strtotime($i->tanggal_input)) ?></td>
+                                <td><?php echo date('d-m-Y', strtotime($i->tanggal_persetujuan)) ?></td>
                                 <td class="text-center">
                                 <?php 
                                     if($i->status == 'Open'){

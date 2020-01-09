@@ -70,12 +70,13 @@ Class Simuda extends CI_Controller{
             if($this->input->post('status_pembukaan_rekening')=='0'){
                 $data_jurnal = array(
                     'tanggal' => $datetime,
-                    'kode' => '', //Belum Dikasih
-                    'lawan' => '',
+                    'keterangan' => 'Pembukaan rekening baru simuda ' . $this->input->post('no_rekening_simuda'),
+                    'kode' => '01.210.10', //Belum Dikasih
+                    'lawan' => '01.100.20',
                     'tipe' => 'K',
                     'nominal' => $this->input->post('saldo_awal'),
                     'tipe_trx_koperasi' => 'Simuda',
-                    'id_detail' => $this->db->insert_id()
+                    'id_detail' => NULL
 
                 );
                 $this->M_jurnal->inputJurnal($data_jurnal);
@@ -176,14 +177,21 @@ Class Simuda extends CI_Controller{
                 $save1 = $this->M_simuda->simpanDetailSimuda($data);
                 
                 //Insert Ke Tabel Jurnal
+                if ($this->input->post('tipe') == "D") {
+                    $keterangan = 'Debet ';
+                }
+                else{
+                    $keterangan = 'Kredit ';
+                }
                 $data_jurnal = array(
                     'tanggal' => $datetime,
-                    'kode' => '', //Belum Dikasih
-                    'lawan' => '',
+                    'keterangan' => $keterangan . 'Simuda no rekening ' . $this->input->post('no_rekening_simuda'),
+                    'kode' => '01.210.10', //Belum Dikasih
+                    'lawan' => '01.100.20',
                     'tipe' => $this->input->post('tipe'),
                     'nominal' => $this->input->post('jumlah'),
                     'tipe_trx_koperasi' => 'Simuda',
-                    'id_detail' => $this->db->insert_id()
+                    'id_detail' => NULL
                 );
                 $save2 = $this->M_jurnal->inputJurnal($data_jurnal);
                 if($save1 == TRUE && $save2 == TRUE){
