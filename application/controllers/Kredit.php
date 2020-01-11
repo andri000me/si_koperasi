@@ -232,6 +232,6 @@ class Kredit extends CI_Controller
             $this->session->set_flashdata("input_failed", "<div class='alert alert-danger'>
              <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Pembayaran Gagal<br>" . $gagal . "</div>");
         }
-        sredirect('kredit/kelolakredit');
+        redirect('kredit/kelolakredit');
     }
 }
