@@ -4,7 +4,7 @@ Class M_neraca_saldo extends CI_Model{
     
     // get rekening kode induk != bank & bank
     function getAllRekening(){
-        return $this->db->query("SELECT r.kode_rekening, r.nama, r.saldo_awal FROM ak_rekening r")->result();
+        return $this->db->query("SELECT r.kode_rekening, r.nama, r.saldo_awal FROM ak_rekening r where r.kode_rekening LIKE '01.%'")->result();
     }
     
     // get kode, nama (satu rekening)

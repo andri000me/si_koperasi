@@ -69,4 +69,9 @@ class M_kredit extends CI_Model
         $this->db->from($this->master_table);
         return $this->db->get()->result();
     }
+
+    public function getTipeKredit($where)
+    {
+        return $this->db->get_where($this->master_table, $where)->result()[0];
+    }
 }

@@ -7,14 +7,25 @@ class Simpanan_pokok extends CI_Controller
         parent::__construct();
         $this->load->model('M_simpanan_pokok');
         $this->load->model('M_jurnal');
+        $this->load->model('M_anggota');
     }
     function index()
     {
         $data['title'] = 'Simpanan Pokok';
         $data['path'] = "simpanan_pokok/v_simpanan_pokok";
+        $data['anggota'] = $this->M_anggota->getAnggota();
+        $this->load->model('M_anggota');
         $data['simpanan_pokok'] = $this->M_simpanan_pokok->getSimpananpokok()->result();
         $this->load->view('master_template', $data);
     }
+
+    function manageAjaxGetDataAnggota(){
+        
+        $no_anggota = $this->input->post('id');
+        $data['anggota'] = $this->M_anggota->get1Anggota(array('no_anggota' => $no_anggota));
+        $this->load->view('simpanan_pokok/get_data_anggota',$data);
+    }
+
     //function add() digunakan untuk aksi input ke tabel simpanan pokok
     function add()
     {
@@ -46,6 +57,21 @@ class Simpanan_pokok extends CI_Controller
                 'id_user' => '1'
             );
             $this->M_simpanan_pokok->addSimpananpokok($data);
+
+            $datetime = date('Y-m-d H:i:s');
+            $data_jurnal = array(
+                'tanggal' => $datetime,
+                'keterangan' => 'Simpanan pokok dari no anggota ' . $this->input->post('no_anggota'),
+                'kode' => '01.100.20',
+                'lawan' => '01.260.10',
+                'tipe' => 'D',
+                'nominal' => $this->input->post('jumlah'),
+                'tipe_trx_koperasi' => 'Simpanan Pokok',
+                'id_detail' => NULL
+
+            );
+            $this->M_jurnal->inputJurnal($data_jurnal);
+
             $this->session->set_flashdata("input_success", "<div class='alert alert-success'>
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Berhasil Ditambahkan.</div>");
             //INPUT KE TABEL SIMPANAN POKOK
@@ -74,7 +100,7 @@ class Simpanan_pokok extends CI_Controller
 
     function ambilUang(){
         $data['id'] = $this->input->post('id');
-        $data['simpanan_pokok'] = $this->M_simpanan_pokok->getSimpananPokok($data['id'])->result();
+        $data['simpanan_pokok'] = $this->M_simpanan_pokok->get1SimpananPokok($data['id'])->result();
         $this->load->view('simpanan_pokok/pencairan_simpanan_pokok',$data);
     }
     function prosesPencairanDana(){
@@ -87,11 +113,12 @@ class Simpanan_pokok extends CI_Controller
         //Input Jurnal
         $data_jurnal = array(
             'tanggal' => date('Y-m-d H:i:s'),
-            'kode' => '', //Belum Dikasih
-            'lawan' => '',
-            'tipe' => 'D',
+            'keterangan' => 'Penarikan Simpanan pokok',
+            'kode' => '01.100.20',
+            'lawan' => '01.260.10',
+            'tipe' => 'K',
             'nominal' => $this->input->post('jumlah'),
-            'tipe_trx_koperasi' => 'Simuda',
+            'tipe_trx_koperasi' => 'Simpanan Pokok',
             'id_detail' => $this->db->insert_id()
         );
         $save2 = $this->M_jurnal->inputJurnal($data_jurnal);

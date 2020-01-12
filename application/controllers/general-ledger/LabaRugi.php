@@ -5,7 +5,7 @@ class LabaRugi extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        // $this->load->model('general-ledger/M_laba_rugi');
+        $this->load->model('general-ledger/M_laba_rugi');
     }
 
     // laba rugi harian
@@ -16,7 +16,10 @@ class LabaRugi extends CI_Controller
         // $data['allRekening'] = $this->M_laba_rugi->getAllRekening(); 
         
         if (!empty($_GET['tanggal']) ) {
-          // $data['rekening'] = $this->M_laba_rugi->getAllRekening($_GET['kode']);
+            $data['rekeningPendapatan'] = $this->M_laba_rugi->getAllRekening('Pendapatan');
+            $data['rekeningBiaya'] = $this->M_laba_rugi->getAllRekening('Biaya');
+            $data['rekeningBiayaNonOperasional'] = $this->M_laba_rugi->getAllRekening('BiayaNonOperasional');
+          $data['rekeningPajakPenghasilan'] = $this->M_laba_rugi->getAllRekening('PajakPenghasilan');
         }
         else{
             // $data['rekening'] = $this->M_laba_rugi->getSomeRekening($_GET['kode'], $_GET['rk_sampai']);
@@ -33,7 +36,10 @@ class LabaRugi extends CI_Controller
         // $data['allRekening'] = $this->M_laba_rugi->getAllRekening(); 
         
         if (!empty($_GET['bulan']) && !empty('tahun') ) {
-          // $data['rekening'] = $this->M_laba_rugi->getAllRekening($_GET['kode']);
+          $data['rekeningPendapatan'] = $this->M_laba_rugi->getAllRekening('Pendapatan');
+          $data['rekeningBiaya'] = $this->M_laba_rugi->getAllRekening('Biaya');
+          $data['rekeningBiayaNonOperasional'] = $this->M_laba_rugi->getAllRekening('BiayaNonOperasional');
+          $data['rekeningPajakPenghasilan'] = $this->M_laba_rugi->getAllRekening('PajakPenghasilan');
         }
         else{
             // $data['rekening'] = $this->M_laba_rugi->getSomeRekening($_GET['kode'], $_GET['rk_sampai']);

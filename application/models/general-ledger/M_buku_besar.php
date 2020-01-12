@@ -78,7 +78,7 @@ Class M_buku_besar extends CI_Model{
 
     function getBukuBesar($kode, $tgl_dari, $tgl_sampai)
     {
-        return $this->db->query("SELECT id_jurnal, tanggal, kode_transaksi, keterangan, kode, lawan, tipe, nominal, SUM(nominal) nominal FROM ak_jurnal WHERE tanggal BETWEEN '$tgl_dari 00:00:00' AND '$tgl_sampai 23:59:59' AND kode = '$kode' OR tanggal BETWEEN '$tgl_dari 00:00:00' AND '$tgl_sampai 23:59:59' AND lawan = '$kode' GROUP BY kode_transaksi, MONTH(tanggal), keterangan ORDER BY tanggal ASC ")->result();
+        return $this->db->query("SELECT id_jurnal, tanggal, kode_transaksi, keterangan, kode, lawan, tipe, nominal, SUM(nominal) nominal FROM ak_jurnal WHERE tanggal BETWEEN '$tgl_dari 00:00:00' AND '$tgl_sampai 23:59:59' AND kode = '$kode' OR tanggal BETWEEN '$tgl_dari 00:00:00' AND '$tgl_sampai 23:59:59' AND lawan = '$kode' GROUP BY kode_transaksi, MONTH(tanggal), keterangan, tipe ORDER BY tanggal ASC ")->result();
     }
     
 }

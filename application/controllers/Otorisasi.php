@@ -80,22 +80,25 @@ Class Otorisasi extends CI_Controller{
                     );
                     $this->M_simuda->simpanDetailSimuda($data_detail);
 
+                    //Input Ke Tabel Jurnal
+                    $data_jurnal = array(
+                        'tanggal' => $datetime,
+                        'keterangan' => 'Debet Simuda no rekening '. $no_rek . ' (Disetujui)',
+                        'kode' => '01.210.10', //Belum Dikasih
+                        'lawan' => '01.100.20',
+                        'tipe' => 'D',
+                        'nominal' => $nominal_debet,
+                        'tipe_trx_koperasi' => $tipe,
+                        'id_detail' => NULL
+
+                    );
+                    $this->M_jurnal->inputJurnal($data_jurnal);
+
                 }else if($tipe == "Sijaka"){
                     
                 }
                 
-                //Input Ke Tabel Jurnal
-                $data_jurnal = array(
-                    'tanggal' => $datetime,
-                    'kode' => '', //Belum Dikasih
-                    'lawan' => '',
-                    'tipe' => 'D',
-                    'nominal' => $nominal_debet,
-                    'tipe_trx_koperasi' => $tipe,
-                    'id_detail' => $this->db->insert_id()
-
-                );
-                $this->M_jurnal->inputJurnal($data_jurnal);
+                
             }
             
             
