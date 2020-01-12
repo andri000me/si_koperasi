@@ -74,6 +74,9 @@ if($this->session->userdata('_login') != TRUE){
       <div class="sidebar-heading">
         Modul
       </div>
+      <?php
+      if ($this->session->userdata('level') == 'Manager' || $this->session->userdata('level') == 'Teller') {
+      ?>
       <!-- Nav Data Master -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#navDataMaster" aria-expanded="true" aria-controls="collapseTwo">
@@ -83,145 +86,204 @@ if($this->session->userdata('_login') != TRUE){
         <div id="navDataMaster" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/anggota' ?>">Anggota</a>
+            <?php
+            if ($this->session->userdata('level') == 'Manager') {
+            ?>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/user'; ?>">User</a>
+            <?php
+            }
+            ?>
           </div>
         </div>
       </li>
 
-      <!-- Nav Monitoring -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#navMonitoring" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Monitoring</span>
-        </a>
-        <div id="navMonitoring" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/LogActivity'; ?>">Log Activity</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/otorisasi'; ?>">Otorisasi</a>
+      <?php
+      }
+      if ($this->session->userdata('level') == 'Manager') {
+      ?>
+        <!-- Nav Monitoring -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#navMonitoring" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Monitoring</span>
+          </a>
+          <div id="navMonitoring" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="<?php echo base_url() . 'index.php/LogActivity'; ?>">Log Activity</a>
+              <a class="collapse-item" href="<?php echo base_url() . 'index.php/otorisasi'; ?>">Otorisasi</a>
+            </div>
           </div>
-        </div>
-      </li>
-      <!-- Simpanan Pokok -->
-      <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url() . 'index.php/simpanan_pokok' ?>">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Simpanan Pokok</span>
-        </a>
-      </li>
-      <!-- Simpanan Wajib -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#navWajib" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Simpanan Wajib</span>
-        </a>
-        <div id="navWajib" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simpanan_wajib/kelolaRekening' ?>">Kelola Rekening</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simpanan_wajib/nominatif' ?>">Nominatif</a>
+        </li>
+      <?php
+      }
+      if($this->session->userdata('level') == 'Teller' || $this->session->userdata('level') == 'Dana'){
+        if ($this->session->userdata('level') == 'Teller') {
+        ?>
+          <!-- Simpanan Pokok -->
+          <li class="nav-item">
+            <a class="nav-link" href="<?php echo base_url() . 'index.php/simpanan_pokok' ?>">
+              <i class="fas fa-fw fa-cog"></i>
+              <span>Simpanan Pokok</span>
+            </a>
+          </li>
+          <!-- Simpanan Wajib -->
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#navWajib" aria-expanded="true" aria-controls="collapseTwo">
+              <i class="fas fa-fw fa-cog"></i>
+              <span>Simpanan Wajib</span>
+            </a>
+            <div id="navWajib" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="<?php echo base_url() . 'index.php/simpanan_wajib/kelolaRekening' ?>">Kelola Rekening</a>
+                <a class="collapse-item" href="<?php echo base_url() . 'index.php/simpanan_wajib/nominatif' ?>">Nominatif</a>
+              </div>
+            </div>
+          </li>
+        <?php
+        }
+      ?>
+        
+        <!-- Nav Simuda -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#navSimuda" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Simuda</span>
+          </a>
+          <div id="navSimuda" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <?php
+                if ($this->session->userdata('level') == 'Teller') {
+                ?>
+                  <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/bukarekening'; ?>">Form Buka Rekening</a>
+                  <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/kelolarekening'; ?>">Kelola Rekening</a>
+                  <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/daftarnominatif'; ?>">Daftar Nominatif</a>
+                  <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/daftartrxotorisasi'; ?>">Daftar Trx Otorisasi</a>
+                <?php
+                }
+                elseif ($this->session->userdata('level') == 'Dana') {
+                ?>
+                  <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/stellimitdebet'; ?>">Setel Limit Debet Simuda</a>
+                  <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/bagihasil'; ?>">Perhitungan Bagi Hasil</a>
+                <?php
+                }
+              ?>
+              
+              
+            </div>
           </div>
-        </div>
-      </li>
-      <!-- Nav Simuda -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#navSimuda" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Simuda</span>
-        </a>
-        <div id="navSimuda" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/bukarekening'; ?>">Form Buka Rekening</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/kelolarekening'; ?>">Kelola Rekening</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/daftarnominatif'; ?>">Daftar Nominatif</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/daftartrxotorisasi'; ?>">Daftar Trx Otorisasi</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/stellimitdebet'; ?>">Setel Limit Debet Simuda</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/simuda/bagihasil'; ?>">Perhitungan Bagi Hasil</a>
-            
+        </li>
+        <!-- Nav Sijaka -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#navSijaka" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Sijaka</span>
+          </a>
+          <div id="navSijaka" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+            <?php
+              if ($this->session->userdata('level') == 'Teller') {
+              ?>
+                <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/bukaRekeningSijaka'; ?>">Form Sijaka</a>
+                <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/hitungKewajibanBulanan'; ?>">Hitung Kewajiban Bulanan</a>
+                <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/pembayaranBahas'; ?>">Pembayaran Bahas</a>
+                <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/penarikan'; ?>">Penarikan Dana</a>
+                <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/daftarNominatifSijaka'; ?>">Daftar Nominatif</a>
+              <?php
+              }
+              elseif ($this->session->userdata('level') == 'Dana') {
+              ?>
+              <!-- <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/kelolaRekeningSijaka'; ?>">Kelola Rekening</a>
+              <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/perhitunganAkhirBulanSijaka'; ?>">Perhitungan Akhir Bulan</a> -->
+              <?php
+              }
+              ?>
+            </div>
           </div>
+        </li>
+        <?php
+        if ($this->session->userdata('level') == 'Teller') {
+          ?>
+          <!-- Nav Kredit/Pembiayaan -->
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#navKredit" aria-expanded="true" aria-controls="collapseTwo">
+              <i class="fas fa-fw fa-cog"></i>
+              <span>Kredit/Pembiayaan</span>
+            </a>
+            <div id="navKredit" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="<?php echo  base_url() . 'index.php/kredit/pengajuanRekening' ?> ">Form Kredit</a>
+                <a class="collapse-item" href="<?php echo  base_url() . 'index.php/kredit/kelolakredit' ?>">Kelola Kredit</a>
+                <a class="collapse-item" href="<?php echo  base_url() . 'index.php/kredit/daftarNominatif' ?>">Daftar Nominatif</a>
+              </div>
+            </div>
+          </li>
+      <?php
+        }
+      }
+      ?>
+      
+      <?php
+      if ($this->session->userdata('level') == 'Manager' || $this->session->userdata('level') == 'Dana') {
+        ?>
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+        <!-- Heading -->
+        <div class="sidebar-heading">
+          Akuntansi
         </div>
-      </li>
-      <!-- Nav Sijaka -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#navSijaka" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Sijaka</span>
-        </a>
-        <div id="navSijaka" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/bukaRekeningSijaka'; ?>">Form Sijaka</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/hitungKewajibanBulanan'; ?>">Hitung Kewajiban Bulanan</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/pembayaranBahas'; ?>">Pembayaran Bahas</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/penarikan'; ?>">Penarikan Dana</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/daftarNominatifSijaka'; ?>">Daftar Nominatif</a>
-            <!-- <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/kelolaRekeningSijaka'; ?>">Kelola Rekening</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/perhitunganAkhirBulanSijaka'; ?>">Perhitungan Akhir Bulan</a> -->
 
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#generalLedger" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>General Ledger</span>
+          </a>
+          <div id="generalLedger" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="<?php echo base_url() . 'index.php/general-ledger/bukubesar'; ?>">Buku Besar</a>
+              <a class="collapse-item" href="<?php echo base_url() . 'index.php/general-ledger/neracasaldo'; ?>">Neraca Saldo</a>
+              <a class="collapse-item" href="<?php echo base_url() . 'index.php/general-ledger/labarugi'; ?>">Laba/Rugi</a>
+              <!-- <a class="collapse-item" href="<?php echo base_url() . 'index.php/general-ledger/labarugi/lrbulanan'; ?>">Laba/Rugi Bulanan</a> -->
+            </div>
           </div>
-        </div>
-      </li>
-      <!-- Nav Kredit/Pembiayaan -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#navKredit" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Kredit/Pembiayaan</span>
-        </a>
-        <div id="navKredit" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo  base_url() . 'index.php/kredit/pengajuanRekening' ?> ">Form Kredit</a>
-            <a class="collapse-item" href="<?php echo  base_url() . 'index.php/kredit/kelolakredit' ?>">Kelola Kredit</a>
-            <a class="collapse-item" href="<?php echo  base_url() . 'index.php/kredit/daftarNominatif' ?>">Daftar Nominatif</a>
+        </li>
+      <?php
+      }
+      
+      if ($this->session->userdata('level') == 'Dana') {
+      ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#transaksiAkuntansi" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Transaksi</span>
+          </a>
+          <div id="transaksiAkuntansi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/kas' ?>">Kas</a>
+              <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/bank' ?>">Bank</a>
+              <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/memorial' ?>">Memorial</a>
+              <div class="dropdown-divider"></div>
+              <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/laporankas' ?>">Laporan Kas</a>
+              <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/laporanbank' ?>">Laporan Bank</a>
+              <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/laporanmemorial' ?>">Laporan Memorial</a>
+            </div>
           </div>
-        </div>
-      </li>
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Akuntansi
-      </div>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#generalLedger" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>General Ledger</span>
-        </a>
-        <div id="generalLedger" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/general-ledger/bukubesar'; ?>">Buku Besar</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/general-ledger/neracasaldo'; ?>">Neraca Saldo</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/general-ledger/labarugi'; ?>">Laba/Rugi</a>
-            <!-- <a class="collapse-item" href="<?php echo base_url() . 'index.php/general-ledger/labarugi/lrbulanan'; ?>">Laba/Rugi Bulanan</a> -->
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#setupAkuntansi" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Setup Akuntansi</span>
+          </a>
+          <div id="setupAkuntansi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="<?php echo base_url() . 'index.php/setup-akuntansi/kodeinduk' ?>">Kode Induk</a>
+              <a class="collapse-item" href="<?php echo base_url() . 'index.php/setup-akuntansi/koderekening' ?>">Kode Rekening</a>
+              <a class="collapse-item" href="<?php echo base_url() . 'index.php/setup-akuntansi/settingrekening' ?>">Setting Rekening</a>
+            </div>
           </div>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#transaksiAkuntansi" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Transaksi</span>
-        </a>
-        <div id="transaksiAkuntansi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/kas' ?>">Kas</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/bank' ?>">Bank</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/memorial' ?>">Memorial</a>
-            <div class="dropdown-divider"></div>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/laporankas' ?>">Laporan Kas</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/laporanbank' ?>">Laporan Bank</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/laporanmemorial' ?>">Laporan Memorial</a>
-          </div>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#setupAkuntansi" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Setup Akuntansi</span>
-        </a>
-        <div id="setupAkuntansi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/setup-akuntansi/kodeinduk' ?>">Kode Induk</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/setup-akuntansi/koderekening' ?>">Kode Rekening</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/setup-akuntansi/settingrekening' ?>">Setting Rekening</a>
-          </div>
-        </div>
-      </li>
+        </li>
+      <?php
+      }
+      ?>
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
