@@ -13,6 +13,7 @@
                 <?php
                 foreach($simpanan_pokok as $i){
                 ?>
+                <input type="hidden" name="no_anggota" id="no_anggota" value="<?php echo $i->no_anggota; ?>">
                 <div class="row">
                     <div class="col-md-4 form-group">
                         <label for="">Jumlah Dana</label>

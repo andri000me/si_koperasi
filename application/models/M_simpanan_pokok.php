@@ -19,7 +19,7 @@ class M_simpanan_pokok extends CI_Model
         $this->db->from($this->_table);
         $this->db->join($this->_table_anggota, 'master_simpanan_pokok.no_anggota=anggota.no_anggota');
         $this->db->join($this->_table_user, 'master_simpanan_pokok.id_user = user.id_user');
-        $this->db->where(array('master_simpanan_pokok.no_anggota' => $id));
+        $this->db->where(array('master_simpanan_pokok.id_simpanan_pokok' => $id));
         return $this->db->get();
     }
 

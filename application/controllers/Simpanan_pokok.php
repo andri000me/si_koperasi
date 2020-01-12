@@ -113,13 +113,13 @@ class Simpanan_pokok extends CI_Controller
         //Input Jurnal
         $data_jurnal = array(
             'tanggal' => date('Y-m-d H:i:s'),
-            'keterangan' => 'Penarikan Simpanan pokok',
+            'keterangan' => 'Penarikan Simpanan pokok dari no anggota ' . $this->input->post('no_anggota'),
             'kode' => '01.100.20',
             'lawan' => '01.260.10',
             'tipe' => 'K',
             'nominal' => $this->input->post('jumlah'),
             'tipe_trx_koperasi' => 'Simpanan Pokok',
-            'id_detail' => $this->db->insert_id()
+            'id_detail' => NULL
         );
         $save2 = $this->M_jurnal->inputJurnal($data_jurnal);
         if($save1 AND $save2){
