@@ -49,13 +49,13 @@
                             <td><?php echo $p->NRSj; ?></td>
                             <td><?php echo $p->no_anggota.' - '.$p->nama;?></td>
                             <td><?php echo $p->tanggal_pembayaran; ?></td>
-                            <td class="text-right"><?php echo $p->jumlah_awal; ?></td>
-                            <td class="text-right"><?php echo $p->jumlah_bahas_bulanan; ?></td>
+                            <td class="text-right"><?php echo number_format($p->jumlah_simpanan,0,',','.'); ?></td>
+                            <td class="text-right"><?php echo number_format($p->jumlah_bahas_bulanan,0,',','.'); ?></td>
                             <td><?php echo $p->pembayaran_bahas; ?></td>
                             <td><?php echo $p->rekening_simuda; ?></td>
-                            <td>0/0</td>
+                            <td><?php echo $p->progress_bahas.'/'.$p->jangka_waktu; ?></td>
                             <td class="text-center">
-                                    <a href="<?php echo base_url().'index.php/sijaka/detailRekeningSijaka/'.$p->NRSj; ?>" class="btn btn-sm btn-primary">Detail</a>
+                                <a href="<?php echo base_url().'index.php/sijaka/detailRekeningSijaka/'.$p->NRSj; ?>" class="btn btn-sm btn-primary">Detail</a>
                             </td>
                         </tr>
                         <?php } ?>

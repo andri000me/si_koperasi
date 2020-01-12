@@ -141,7 +141,6 @@
                                     <option value="">--Pilih--</option>
                                     <option value="Manager">Manager</option>
                                     <option value="Dana">Dana</option>
-                                    <option value="Pembiayaan">Pembiayaan</option>
                                     <option value="Teller">Teller</option>
                                 </select>
                             </div>

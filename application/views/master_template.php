@@ -150,7 +150,7 @@ if($this->session->userdata('_login') != TRUE){
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/bukaRekeningSijaka'; ?>">Form Sijaka</a>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/hitungKewajibanBulanan'; ?>">Hitung Kewajiban Bulanan</a>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/pembayaranBahas'; ?>">Pembayaran Bahas</a>
-            <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/penarikan'; ?>">Penarikan Dana</a>
+            <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/penarikanDana'; ?>">Penarikan Dana</a>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/daftarNominatifSijaka'; ?>">Daftar Nominatif</a>
             <!-- <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/kelolaRekeningSijaka'; ?>">Kelola Rekening</a>
             <a class="collapse-item" href="<?php echo base_url() . 'index.php/sijaka/perhitunganAkhirBulanSijaka'; ?>">Perhitungan Akhir Bulan</a> -->

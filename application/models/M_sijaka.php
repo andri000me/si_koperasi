@@ -45,9 +45,6 @@ Class M_sijaka extends CI_Model{
         $this->db->where("bulan_berjalan < jangka_waktu");
         return $this->db->get()->result();
     }
-
-    
-
     //............Tabel Detail Sijaka
     //Simpan Data Ke Tabel Master Detail Sijaka
     function simpanDetailSijaka($data){
@@ -59,9 +56,11 @@ Class M_sijaka extends CI_Model{
     }
 
     function getDetailSijaka($where){
-        $this->db->order_by('id_detail_sijaka','DESC');
+        $this->db->select('id_detail_sijaka,NRSj,datetime,nominal,tipe_penarikan,user.id_user,user.nama_terang');
+        $this->db->from($this->detail_table);
+        $this->db->join('user','master_detail_rekening_sijaka.id_user = user.id_user');
         $this->db->where($where);
-        return $this->db->get($this->detail_table)->result();
+        return $this->db->get()->result();
     }
 
     //.......Tabel Support Bagi Hasil Sijaka
@@ -95,6 +94,15 @@ Class M_sijaka extends CI_Model{
         
     }
 
+    //Mendapatkan Record Sijaka Selesai
+    function getRecordSijakaSelesai(){
+        $this->db->select('NRSj,anggota.no_anggota,nama,tanggal_pembayaran,jumlah_simpanan,jangka_waktu,progress_bahas');
+        $this->db->from($this->master_table);
+        $this->db->join('anggota','master_rekening_sijaka.no_anggota = anggota.no_anggota');
+        $this->db->where("jangka_waktu = progress_bahas");
+        $this->db->where('status_dana','Belum Diambil');
+        return $this->db->get()->result();
+    }
     
     ///////////////////////////////////
 
