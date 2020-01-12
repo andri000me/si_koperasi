@@ -16,15 +16,15 @@
             <div class="row">
                 <?php foreach($master_rekening_sijaka as $i){ ?>
                 <div class="col-md-4">
-                    <label for="">NRSj</label>
+                    <label for="" class="font-weight-bold">NRSj</label>
                     <input type="text" name="NRSj" id="NRSj" class="form-control-plaintext" readonly value="<?php echo $i->NRSj ?>">
                 </div>
                 <div class="col-md-4">
-                    <label for="">No. Anggota</label>
+                    <label for="" class="font-weight-bold">No. Anggota</label>
                     <input type="text" name="no_anggota" id="no_anggota" class="form-control-plaintext" readonly value="<?php echo $i->no_anggota ?>">
                 </div>
                 <div class="col-md-4">
-                    <label for="">Nama</label>
+                    <label for="" class="font-weight-bold">Nama</label>
                     <input type="text" name="nama" id="nama" class="form-control-plaintext" readonly value="<?php echo $i->nama; ?>">
                 </div>
                 <?php } ?>
@@ -34,10 +34,10 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Debet</th>
-                            <th>Kredit</th>
-                            <th>Saldo</th>
-                            <th>Aksi</th>
+                            <th>Datetime</th>
+                            <th>Penarikan</th>
+                            <th>Nominal</th>
+                            <th>Teller</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,10 +47,10 @@
                             ?>
                             <tr>
                                 <td><?php echo $no++."."; ?></td>
-                                <td class="text-right"><?php echo $p->debet; ?></td>
-                                <td class="text-right"><?php echo $p->kredit; ?></td>
-                                <td class="text-right"><?php echo $p->saldo; ?></td>
-                                <td style="text-align:center;"><button type="button" class="btn btn-sm btn-success">Edit</button></td>
+                                <td><?php echo $p->datetime; ?></td>
+                                <td><?php echo $p->tipe_penarikan; ?></td>
+                                <td class="text-right"><?php echo number_format($p->nominal,0,',','.'); ?></td>
+                                <td><?php echo $p->nama_terang; ?></td>
                             </tr>
                         <?php } ?>
                     </tbody>
