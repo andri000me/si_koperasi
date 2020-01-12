@@ -148,7 +148,7 @@ Class Kas extends CI_Controller{
 
         $datetime = date('Y-m-d H:i:s');
         $activity = array(
-            'id_user' => '1', //sementara
+            'id_user' => $this->session->userdata('_id'),
             'datetime' => $datetime,
             'keterangan' => 'Menginput bukti kas dengan kode ' . $bukti_kas['kode_trx_kas'],
         );
@@ -326,7 +326,7 @@ Class Kas extends CI_Controller{
 
         $datetime = date('Y-m-d H:i:s');
         $activity = array(
-            'id_user' => '1', //sementara
+            'id_user' => $this->session->userdata('_id'),
             'datetime' => $datetime,
             'keterangan' => 'Mengedit bukti kas dengan kode ' . $kode,
         );
@@ -355,7 +355,7 @@ Class Kas extends CI_Controller{
 
         $datetime = date('Y-m-d H:i:s');
         $activity = array(
-            'id_user' => '1', //sementara
+            'id_user' => $this->session->userdata('_id'),
             'datetime' => $datetime,
             'keterangan' => 'Menghapus bukti kas dengan kode ' . $kode,
         );

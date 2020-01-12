@@ -33,7 +33,7 @@ Class Otorisasi extends CI_Controller{
         $this->M_otorisasi->updateOtorisasi(array('id_otorisasi' => $id),$data_otorisasi);
 
         $activity = array(
-            'id_user' => '1', //sementara
+            'id_user' => $this->session->userdata('_id'),
             'datetime' => $datetime,
             'keterangan' => 'Melakukan otorisasi dengan status ' . $this->input->post('status'),
         );
@@ -76,7 +76,7 @@ Class Otorisasi extends CI_Controller{
                         'debet' => $nominal_debet,
                         'saldo' => $saldo_akhir,
                         'saldo_terendah' => $saldo_terendah,
-                        'id_user' => '1' //Sementara
+                        'id_user' => $this->session->userdata('_id')
                     );
                     $this->M_simuda->simpanDetailSimuda($data_detail);
 

@@ -142,7 +142,7 @@ Class Memorial extends CI_Controller{
 
         $datetime = date('Y-m-d H:i:s');
         $activity = array(
-            'id_user' => '1', //sementara
+            'id_user' => $this->session->userdata('_id'),
             'datetime' => $datetime,
             'keterangan' => 'Menginput bukti memorial dengan kode ' . $bukti_memorial['kode_trx_memorial'],
         );
@@ -324,7 +324,7 @@ Class Memorial extends CI_Controller{
 
         $datetime = date('Y-m-d H:i:s');
         $activity = array(
-            'id_user' => '1', //sementara
+            'id_user' => $this->session->userdata('_id'),
             'datetime' => $datetime,
             'keterangan' => 'Mengedit bukti memorial dengan kode ' . $kode,
         );
@@ -352,7 +352,7 @@ Class Memorial extends CI_Controller{
 
         $datetime = date('Y-m-d H:i:s');
         $activity = array(
-            'id_user' => '1', //sementara
+            'id_user' => $this->session->userdata('_id'),
             'datetime' => $datetime,
             'keterangan' => 'Menghapus bukti memorial dengan kode ' . $kode,
         );

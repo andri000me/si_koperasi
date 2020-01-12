@@ -3,7 +3,26 @@ defined("BASEPATH") or die("No Direct Access Allowed");
 Class M_sijaka extends CI_Model{
     private $master_table ='master_rekening_sijaka';
     private $detail_table = 'master_detail_rekening_sijaka';
+    private $support_table = 'support_bagi_hasil_sijaka';
+    
+    //.....Tabel Master Sijaka
+    //tabel daftar nominatif sijaka
+    function getSemuaMasterSijaka(){
+        $this->db->join('anggota','master_rekening_sijaka.no_anggota = anggota.no_anggota');
+        return $this->db->get($this->master_table)->result();
+    }
 
+    //Mendapatkan 1 Record dari Tabel Master Sijaka
+    function get1MasterSijaka($where){
+        $this->db->select('*');
+        $this->db->from($this->master_table);
+        $this->db->join('anggota','master_rekening_sijaka.no_anggota = anggota.no_anggota');
+        $this->db->where($where);
+        return $this->db->get()->result();
+
+    }
+
+    //Simpan Data Ke Tabel Master Sijaka
     function simpanSijaka($data){
         if($this->db->insert($this->master_table,$data)){
             return TRUE;
@@ -11,11 +30,75 @@ Class M_sijaka extends CI_Model{
             return FALSE;
         }
     }
-    //tabel daftar nominatif sijaka
-    function getSemuaMasterSijaka(){
-        $this->db->join('anggota','master_rekening_sijaka.no_anggota = anggota.no_anggota');
-        return $this->db->get($this->master_table)->result();
+
+    //Update Tabel Master Sijaka
+    function updateMasterSijaka($NRSj,$data){
+        $this->db->where('NRSj',$NRSj);
+        $this->db->update($this->master_table,$data);
     }
+
+    //Mendapatkan Record Sijaka Untuk Pembayaran Bulan Selanjutnya
+    function getPreviewDataPembayaranSijakaBulanDepan(){
+        $this->db->select('NRSj,anggota.no_anggota,nama,tanggal_pembayaran,jumlah_bahas_bulanan');
+        $this->db->from($this->master_table);
+        $this->db->join('anggota','master_rekening_sijaka.no_anggota = anggota.no_anggota');
+        $this->db->where("bulan_berjalan < jangka_waktu");
+        return $this->db->get()->result();
+    }
+
+    
+
+    //............Tabel Detail Sijaka
+    //Simpan Data Ke Tabel Master Detail Sijaka
+    function simpanDetailSijaka($data){
+        if($this->db->insert($this->detail_table,$data)){
+            return TRUE;
+        }else{
+            return FALSE;
+        }
+    }
+
+    function getDetailSijaka($where){
+        $this->db->order_by('id_detail_sijaka','DESC');
+        $this->db->where($where);
+        return $this->db->get($this->detail_table)->result();
+    }
+
+    //.......Tabel Support Bagi Hasil Sijaka
+    function simpanDataPembayaranSijakaBulanDepan($data){
+        if($this->db->insert($this->support_table,$data)){
+            return TRUE;
+        }else{
+            return FALSE;
+        }
+    }
+
+    function getDataPembayaranSijakaBulanDepan(){
+        $this->db->select('id_support_bagi_hasil,support_bagi_hasil_sijaka.NRSj,anggota.no_anggota,nama,support_bagi_hasil_sijaka.tanggal_pembayaran,jumlah_pembayaran');
+        $this->db->from($this->support_table);
+        $this->db->join('master_rekening_sijaka','support_bagi_hasil_sijaka.NRSj  = master_rekening_sijaka.NRSj');
+        $this->db->join('anggota','master_rekening_sijaka.no_anggota = anggota.no_anggota');
+        return $this->db->get();
+    }
+    function get1DataPembayaranSijakaBulanDepan($id){
+        $this->db->select('id_support_bagi_hasil,support_bagi_hasil_sijaka.NRSj,anggota.no_anggota,nama,rekening_simuda,support_bagi_hasil_sijaka.tanggal_pembayaran,jumlah_pembayaran');
+        $this->db->from($this->support_table);
+        $this->db->join('master_rekening_sijaka','support_bagi_hasil_sijaka.NRSj  = master_rekening_sijaka.NRSj');
+        $this->db->join('anggota','master_rekening_sijaka.no_anggota = anggota.no_anggota');
+        $this->db->where(array('id_support_bagi_hasil' => $id));
+        return $this->db->get();
+    }
+
+    function deleteDataPembayaranSijakaBulanDepan($id){
+        $this->db->where('id_support_bagi_hasil', $id);
+        $this->db->delete($this->support_table);
+        
+    }
+
+    
+    ///////////////////////////////////
+
+    
 
     //tabel perhitungan akhir bulan sijaka
     function getSijakaBerjalan(){
@@ -31,28 +114,7 @@ Class M_sijaka extends CI_Model{
         $this->db->update($this->master_table,$data, $where);
     }
 
-    function get1MasterSijaka($where){
-        $this->db->select('NRSj,master_rekening_sijaka.no_anggota,nama');
-        $this->db->from($this->master_table);
-        $this->db->join('anggota','master_rekening_sijaka.no_anggota = anggota.no_anggota');
-        $this->db->where($where);
-        return $this->db->get()->result();
-    }
-
-    //tabel master detail rekening sijaka
-    function simpanDetailSijaka($data){
-        if($this->db->insert($this->detail_table,$data)){
-            return TRUE;
-        }else{
-            return FALSE;
-        }
-    }
-
-    function getDetailSijaka($where){
-        $this->db->order_by('id_detail_sijaka','DESC');
-        $this->db->where($where);
-        return $this->db->get($this->detail_table)->result();
-    }
+    
 
     function getJumlahSaldo($NRSj){
         $where = array(

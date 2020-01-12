@@ -89,7 +89,7 @@ class Simpanan_wajib extends CI_Controller
                     'tgl_pembayaran' => $datetime,
                     'kredit' => $this->input->post('jumlah'),
                     'saldo' => $this->input->post('saldo_akhir'),
-                    'id_user' => '1'
+                    'id_user' => $this->session->userdata('_id')
                 );
             }else if($this->input->post('tipe') == "D"){ //Jika Tipe Debet
                 $data = array(
@@ -98,7 +98,7 @@ class Simpanan_wajib extends CI_Controller
                     'tgl_pembayaran' => $datetime,
                     'debet' => $this->input->post('jumlah'),
                     'saldo' => $this->input->post('saldo_akhir'),
-                    'id_user' => '1'
+                    'id_user' => $this->session->userdata('_id')
                 );
             }
             $this->M_simpanan_wajib->addSimpananwajib($data);

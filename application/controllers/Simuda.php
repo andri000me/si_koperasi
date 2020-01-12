@@ -49,7 +49,7 @@ Class Simuda extends CI_Controller{
             $datetime = date('Y-m-d H:i:s');
             // simpan ke log activity
             $activity = array(
-                'id_user' => '1', //sementara
+                'id_user' => $this->session->userdata('_id'),
                 'datetime' => $datetime,
                 'keterangan' => 'Menginput buka rekening simuda dengan no rekening simuda ' . $this->input->post('no_rekening_simuda') . ' dengan no anggota ' . $this->input->post('no_anggota'),
             );
@@ -62,7 +62,7 @@ Class Simuda extends CI_Controller{
                 'kredit' => $this->input->post('saldo_awal'),
                 'saldo' => $this->input->post('saldo_awal'),
                 'saldo_terendah' => $this->input->post('saldo_awal'),
-                'id_user' => '1' //Sementara
+                'id_user' => $this->session->userdata('_id') 
             );
             $this->M_simuda->simpanDetailSimuda($data_detail);
 
@@ -71,14 +71,15 @@ Class Simuda extends CI_Controller{
                 $data_jurnal = array(
                     'tanggal' => $datetime,
                     'keterangan' => 'Pembukaan rekening baru simuda ' . $this->input->post('no_rekening_simuda'),
-                    'kode' => '01.100.20', //Belum Dikasih
-                    'lawan' => '01.210.10',
-                    'tipe' => 'D',
+                    'kode' => '01.210.10', //Belum Dikasih
+                    'lawan' => '01.100.20',
+                    'tipe' => 'K',
                     'nominal' => $this->input->post('saldo_awal'),
                     'tipe_trx_koperasi' => 'Simuda',
                     'id_detail' => NULL
 
                 );
+
                 $this->M_jurnal->inputJurnal($data_jurnal);
                 $this->session->set_flashdata("input_success","<div class='alert alert-success'>
                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Berhasil Ditambahkan!!</div>");
@@ -109,15 +110,6 @@ Class Simuda extends CI_Controller{
         $data_nominal = 0;
         //Mengambil Record Terakhir
         $data_nominal = $this->M_simuda->getSaldoRecordTerakhir($no_rekening_simuda);
-
-        // //Jika Record Lebih dari 0 Maka saldo Mengambil dari bulan ini, jika tidak maka mengambil dari hasil tutup buku bulan lalu
-        // if($this->M_simuda->getJumlahRecordBulanIni($no_rekening_simuda) > 0){
-        //     //Mengambil Record Terakhir Bulan Ini
-        //     $data_nominal = $this->M_simuda->getRecordTerakhirBulanIni($no_rekening_simuda);
-        // }else{
-        //     //Mengambil Hasil Tutup Buku Bulan Lalu
-        //     $data_nominal = $this->M_simuda->getRecordTerakhirTutupBulanLalu($no_rekening_simuda);
-        // }
         echo "<label>Saldo Awal</label>";
         echo "<input type='number' name='saldo_awal' id='saldo_awal' class='form-control' value='".$data_nominal."' readonly />";
     }
@@ -179,18 +171,16 @@ Class Simuda extends CI_Controller{
                 //Insert Ke Tabel Jurnal
                 if ($this->input->post('tipe') == "D") {
                     $keterangan = 'Debet ';
-                    $tipe_jurnal = 'K';
                 }
                 else{
                     $keterangan = 'Kredit ';
-                    $tipe_jurnal = 'D';
                 }
                 $data_jurnal = array(
                     'tanggal' => $datetime,
                     'keterangan' => $keterangan . 'Simuda no rekening ' . $this->input->post('no_rekening_simuda'),
-                    'kode' => '01.100.20', //Belum Dikasih
-                    'lawan' => '01.210.10',
-                    'tipe' => $tipe_jurnal,
+                    'kode' => '01.210.10',
+                    'lawan' => '01.100.20',
+                    'tipe' => $this->input->post('tipe'),
                     'nominal' => $this->input->post('jumlah'),
                     'tipe_trx_koperasi' => 'Simuda',
                     'id_detail' => NULL
