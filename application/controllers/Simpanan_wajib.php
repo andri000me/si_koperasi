@@ -106,16 +106,18 @@ class Simpanan_wajib extends CI_Controller
             //Insert Ke Tabel Jurnal
             if ($this->input->post('tipe') == "K") {
                 $keterangan = 'Kredit ';
+                $tipe_jurnal = 'D';
             }
             else {
                 $keterangan = 'Debet ';
+                $tipe_jurnal = 'K';
             }
             $data_jurnal = array(
                 'tanggal' => $datetime,
                 'keterangan' => $keterangan.'Simpanan wajib dari no anggota ' . $this->input->post('no_anggota'),
-                'kode' => '01.260.20', //Belum Dikasih
-                'lawan' => '01.100.20',
-                'tipe' => $this->input->post('tipe'),
+                'kode' => '01.100.20', //Belum Dikasih
+                'lawan' => '01.260.20',
+                'tipe' => $tipe_jurnal,
                 'nominal' => $this->input->post('jumlah'),
                 'tipe_trx_koperasi' => 'Simpanan Wajib',
                 'id_detail' => NULL

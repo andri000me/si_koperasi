@@ -77,9 +77,9 @@ class Kredit extends CI_Controller
             $data_jurnal = array(
                 'tanggal' => $datetime,
                 'keterangan' => 'Buka rekening Pembiayaan no rekening ' . $this->input->post('no_rekening_pembiayaan'),
-                'kode' => $kode_rek, //Belum Dikasih
-                'lawan' => '01.100.20',
-                'tipe' => 'D',
+                'kode' => '01.100.20', //Belum Dikasih
+                'lawan' => $kode_rek,
+                'tipe' => 'K',
                 'nominal' => $this->input->post('jumlah_pembiayaan'),
                 'tipe_trx_koperasi' => 'Pembiayaan',
                 'id_detail' => NULL

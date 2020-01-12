@@ -71,9 +71,9 @@ Class Simuda extends CI_Controller{
                 $data_jurnal = array(
                     'tanggal' => $datetime,
                     'keterangan' => 'Pembukaan rekening baru simuda ' . $this->input->post('no_rekening_simuda'),
-                    'kode' => '01.210.10', //Belum Dikasih
-                    'lawan' => '01.100.20',
-                    'tipe' => 'K',
+                    'kode' => '01.100.20', //Belum Dikasih
+                    'lawan' => '01.210.10',
+                    'tipe' => 'D',
                     'nominal' => $this->input->post('saldo_awal'),
                     'tipe_trx_koperasi' => 'Simuda',
                     'id_detail' => NULL
@@ -179,16 +179,18 @@ Class Simuda extends CI_Controller{
                 //Insert Ke Tabel Jurnal
                 if ($this->input->post('tipe') == "D") {
                     $keterangan = 'Debet ';
+                    $tipe_jurnal = 'K';
                 }
                 else{
                     $keterangan = 'Kredit ';
+                    $tipe_jurnal = 'D';
                 }
                 $data_jurnal = array(
                     'tanggal' => $datetime,
                     'keterangan' => $keterangan . 'Simuda no rekening ' . $this->input->post('no_rekening_simuda'),
-                    'kode' => '01.210.10', //Belum Dikasih
-                    'lawan' => '01.100.20',
-                    'tipe' => $this->input->post('tipe'),
+                    'kode' => '01.100.20', //Belum Dikasih
+                    'lawan' => '01.210.10',
+                    'tipe' => $tipe_jurnal,
                     'nominal' => $this->input->post('jumlah'),
                     'tipe_trx_koperasi' => 'Simuda',
                     'id_detail' => NULL

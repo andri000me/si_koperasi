@@ -113,10 +113,10 @@ class Simpanan_pokok extends CI_Controller
         //Input Jurnal
         $data_jurnal = array(
             'tanggal' => date('Y-m-d H:i:s'),
-            'keterangan' => 'Debet Simpanan Pokok dari no',
-            'kode' => '', //Belum Dikasih
-            'lawan' => '',
-            'tipe' => 'D',
+            'keterangan' => 'Penarikan Simpanan pokok',
+            'kode' => '01.100.20',
+            'lawan' => '01.260.10',
+            'tipe' => 'K',
             'nominal' => $this->input->post('jumlah'),
             'tipe_trx_koperasi' => 'Simpanan Pokok',
             'id_detail' => $this->db->insert_id()
