@@ -148,7 +148,7 @@ Class Bank extends CI_Controller{
 
         $datetime = date('Y-m-d H:i:s');
         $activity = array(
-            'id_user' => '1', //sementara
+            'id_user' => $this->session->userdata('_id'),
             'datetime' => $datetime,
             'keterangan' => 'Menginput bukti bank dengan kode ' . $bukti_bank['kode_trx_bank'],
         );
@@ -326,7 +326,7 @@ Class Bank extends CI_Controller{
 
         $datetime = date('Y-m-d H:i:s');
         $activity = array(
-            'id_user' => '1', //sementara
+            'id_user' => $this->session->userdata('_id'),
             'datetime' => $datetime,
             'keterangan' => 'Mengedit bukti bank dengan kode ' . $kode,
         );
@@ -354,7 +354,7 @@ Class Bank extends CI_Controller{
 
         $datetime = date('Y-m-d H:i:s');
         $activity = array(
-            'id_user' => '1', //sementara
+            'id_user' => $this->session->userdata('_id'),
             'datetime' => $datetime,
             'keterangan' => 'Menghapus bukti bank dengan kode ' . $kode,
         );

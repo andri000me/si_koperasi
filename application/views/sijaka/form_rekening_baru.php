@@ -1,36 +1,37 @@
 <script>
     function manageAjax() {
-        var no_anggota_field = $("#no_anggota").val()
-        $.ajax({
-            url: "<?php echo base_url() . 'index.php/sijaka/manageajaxgetdataanggota'; ?>",
-            type: "POST",
-            data: {
-                id : no_anggota_field
-            },
-            success: function(ajaxData) {
-                $('.data-ajax').html(ajaxData);
-            }
-        });
+      var no_anggota_field = $("#no_anggota").val()
+      $.ajax({
+          url: "<?php echo base_url() . 'index.php/sijaka/manageajaxgetdataanggota'; ?>",
+          type: "POST",
+          data: {
+              id : no_anggota_field
+          },
+          success: function(ajaxData) {
+              var obj = JSON.parse(ajaxData)
+              $("#nama").val(obj.nama)
+              $("#alamat").val(obj.alamat)
+          }
+      });
     }
 
     function manageDate() {
-    var tgl_awal_field = $("#tgl_awal").val()
-    var jangka_waktu_field = $("#jangka_waktu").val()
+      var tgl_awal_field = $("#tgl_awal").val()
+      var jangka_waktu_field = $("#jangka_waktu").val()
 
-    $.ajax({
-      url: "<?php echo base_url() . 'index.php/sijaka/manageajaxDate'; ?>",
-      type: "POST",
-      data: {
-   
-        tgl_awal_field: tgl_awal_field,
-        jangka_waktu_field: jangka_waktu_field
-      },
-      success: function(response) {
-        $("#tgl_akhir").val(response);
+      $.ajax({
+        url: "<?php echo base_url() . 'index.php/sijaka/manageajaxDate'; ?>",
+        type: "POST",
+        data: {
+          tgl_awal_field: tgl_awal_field,
+          jangka_waktu_field: jangka_waktu_field
+        },
+        success: function(response) {
+          $("#tanggal_akhir").val(response);
 
-      }
-    });
-  }
+        }
+      });
+    }
 
     function manageHitungBahas(){
       var jumlah = parseInt($("#inputJumlah").val())
@@ -102,36 +103,43 @@
   <div class="card-body">
     <form method="POST" action="<?php echo base_url() . 'index.php/sijaka/simpanRekeningBaruSijaka' ?>">
       <div class="form-row">
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-3">
           <label for="NRSj">No. Rekening</label>
           <input name="NRSj" type="text" class="form-control" id="NRSj" placeholder="84565xxxx" autofocus required>
         </div>
-        <div class="col-md-4">
+
+        <div class="form-group col-md-3">
           <label for="">No. Anggota</label>
           <select name="no_anggota" id="no_anggota" class="form-control select2_" onchange="manageAjax()" required>
               <option value="">--Pilih--</option>
               <?php foreach($anggota as $a){ ?>
-              <option value="<?php echo $a->no_anggota; ?>"><?php echo $a->no_anggota.' - '.$a->nama ?></option>
+                <option value="<?php echo $a->no_anggota; ?>"><?php echo $a->no_anggota.' - '.$a->nama; ?></option>
               <?php } ?>
           </select>
         </div>
-        <div class="form-group col-md-4">
+
+        <div class="form-group col-md-3">
+            <label for="">Nama</label>
+            <input type="text" name="nama" id="nama" class="form-control" value="" required readonly>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label for="">Alamat</label>
+            <textarea name="alamat" id="alamat" class="form-control" style="height:40px;max-height:40px;" required readonly></textarea>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
           <label for="inputJumlah">Jumlah</label>
           <input name="jumlah" type="number" class="form-control" id="inputJumlah" placeholder="85000xxx" onkeyup="manageHitungBahas()" required>
         </div>
-      </div>
-      <div class='row data-ajax'>
 
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-3">
             <label for="inputTanggalAwal">Tanggal Awal</label>
-            <?php
-            $tgl = date('Y-m-d');
-            ?>
-            <input name="tanggal_awal" type="date" class="form-control" id="tgl_awal" value="<?php echo $tgl; ?>" name="tgl_awal" placeholder="Tanggal Awal">
+            <input name="tanggal_awal" type="date" class="form-control" id="tgl_awal" value="<?php echo date('Y-m-d');; ?>" name="tgl_awal" placeholder="Tanggal Awal">
         </div>
-        <div class="form-group col-md-4">
+
+        <div class="form-group col-md-3">
           <label for="inputJangkaWaktu">Jangka Waktu</label>
             <select name="jangka_waktu" id="jangka_waktu" class="form-control select2_" onchange="manageDate()" required>
               <option value="">--Pilih Jangka Waktu--</option>
@@ -143,42 +151,33 @@
               <option value="30">30 Bulan</option>
             </select>
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-3">
             <label for="inputTanggalAkhir">Tanggal Akhir</label>
-            <input type="date" name="tanggal_akhir" class="form-control" id="tgl_akhir" placeholder="Tanggal Akhir" readonly>
+            <input type="date" name="tanggal_akhir" id="tanggal_akhir" class="form-control" id="tgl_akhir" placeholder="Tanggal Akhir" readonly>
         </div>
       </div>
       <div class="form-row">
-      </div>
-       <div class="form-row">
-        <div class="form-group col-md-2">
-          <label for="inputNilaiBahas">Nilai Bahas</label>
+        <div class="form-group col-md-3">
+          <label for="inputNilaiBahas">Presentase</label>
           <select name="nilai_bahas" id="inputBahas" class="form-control" required>
             <option value="0.7%" selected>0.7%</option>
             <option value="Custom">Custom</option>
           </select>
         </div>
-        <div class="form-group col-md-2">
-          <label for="inputJmlNilaiBahas">Jumlah Bayar Bahas</label>
+        <div class="form-group col-md-3">
+          <label for="inputJmlNilaiBahas">Nilai Bahas</label>
           <input name="presentase_bagi_hasil_bulanan" type="number" class="form-control" value="" id="inputJmlBahas">
         </div>
-        <div class="form-group col-md-2">
-          <label for="perpanjanganOtomatis">Perpanjangan Otomatis</label>
-          <select name="perpanjangan_otomatis" id="perpanjanganOtomatis" class="form-control" required>
-            <option>--Pilih--</option>
-            <option>Y</option>
-            <option>N</option>
-          </select>
-        </div>
-        <div class="form-group col-md-2">
-          <label for="inputPembayaranBahas">Pembayaran</label>
+        
+        <div class="form-group col-md-3">
+          <label for="inputPembayaranBahas">Tipe Pembayaran</label>
           <select name="pembayaran_bahas" id="inputPembayaranBahas" class="form-control" onchange="managePembayaran()" required>
           <option value="">--Pilih--</option>
             <option value="Tunai">Tunai</option>
             <option value="Kredit Rekening">Kredit Rekening</option>
           </select>
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-3">
             <label for="">Rekening Simuda</label>
             <select name="no_rekening_simuda" id="no_rekening_simuda" class="form-control select2_" required>
                 <option value="">--Pilih--</option>
@@ -187,6 +186,16 @@
                 <?php } ?>
             </select>
         </div>  
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="perpanjanganOtomatis">Perpanjangan Otomatis</label>
+          <select name="perpanjangan_otomatis" id="perpanjanganOtomatis" class="form-control" required>
+            <option>--Pilih--</option>
+            <option>Y</option>
+            <option>N</option>
+          </select>
+        </div>
       </div>
       <div>
         <div class="row mt-2">

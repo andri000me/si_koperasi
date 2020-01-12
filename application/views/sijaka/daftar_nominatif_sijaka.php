@@ -27,13 +27,16 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>No.</th>
-                            <th>No. Rekening</th>
-                            <th>No. Anggota</th>
-                            <th>Jumlah</th>
-                            <th>Jumlah Bayar Bahas</th>
-                            <th>Rekening Simuda</th>
-                            <th>Aksi</th>
+                            <th class="text-center">No.</th>
+                            <th class="text-center">No&nbsp;Rekening</th>
+                            <th class="text-center">No.&nbsp;Anggota</th>
+                            <th class="text-center">Tgl.&nbsp;Pembayaran</th>
+                            <th class="text-center">Jumlah</th>
+                            <th class="text-center">Bahas&nbsp;Bulanan</th>
+                            <th class="text-center">Pembayaran</th>
+                            <th class="text-center">Rek.&nbsp;Simuda</th>
+                            <th class="text-center">Progress</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,9 +48,12 @@
                             <td><?php echo $no++; ?></td>
                             <td><?php echo $p->NRSj; ?></td>
                             <td><?php echo $p->no_anggota.' - '.$p->nama;?></td>
+                            <td><?php echo $p->tanggal_pembayaran; ?></td>
                             <td class="text-right"><?php echo $p->jumlah_awal; ?></td>
-                            <td class="text-right"><?php echo $p->presentase_bagi_hasil_bulanan; ?></td>
+                            <td class="text-right"><?php echo $p->jumlah_bahas_bulanan; ?></td>
+                            <td><?php echo $p->pembayaran_bahas; ?></td>
                             <td><?php echo $p->rekening_simuda; ?></td>
+                            <td>0/0</td>
                             <td class="text-center">
                                     <a href="<?php echo base_url().'index.php/sijaka/detailRekeningSijaka/'.$p->NRSj; ?>" class="btn btn-sm btn-primary">Detail</a>
                             </td>

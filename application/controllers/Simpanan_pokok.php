@@ -54,7 +54,7 @@ class Simpanan_pokok extends CI_Controller
                 'no_anggota' => $this->input->post('no_anggota'),
                 'tanggal_pembayaran' => $this->input->post('tanggal_pembayaran'),
                 'jumlah' => $this->input->post('jumlah'),
-                'id_user' => '1'
+                'id_user' => $this->session->userdata('_id')
             );
             $this->M_simpanan_pokok->addSimpananpokok($data);
 

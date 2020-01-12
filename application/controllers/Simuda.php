@@ -49,7 +49,7 @@ Class Simuda extends CI_Controller{
             $datetime = date('Y-m-d H:i:s');
             // simpan ke log activity
             $activity = array(
-                'id_user' => '1', //sementara
+                'id_user' => $this->session->userdata('_id'),
                 'datetime' => $datetime,
                 'keterangan' => 'Menginput buka rekening simuda dengan no rekening simuda ' . $this->input->post('no_rekening_simuda') . ' dengan no anggota ' . $this->input->post('no_anggota'),
             );
@@ -62,7 +62,7 @@ Class Simuda extends CI_Controller{
                 'kredit' => $this->input->post('saldo_awal'),
                 'saldo' => $this->input->post('saldo_awal'),
                 'saldo_terendah' => $this->input->post('saldo_awal'),
-                'id_user' => '1' //Sementara
+                'id_user' => $this->session->userdata('_id') 
             );
             $this->M_simuda->simpanDetailSimuda($data_detail);
 

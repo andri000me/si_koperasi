@@ -62,7 +62,7 @@ class Kredit extends CI_Controller
 
             $datetime = date('Y-m-d H:i:s');
             $activity = array(
-                'id_user' => '1', //sementara
+                'id_user' => $this->session->userdata('_id'),
                 'datetime' => $datetime,
                 'keterangan' => 'Menginput pembiayaan dengan no rekening ' . $this->input->post('no_rekening_pembiayaan') . ' dari anggota ' .$this->input->post('no_anggota') . ' dengan nominal ' . $this->input->post('jumlah_pembiayaan'),
             );
@@ -171,7 +171,7 @@ class Kredit extends CI_Controller
                 'jml_bahas' => $this->input->post('jml_bahas'),
                 'denda' => $this->input->post('denda'),
                 'total' => $this->input->post('total'),
-                'id_user' => '1'
+                'id_user' => $this->session->userdata('_id')
             );
             $save1 = $this->M_kredit->simpanKelolaKredit($detail_table);
 

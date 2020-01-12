@@ -21,7 +21,23 @@ Class Sijaka extends CI_Controller{
     function manageAjaxGetDataAnggota(){
         $no_anggota = $this->input->post('id');
         $data['anggota'] = $this->M_anggota->get1Anggota(array('no_anggota' => $no_anggota));
-        $this->load->view('sijaka/get_data_anggota',$data);
+        if($this->M_anggota->countAnggota(array('no_anggota' => $no_anggota)) == 0){
+            echo json_encode(   
+                array(
+                    "nama" => "",
+                    "alamat" => ""
+                )
+            );
+        }else{
+            foreach($data['anggota'] as $i){
+                echo json_encode(   
+                    array(
+                        "nama" => $i->nama,
+                        "alamat" => $i->alamat
+                    )
+                );
+            }
+        }
     }
 
 
@@ -48,7 +64,7 @@ Class Sijaka extends CI_Controller{
                 'no_anggota' => $this->input->post('no_anggota'),
                 'jumlah_awal' => $this->input->post('jumlah'),
                 'jangka_waktu' => $this->input->post('jangka_waktu'),
-                'tanggal_awal' => $this->input->post('tanggal_awal'),
+                'tanggal_pembayaran' => $this->input->post('tanggal_awal'),
                 'tanggal_akhir' => $this->input->post('tanggal_akhir'),
                 'presentase_bagi_hasil_bulanan' => $this->input->post('presentase_bagi_hasil_bulanan'),
                 'pembayaran_bahas' => $this->input->post('pembayaran_bahas'),
@@ -89,13 +105,197 @@ Class Sijaka extends CI_Controller{
         redirect('sijaka/bukaRekeningSijaka');
     }
 
-    function manageAjaxDate()
-    {
+    function manageAjaxDate(){
         $tgl_awal = $this->input->post('tgl_awal_field');
         $jangka_waktu = $this->input->post('jangka_waktu_field');
         $date = date('Y-m-d', strtotime("+" . $jangka_waktu . " months", strtotime($tgl_awal)));
         echo $date;
     }
+
+    //Hitung Kewajiban Bulanan
+    function hitungKewajibanBulanan(){
+        $data['path'] = 'sijaka/hitung_kewajiban_bulanan';
+        $this->load->view('master_template',$data);
+    }
+    function previewHitungKewajibanBulanan(){
+        $record_bulan_depan = $this->M_sijaka->getPreviewDataPembayaranSijakaBulanDepan();
+        $no = 1;
+        foreach($record_bulan_depan as $i){
+            $newDate = date('d', strtotime($i->tanggal_pembayaran)).date('-m-Y',strtotime("+1 month"));
+            
+            echo "<tr>
+                    <td>".$no++."</td>
+                    <td>".$i->NRSj."</td>
+                    <td>".$i->no_anggota."-".$i->nama."</td>
+                    <td>".$newDate."</td>
+                    <td class='text-right'>Rp. ".number_format($i->jumlah_bahas_bulanan,0,',','.')."</td>
+            ";
+        }
+    }
+    function simpanPerhitunganKewajibanBulanan(){
+        //Mengambil Data Preview
+        $record_bulan_depan = $this->M_sijaka->getPreviewDataPembayaranSijakaBulanDepan();
+        $total_kewajiban_bahas = 0;
+        //Input Ke Tabel Support Pembayaran Bulan Depan
+        foreach($record_bulan_depan as $i){
+            $total_kewajiban_bahas += $i->jumlah_bahas_bulanan;
+            $data = array(
+                'NRSj' => $i->NRSj,
+                'tanggal_pembayaran' => date('Y-m-',strtotime("+1 month")).date('d', strtotime($i->tanggal_pembayaran)),
+                'jumlah_pembayaran' => $i->jumlah_bahas_bulanan
+            );
+            $this->M_sijaka->simpanDataPembayaranSijakaBulanDepan($data);
+        }
+        //Insert Ke Tabel Jurnal
+        $data_jurnal = array(
+            'tanggal' => date('Y-m-d H:i:s'),
+            'kode' => '', //Belum Dikasih
+            'lawan' => '',
+            'tipe' => 'K',
+            'nominal' => $total_kewajiban_bahas,
+            'tipe_trx_koperasi' => 'Sijaka',
+            'id_detail' => NULL
+        );
+        $this->M_jurnal->inputJurnal($data_jurnal);
+
+        
+        $this->session->set_flashdata("input_success","<div class='alert alert-success'>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Kewajiban Pembayaran Sijaka Bulan Depan Berhasil Disimpan!!</div>");
+        redirect('sijaka/hitungKewajibanBulanan');
+    }
+
+    //Pembayaran Bahas
+    function pembayaranBahas(){
+        $data['path'] = 'sijaka/pembayaran_bahas';
+        $data['dataPembayaranBahas'] = $this->M_sijaka->getDataPembayaranSijakaBulanDepan()->result();
+        $this->load->view('master_template',$data);
+    }
+    function kreditRekeningSimuda($id){
+        //Datetime
+        $datetime = date('Y-m-d H:i:s');
+        //Mengambil Jumlah Pembayaran Dari Tabel Support Bagi Hasil Simuda
+        $support_data = $this->M_sijaka->get1DataPembayaranSijakaBulanDepan($id)->result();
+        $jumlah_pembayaran_bahas = 0;
+        $NRSj = "";
+        $no_rekening_simuda = "";
+        foreach($support_data as $i){
+            $jumlah_pembayaran_bahas = $i->jumlah_pembayaran;
+            $NRSj = $i->NRSj;
+            $no_rekening_simuda = $i->rekening_simuda;
+        }
+
+        //Ambil Saldo Terakhir Rekening Simuda
+        $nominal_saldo_terakhir_db = $this->M_simuda->getSaldoRecordTerakhir($no_rekening_simuda);
+        //Saldo Baru Setelah Saldo Terakhir Rekening Simuda Ditambah Jumlah Pembayaran Bahas
+        $saldo_baru = $nominal_saldo_terakhir_db + $jumlah_pembayaran_bahas;
+        //Mendapatkan Saldo Terendah
+        $saldo_terendah = 0;
+        if($this->M_simuda->getJumlahRecordBulanIni($no_rekening_simuda) >0){ //Jika Bulan Ini Ada Transaksi, Maka Menggunakan Pengolahan ini
+            $record_terakhir_db = $this->M_simuda->getSaldoTerendahRecordTerakhir($no_rekening_simuda);
+            if($saldo_baru <= $record_terakhir_db){
+                $saldo_terendah = $saldo_baru;
+            }else{
+                $saldo_terendah = $record_terakhir_db;
+            }
+        }else{ //Jika Bulan Ini Tidak Ada Transaksi, Maka Menggunakan Pengolahan ini
+            $saldo_terendah = $saldo_baru;
+        }
+        //Insert Ke Tabel Detail Simuda
+        $data = array(
+            'no_rekening_simuda' => $no_rekening_simuda,
+            'datetime' => $datetime,
+            'kredit' => $jumlah_pembayaran_bahas,
+            'saldo' => $saldo_baru,
+            'saldo_terendah' => $saldo_terendah,
+            'id_user' => 1
+        );
+        $save_simuda = $this->M_simuda->simpanDetailSimuda($data);
+
+        //Ambil Data Master Sijaka
+        $data_master_sijaka = $this->M_sijaka->get1MasterSijaka(array('NRSj' => $NRSj));
+        $bulan_berjalan = 0;
+        foreach($data_master_sijaka as $i){
+            $bulan_berjalan = $i->bulan_berjalan;
+        }
+
+        //Update Master Sijaka
+        $bulan_berjalan+=1;
+        $data_master_sijaka = array(
+            'bulan_berjalan' => $bulan_berjalan
+        );
+        $this->M_sijaka->updateMasterSijaka($NRSj,$data_master_sijaka);
+
+        //Insert Ke Tabel Detail Sijaka
+
+        //Insert Ke Tabel Jurnal
+        $data_jurnal = array(
+            'tanggal' => $datetime,
+            'kode' => '', //Belum Dikasih
+            'lawan' => '',
+            'tipe' => 'K',
+            'nominal' => $jumlah_pembayaran_bahas,
+            'tipe_trx_koperasi' => 'Simuda',
+            'id_detail' => NULL
+        );
+        $save3 = $this->M_jurnal->inputJurnal($data_jurnal);
+        //Delete Data Support Bagi Hasil
+        $delete_data_support  = $this->M_sijaka->deleteDataPembayaranSijakaBulanDepan($id);
+
+        //Redirect
+        $this->session->set_flashdata("input_success","<div class='alert alert-success'>
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Dana Berhasil Dialhikan Ke Rekening Simuda</div>");
+        redirect('sijaka/pembayaranBahas');
+
+    }
+    function ambilBahasTunai($id){
+        //Datetime
+        $datetime = date('Y-m-d H:i:s');
+        //Mengambil Field Data Dari Tabel Support Bagi Hasil Simuda
+        $support_data = $this->M_sijaka->get1DataPembayaranSijakaBulanDepan($id)->result();
+        $NRSj = "";
+        $jumlah_pembayaran_bahas = 0;
+        foreach($support_data as $i){
+            $NRSj = $i->NRSj;
+            $jumlah_pembayaran_bahas = $i->jumlah_pembayaran;
+        }
+
+        //Ambil Data Master Sijaka
+        $data_master_sijaka = $this->M_sijaka->get1MasterSijaka(array('NRSj' => $NRSj));
+        $bulan_berjalan = 0;
+        foreach($data_master_sijaka as $i){
+            $bulan_berjalan = $i->bulan_berjalan;
+        }
+
+        //Update Master Sijaka
+        $bulan_berjalan+=1;
+        $data_master_sijaka = array(
+            'bulan_berjalan' => $bulan_berjalan
+        );
+        $this->M_sijaka->updateMasterSijaka($NRSj,$data_master_sijaka);
+
+        //Insert Ke Tabel Detail Sijaka
+        
+
+        //Insert Ke Tabel Jurnal
+        $data_jurnal = array(
+            'tanggal' => $datetime,
+            'kode' => '', //Belum Dikasih
+            'lawan' => '',
+            'tipe' => 'D',
+            'nominal' => $jumlah_pembayaran_bahas,
+            'tipe_trx_koperasi' => 'Sijaka',
+            'id_detail' => NULL
+        );
+        $save_jurnal = $this->M_jurnal->inputJurnal($data_jurnal);
+
+        //Delete Data Support Bagi Hasil
+        $delete_data_support  = $this->M_sijaka->deleteDataPembayaranSijakaBulanDepan($id);
+        //Redirect
+        $this->session->set_flashdata("input_success","<div class='alert alert-success'>
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Berhasil Disimpan, Silahkan Melakukan Pencairan</div>");
+        redirect('sijaka/pembayaranBahas');
+    }
+
 
     function daftarNominatifSijaka(){
         $data['path'] = 'sijaka/daftar_nominatif_sijaka';
