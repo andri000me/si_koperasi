@@ -264,7 +264,7 @@ if($this->session->userdata('_login') != TRUE){
               <div class="dropdown-divider"></div>
               <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/laporankas' ?>">Laporan Kas</a>
               <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/laporanbank' ?>">Laporan Bank</a>
-              <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/laporanmemorial' ?>">Laporan Memorial</a>
+              <!-- <a class="collapse-item" href="<?php echo base_url() . 'index.php/transaksi/laporanmemorial' ?>">Laporan Memorial</a> -->
             </div>
           </div>
         </li>
