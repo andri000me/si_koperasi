@@ -119,7 +119,7 @@ Class Anggota extends CI_Controller{
         //Nama Anggota
         $data['anggota'] = $this->M_anggota->get1Anggota(array('no_anggota'=>$id));
         //Simpanan Pokok Anggota
-        $data['simpanan_pokok']= $this->M_simpanan_pokok->get1SimpananPokok($id)->result();
+        $data['simpanan_pokok']= $this->M_simpanan_pokok->get1SimpananPokok(array('anggota.no_anggota' => $id))->result();
         $data['simpanan_wajib']= $this->M_simpanan_wajib->get1Nominatif($id);
         $data['simuda'] = $this->M_simuda->get1MasterSimuda($id);
         $data['sijaka'] = "";

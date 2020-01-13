@@ -100,7 +100,8 @@ class Simpanan_pokok extends CI_Controller
 
     function ambilUang(){
         $data['id'] = $this->input->post('id');
-        $data['simpanan_pokok'] = $this->M_simpanan_pokok->get1SimpananPokok($data['id'])->result();
+        // $data['simpanan_pokok'] = $this->M_simpanan_pokok->get1SimpananPokok($data['id'])->result();
+        $data['simpanan_pokok'] = $this->M_simpanan_pokok->get1SimpananPokok(array('master_simpanan_pokok.id_simpanan_pokok' => $data['id']))->result();
         $this->load->view('simpanan_pokok/pencairan_simpanan_pokok',$data);
     }
     function prosesPencairanDana(){

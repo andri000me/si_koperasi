@@ -14,12 +14,12 @@ class M_simpanan_pokok extends CI_Model
         return $this->db->get();
     }
 
-    function get1SimpananPokok($id){
+    function get1SimpananPokok($where){
         $this->db->select('master_simpanan_pokok.id_simpanan_pokok, master_simpanan_pokok.no_anggota, anggota.nama, master_simpanan_pokok.tanggal_pembayaran, master_simpanan_pokok.jumlah, master_simpanan_pokok.status_dana, master_simpanan_pokok.id_user, user.nama_terang');
         $this->db->from($this->_table);
         $this->db->join($this->_table_anggota, 'master_simpanan_pokok.no_anggota=anggota.no_anggota');
         $this->db->join($this->_table_user, 'master_simpanan_pokok.id_user = user.id_user');
-        $this->db->where(array('master_simpanan_pokok.id_simpanan_pokok' => $id));
+        $this->db->where($where);
         return $this->db->get();
     }
 
