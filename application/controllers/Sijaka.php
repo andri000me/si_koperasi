@@ -77,13 +77,16 @@ Class Sijaka extends CI_Controller{
 
             $data_jurnal = array(
                 'tanggal' => $datetime,
-                'kode' => '', //Belum Dikasih
-                'lawan' => '',
-                'tipe' => 'K',
+                'keterangan' => 'Pembukaan rekening baru sijaka ' . $this->input->post('NRSj'),
+                'kode' => '01.100.20', //Belum Dikasih
+                'lawan' => '01.210.20',
+                'tipe' => 'D',
                 'nominal' => $this->input->post('jumlah'),
                 'tipe_trx_koperasi' => 'Sijaka',
-                'id_detail' => $this->db->insert_id()
+                'id_detail' => NULL
+
             );
+
             $this->M_jurnal->inputJurnal($data_jurnal);
 
             //simpan ke tabel master detail rekening sijaka
@@ -165,8 +168,9 @@ Class Sijaka extends CI_Controller{
         //Insert Ke Tabel Jurnal
         $data_jurnal = array(
             'tanggal' => date('Y-m-d H:i:s'),
-            'kode' => '', //Belum Dikasih
-            'lawan' => '',
+            'keterangan' => 'Kewajiban bulanan sijaka',
+            'kode' => '01.200.50', //Belum Dikasih
+            'lawan' => '02.210.20',
             'tipe' => 'K',
             'nominal' => $total_kewajiban_bahas,
             'tipe_trx_koperasi' => 'Sijaka',
@@ -254,11 +258,12 @@ Class Sijaka extends CI_Controller{
         //Insert Ke Tabel Jurnal
         $data_jurnal = array(
             'tanggal' => $datetime,
-            'kode' => '', //Belum Dikasih
-            'lawan' => '',
-            'tipe' => 'K',
+            'keterangan' => 'Transfer bahas sijaka no rekening ' . $NRSj . ' ke rekening simuda ',
+            'kode' => '01.200.50', //Belum Dikasih
+            'lawan' => '01.210.10',
+            'tipe' => 'D',
             'nominal' => $jumlah_pembayaran_bahas,
-            'tipe_trx_koperasi' => 'Simuda',
+            'tipe_trx_koperasi' => 'Sijaka',
             'id_detail' => NULL
         );
         $save_jurnal = $this->M_jurnal->inputJurnal($data_jurnal);
@@ -310,9 +315,10 @@ Class Sijaka extends CI_Controller{
         //Insert Ke Tabel Jurnal
         $data_jurnal = array(
             'tanggal' => $datetime,
-            'kode' => '', //Belum Dikasih
-            'lawan' => '',
-            'tipe' => 'D',
+            'keterangan' => 'Penarikan tunai bahas sijaka no rekening ' . $NRSj,
+            'kode' => '01.100.20', //Belum Dikasih
+            'lawan' => '01.200.50',
+            'tipe' => 'K',
             'nominal' => $jumlah_pembayaran_bahas,
             'tipe_trx_koperasi' => 'Sijaka',
             'id_detail' => NULL
@@ -345,18 +351,19 @@ Class Sijaka extends CI_Controller{
             'status_dana' => 'Diambil'
         );
         $this->M_sijaka->updateMasterSijaka($NRSj,$data);
-        
+        $datetime = date('Y-m-d H:i:s');
         //insert ke table jurnal
         $data_jurnal = array(
-            'tanggal' => '',
-            'kode' => '', //Belum Dikasih
-            'lawan' => '',
+            'tanggal' => $datetime,
+            'keterangan' => 'Penarikan pokok sijaka no rekening ' . $NRSj,
+            'kode' => '01.100.20', //Belum Dikasih
+            'lawan' => '01.210.20',
             'tipe' => 'K',
             'nominal' => $jumlah_simpanan,
             'tipe_trx_koperasi' => 'Sijaka',
             'id_detail' => NULL
         );
-        $save2 = $this->M_jurnal->inputJurnal($data_jurnal);
+        $save_jurnal = $this->M_jurnal->inputJurnal($data_jurnal);
 
         //Redirect
         $this->session->set_flashdata("input_success","<div class='alert alert-success'>

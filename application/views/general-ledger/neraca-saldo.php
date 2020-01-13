@@ -237,9 +237,40 @@
                                     }
                                     ?>
                                 </tr>
-                            <?php
+
+                                
+                                <?php
                             }
+                            
+                                $lrTahunBerjalan = $this->M_neraca_saldo->getLabaRugiTahunBerjalan($_GET['dari'], $_GET['sampai']);
+
+                                $ttlMutasiDebet = $ttlMutasiDebet - $lrTahunBerjalan;
+                                // $ttlMutasiKredit = $ttlMutasiKredit + $mutasiKredit;
+
+                                $ttlSaldoAkhirDebet = $ttlSaldoAkhirDebet - $lrTahunBerjalan;
+                                // $ttlSaldoAwalDebet = $ttlSaldoAwalDebet + $saldoAwal;
                             ?>
+                            <!-- LR belum fix -->
+                                <tr>
+                                    <th>01.270.10</th>
+                                    <th>SHU Tahun Lalu</th>
+                                    <th>0,00</th>
+                                    <th>0,00</th>
+                                    <th>0,00</th>
+                                    <th>0,00</th>
+                                    <th>0,00</th>
+                                    <th>0,00</th>
+                                </tr>
+                                <tr>
+                                    <th>01.280.10</th>
+                                    <th>SHU Tahun Berjalan</th>
+                                    <th>0,00</th>
+                                    <th>0,00</th>
+                                    <th>( <?php echo number_format($lrTahunBerjalan, 2, ',', '.')?> )</th>
+                                    <th>0,00</th>
+                                    <th>( <?php echo number_format($lrTahunBerjalan, 2, ',', '.')?> )</th>
+                                    <th>0,00</th>
+                                </tr>
                             </tbody>
                             <tfoot class="bg-warning text-white">
                                 <th colspan="2"></th>

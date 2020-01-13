@@ -4,7 +4,7 @@ Class M_neraca_saldo extends CI_Model{
     
     // get rekening kode induk != bank & bank
     function getAllRekening(){
-        return $this->db->query("SELECT r.kode_rekening, r.nama, r.saldo_awal FROM ak_rekening r where r.kode_rekening LIKE '01.%'")->result();
+        return $this->db->query("SELECT r.kode_rekening, r.nama, r.saldo_awal FROM ak_rekening r where r.kode_rekening LIKE '01.%' AND r.kode_rekening NOT IN('01.270.10', '01.280.10')")->result();
     }
     
     // get kode, nama (satu rekening)
@@ -109,6 +109,19 @@ Class M_neraca_saldo extends CI_Model{
     function sumMutasiAwalKreditByLawan($kode, $tgl_dari)
     {
         return $this->db->query("SELECT SUM(nominal) ttl FROM ak_jurnal WHERE lawan = '$kode' AND tanggal < '$tgl_dari 00:00:00' AND tipe = 'D'")->result();
+    }
+
+    public function getLabaRugiTahunBerjalan($dari, $sampai)
+    {
+        $ttlPendapatan = $this->db->query("SELECT SUM(nominal) ttlPendapatan FROM ak_jurnal WHERE lawan LIKE '02.1%' AND tanggal BETWEEN '$dari 00:00:00' AND '$sampai 23:59:59' AND tipe = 'D'")->result()[0];
+
+        $ttlBiaya = $this->db->query("SELECT SUM(nominal) ttlPendapatan FROM ak_jurnal WHERE lawan LIKE '02.2%' AND tanggal BETWEEN '$dari 00:00:00' AND '$sampai 23:59:59' AND tipe = 'K'")->result()[0];
+
+        $pajakPenghasilan = $this->db->query("SELECT SUM(nominal) pajakPenghasilan FROM ak_jurnal WHERE lawan LIKE '02.320%' AND tanggal BETWEEN '$dari 00:00:00' AND '$sampai 23:59:59' AND tipe = 'K'")->result()[0];
+
+        $labaRugiTahunBerjalan = $ttlPendapatan->ttlPendapatan - $ttlBiaya->ttlPendapatan - $pajakPenghasilan->pajakPenghasilan;
+
+        return $labaRugiTahunBerjalan;
     }
 
   }
