@@ -62,13 +62,14 @@ Class Sijaka extends CI_Controller{
                 //'nama field db' => $this->input->post('name di view')
                 'NRSj' => $this->input->post('NRSj'),
                 'no_anggota' => $this->input->post('no_anggota'),
-                'jumlah_awal' => $this->input->post('jumlah'),
+                'jumlah_simpanan' => $this->input->post('jumlah'),
                 'jangka_waktu' => $this->input->post('jangka_waktu'),
                 'tanggal_pembayaran' => $this->input->post('tanggal_awal'),
                 'tanggal_akhir' => $this->input->post('tanggal_akhir'),
-                'presentase_bagi_hasil_bulanan' => $this->input->post('presentase_bagi_hasil_bulanan'),
+                'jumlah_bahas_bulanan' => $this->input->post('presentase_bagi_hasil_bulanan'),
                 'pembayaran_bahas' => $this->input->post('pembayaran_bahas'),
-                'rekening_simuda' => $this->input->post('no_rekening_simuda'), 
+                'rekening_simuda' => $this->input->post('no_rekening_simuda'),
+                'status_dana' => 'Belum Diambil', 
                 'otomatis_perpanjang' => $this->input->post('perpanjangan_otomatis')                
             );
             $this->M_sijaka->simpanSijaka($data_master);
