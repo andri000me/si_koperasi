@@ -13,13 +13,8 @@ class NeracaSaldo extends CI_Controller
         $data['path'] = "general-ledger/neraca-saldo.php";
         $data['allRekening'] = $this->M_neraca_saldo->getAllRekening();   
         
-        if (!empty($_GET['dari']) && !empty($_GET['sampai']) && !empty($_GET['kode']) ) {
-            if ($_GET['kode'] == 'semua') {
-                $data['rekening'] = $this->M_neraca_saldo->getAllRekening($_GET['kode']);
-            }
-            else{
-                $data['rekening'] = $this->M_neraca_saldo->getSomeRekening($_GET['kode'], $_GET['rk_sampai']);
-            }
+        if (!empty($_GET['dari']) && !empty($_GET['sampai'])) {
+            $data['rekening'] = $this->M_neraca_saldo->getAllRekening();
         }
 
         $this->load->view('master_template', $data);

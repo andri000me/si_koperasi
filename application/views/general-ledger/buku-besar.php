@@ -169,7 +169,7 @@
                                     <td> <?php echo $tanggal ?> </td>
                                     <td> <?php echo $value->kode_transaksi ?> </td>
                                     <td> <?php echo $value->keterangan ?> </td>
-                                    <td> <?php echo $value->$fieldLawan ?> </td>
+                                    <td> <?php echo $value->$fieldLawan . ' ( ' . $this->M_buku_besar->getNamaRekening($value->$fieldLawan) . ' )'  ?> </td>
                                     <?php
                                     // jika lawan terdapat di field lawan
                                     if ($fieldLawan == 'lawan') {

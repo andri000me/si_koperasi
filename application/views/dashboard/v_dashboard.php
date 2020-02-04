@@ -2,7 +2,8 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
     </div>
-    <h5 class="h5">Selamat Datang Nama User</h5>
+    <h5 class="h5">Selamat Datang <?php echo $this->session->userdata('nama_terang');
+     ?></h5>
     <br>
     <!-- Content Row -->
     <div class="row">

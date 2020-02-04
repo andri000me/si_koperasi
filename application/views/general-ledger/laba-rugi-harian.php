@@ -214,7 +214,7 @@
                                     <td><?php echo $valKode->kode_rekening ?></td>
                                     <td><?php echo $valKode->nama ?></td>
                                     <?php
-                                    echo "<td>". number_format($saldoAwal, 2, ',', '.') ."</td>";
+                                    echo "<td>". number_format($saldoAwal * -1, 2, ',', '.') ."</td>";
                                     echo '<td>'. number_format($mutasiDebet, 2, ',', '.') .'</td>';
                                     echo '<td>'. number_format($mutasiKredit, 2, ',', '.') .'</td>';
                                     echo "<td>". number_format($saldoAkhir * -1, 2, ',', '.') ."</td>";
@@ -222,7 +222,7 @@
                                     ?>
                                 </tr>
                             <?php
-                            $totalMutasiPendapatan += $mutasiKredit;
+                            $totalMutasiPendapatan += $mutasiKredit - $mutasiDebet;
                             $totalPendapatanAwal += $saldoAwal;
                             $totalPendapatan += $saldoAkhir;
                             }
@@ -233,7 +233,11 @@
                                 <?php
                                 echo "<th>". number_format($totalPendapatanAwal * -1, 2, ',', '.') ."</th>";
                                 ?>
-                                <th colspan="2"></th>
+                                <th>0,00</th>
+                                <?php
+                                echo "<th>". number_format($totalMutasiPendapatan , 2, ',', '.') ."</th>";
+                                ?>
+                                
                                 <?php
                                 echo "<th>". number_format($totalPendapatan * -1, 2, ',', '.') ."</th>";
                                 ?>
@@ -385,7 +389,7 @@
                                     ?>
                                 </tr>
                             <?php
-                                $totalMutasiBiaya += $mutasiDebet;
+                                $totalMutasiBiaya += $mutasiDebet - $mutasiKredit;
                                 $totalBiayaAwal += $saldoAwal;
                                 $totalBiaya += $saldoAkhir;
                             }
@@ -396,7 +400,10 @@
                                 <?php
                                 echo "<th>". number_format($totalBiayaAwal, 2, ',', '.') ."</th>";
                                 ?>
-                                <th colspan="2"></th>
+                                <?php
+                                echo "<th>". number_format($totalMutasiBiaya, 2, ',', '.') ."</th>";
+                                ?>
+                                <th>0,00</th>
                                 <?php
                                 echo "<th>". number_format($totalBiaya, 2, ',', '.') ."</th>";
                                 ?>
@@ -556,7 +563,10 @@
                                 <th></th>
                                 <th>SHU Sebelum Pajak</th>
                                 <?php
-                                $shuSebelumPajakAwal = ($totalPendapatanAwal * -1) - $totalBiayaAwal - $totalBiayaNonOperasionalAwal;
+                                $saldoAwalShuSebelumPajak = $this->M_laba_rugi->getSaldoAwal('02.310.10')[0]->saldo_awal;
+
+                                $shuSebelumPajakAwal = $saldoAwalShuSebelumPajak + ($totalPendapatanAwal * -1) - $totalBiayaAwal - $totalBiayaNonOperasionalAwal;
+
                                 if ($shuSebelumPajakAwal < 0) {
                                     echo "<th> ( ". number_format($shuSebelumPajakAwal, 2, ',', '.') ." ) </th>";
                                 }
@@ -566,14 +576,17 @@
                                 ?>
 
                                 <?php
-                                $shuSebelumPajak = $totalMutasiPendapatan - $totalMutasiBiaya;
-                                if ($shuSebelumPajak < 0) {
-                                    echo "<th> ( ". number_format($shuSebelumPajak, 2, ',', '.') ." ) </th>";
+                                $mutasiShuSebelumPajak = $totalMutasiPendapatan - $totalMutasiBiaya -$totalBiayaNonOperasional;
+
+                                $shuSebelumPajak = $saldoAwalShuSebelumPajak + ($totalPendapatan * -1) - $totalBiaya - $totalBiayaNonOperasional;
+                                // $saldoAwalShu + ($totalPendapatan * -1) - $totalBiaya - $totalBiayaNonOperasional - $totalPajakPenghasilan;
+                                if ($mutasiShuSebelumPajak < 0) {
+                                    echo "<th> ( ". number_format($mutasiShuSebelumPajak, 2, ',', '.') ." ) </th>";
                                 }
                                 else{
-                                    echo "<th>". number_format($shuSebelumPajak, 2, ',', '.') ."</th>";
+                                    echo "<th>". number_format($mutasiShuSebelumPajak, 2, ',', '.') ."</th>";
                                 }
-                                echo "<th></th> <th>". number_format($shuSebelumPajakAwal + $shuSebelumPajak, 2, ',', '.') ."</th>";
+                                echo "<th></th> <th>". number_format($shuSebelumPajak, 2, ',', '.') ."</th>";
                                 ?>
                             </tr>
                             <!-- <tr>
@@ -730,13 +743,15 @@
                             <?php
                                 $totalPajakPenghasilanAwal += $saldoAwal;
                                 $totalPajakPenghasilan += $saldoAkhir;
+                                $pajakPenghasilan = $mutasiDebet - $mutasiKredit;
                             }
                             ?>
                             <tr>
                                 <th></th>
                                 <th>SISA HASIL USAHA</th>
                                 <?php
-                                $shuAwal = ($totalPendapatanAwal * -1) - $totalBiayaAwal - $totalBiayaNonOperasionalAwal - $totalPajakPenghasilanAwal;
+                                $saldoAwalShu = $this->M_laba_rugi->getSaldoAwal('02.330.10')[0]->saldo_awal;
+                                $shuAwal = $saldoAwalShu + $shuSebelumPajakAwal - $totalPajakPenghasilanAwal;
                                 if ($shuAwal < 0) {
                                     echo "<th> ( ". number_format($shuAwal, 2, ',', '.') ." ) </th>";
                                 }
@@ -744,11 +759,11 @@
                                     echo "<th>". number_format($shuAwal, 2, ',', '.') ."</th>";
                                 }
 
-                                echo "<th> ( ". number_format(($shuSebelumPajak - $totalPajakPenghasilan) , 2, ',', '.') ." ) </th>";
+                                echo "<th> ( ". number_format(($mutasiShuSebelumPajak - $pajakPenghasilan) , 2, ',', '.') ." ) </th>";
                                 ?>
                                 <th></th>
                                 <?php
-                                $shu = ($totalPendapatan * -1) - $totalBiaya - $totalBiayaNonOperasional - $totalPajakPenghasilan;
+                                $shu = $saldoAwalShu + $shuSebelumPajak - $totalPajakPenghasilanAwal;
                                 if ($shu < 0) {
                                     echo "<th>". number_format($shu, 2, ',', '.') ."</th>";
                                 }

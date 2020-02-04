@@ -15,26 +15,6 @@
         <form method="GET" action="">
                 <div class="row">
                     <div class="form-group col-md-3">
-                        <label for="">Kode Perkiraan</label>
-                        <select name="kode" id="kode" class="form-control select2_" required>
-                            <option value="">--Pilih Kode Perkiraan--</option>
-                            <option value="semua" <?php echo isset($_GET['kode']) && $_GET['kode'] == 'semua' ? 'selected' : '' ?>>Semua Kode Perkiraan</option>
-                            <?php foreach ($allRekening as $key) { ?>
-                                <option value="<?php echo $key->kode_rekening; ?>" <?php echo isset($_GET['kode']) && $_GET['kode'] == $key->kode_rekening ? 'selected' : '' ?> ><?php echo $key->kode_rekening . ' - ' . $key->nama ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="">S/d</label>
-                        <select name="rk_sampai" id="rk_sampai" class="form-control select2_" required>
-                            <option value="">--Pilih Kode Perkiraan--</option>
-                            <option value="semua" <?php echo isset($_GET['kode']) && $_GET['kode'] == 'semua' ? 'selected' : '' ?>>Semua Kode Perkiraan</option>
-                            <?php foreach ($allRekening as $key) { ?>
-                                <option value="<?php echo $key->kode_rekening; ?>" <?php echo isset($_GET['rk_sampai']) && $_GET['rk_sampai'] == $key->kode_rekening ? 'selected' : '' ?> ><?php echo $key->kode_rekening . ' - ' . $key->nama ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-3">
                         <label for="">Tanggal</label>
                         <?php
                         $tgl = date('Y-m-d');
@@ -45,14 +25,14 @@
                         <label for="">S/d</label>
                         <input type="date" class="form-control" id="sampai" value="<?php echo isset($_GET['sampai']) ? $_GET['sampai'] : $tgl ?>" name="sampai" required>
                     </div>
-                    <div class="col-md-3">
-                        <button type="submit" class="btn btn-sm btn-primary mr-1">Proses</button>
-                        <button type="reset" class="btn btn-sm btn-default btn-secondary">Reset</button>
+                    <div class="col-md-3 mt-4">
+                        <button type="submit" style="margin-top: 10px;" class="btn btn-sm btn-primary mr-1">Proses</button>
+                        <button type="reset" style="margin-top: 10px;" class="btn btn-sm btn-default btn-secondary">Reset</button>
                     </div>
                 </div>
             </form>
             <?php
-            if (isset($_GET['dari']) && isset($_GET['sampai']) && isset($_GET['kode']) ) {
+            if (isset($_GET['dari']) && isset($_GET['sampai']) ) {
             ?>
             <br>
             <hr>
@@ -241,13 +221,16 @@
                                 
                                 <?php
                             }
-                            
+                                $saldoAwalShu = $this->M_neraca_saldo->getSaldoAwal('02.330.10')->saldo_awal;
+                                $shuAwal = $this->M_neraca_saldo->getLabaRugiTahunBerjalanAwal($_GET['dari']);
+                                
                                 $lrTahunBerjalan = $this->M_neraca_saldo->getLabaRugiTahunBerjalan($_GET['dari'], $_GET['sampai']);
-
+                                
+                                $ttlSaldoAwalKredit = $saldoAwalShu + $shuAwal;
                                 $ttlMutasiDebet = $ttlMutasiDebet - $lrTahunBerjalan;
                                 // $ttlMutasiKredit = $ttlMutasiKredit + $mutasiKredit;
 
-                                $ttlSaldoAkhirDebet = $ttlSaldoAkhirDebet - $lrTahunBerjalan;
+                                $ttlSaldoAkhirDebet = $ttlSaldoAkhirDebet - $lrTahunBerjalan - ($saldoAwalShu + $shuAwal);
                                 // $ttlSaldoAwalDebet = $ttlSaldoAwalDebet + $saldoAwal;
                             ?>
                             <!-- LR belum fix -->
@@ -265,7 +248,7 @@
                                     <th>01.280.10</th>
                                     <th>SHU Tahun Berjalan</th>
                                     <th>0,00</th>
-                                    <th>0,00</th>
+                                    <th><?php echo number_format($saldoAwalShu + $shuAwal, 2, ',', '.')?> </th>
                                     <th>( <?php echo number_format($lrTahunBerjalan, 2, ',', '.')?> )</th>
                                     <th>0,00</th>
                                     <th>( <?php echo number_format($lrTahunBerjalan, 2, ',', '.')?> )</th>
@@ -275,7 +258,7 @@
                             <tfoot class="bg-warning text-white">
                                 <th colspan="2"></th>
                                 <th><?php echo number_format($ttlSaldoAwalDebet, 2, ',', '.') ?></th>
-                                <th><?php echo number_format($ttlSaldoAwalKredit * -1, 2, ',', '.') ?></th>
+                                <th><?php echo number_format($ttlSaldoAwalKredit, 2, ',', '.') ?></th>
                                 <th><?php echo number_format($ttlMutasiDebet, 2, ',', '.') ?></th>
                                 <th><?php echo number_format($ttlMutasiKredit, 2, ',', '.') ?></th>
                                 <th><?php echo number_format($ttlSaldoAkhirDebet, 2, ',', '.') ?></th>
