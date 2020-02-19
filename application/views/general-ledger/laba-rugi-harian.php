@@ -556,6 +556,7 @@
                                 </tr>
                             <?php
                                 $totalBiayaNonOperasionalAwal += $saldoAwal;
+                                $totalMutasiBiayaNonOperasional += $mutasiDebet - $mutasiKredit;
                                 $totalBiayaNonOperasional += $saldoAkhir;
                             }
                             ?>
@@ -576,7 +577,7 @@
                                 ?>
 
                                 <?php
-                                $mutasiShuSebelumPajak = $totalMutasiPendapatan - $totalMutasiBiaya -$totalBiayaNonOperasional;
+                                $mutasiShuSebelumPajak = $totalMutasiPendapatan - $totalMutasiBiaya -$totalMutasiBiayaNonOperasional;
 
                                 $shuSebelumPajak = $saldoAwalShuSebelumPajak + ($totalPendapatan * -1) - $totalBiaya - $totalBiayaNonOperasional;
                                 // $saldoAwalShu + ($totalPendapatan * -1) - $totalBiaya - $totalBiayaNonOperasional - $totalPajakPenghasilan;

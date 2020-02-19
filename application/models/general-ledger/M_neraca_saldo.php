@@ -117,9 +117,11 @@ Class M_neraca_saldo extends CI_Model{
 
         $ttlBiaya = $this->db->query("SELECT SUM(nominal) ttlPendapatan FROM ak_jurnal WHERE lawan LIKE '02.2%' AND tanggal BETWEEN '$dari 00:00:00' AND '$sampai 23:59:59' AND tipe = 'K'")->result()[0];
 
+        $ttlBiayaNonOperasional = $this->db->query("SELECT SUM(nominal) ttlPendapatan FROM ak_jurnal WHERE lawan LIKE '02.300%' AND tanggal BETWEEN '$dari 00:00:00' AND '$sampai 23:59:59' AND tipe = 'K'")->result()[0];
+
         $pajakPenghasilan = $this->db->query("SELECT SUM(nominal) pajakPenghasilan FROM ak_jurnal WHERE lawan LIKE '02.320%' AND tanggal BETWEEN '$dari 00:00:00' AND '$sampai 23:59:59' AND tipe = 'K'")->result()[0];
 
-        $labaRugiTahunBerjalan = $ttlPendapatan->ttlPendapatan - $ttlBiaya->ttlPendapatan - $pajakPenghasilan->pajakPenghasilan;
+        $labaRugiTahunBerjalan = $ttlPendapatan->ttlPendapatan - $ttlBiaya->ttlPendapatan - $ttlBiayaNonOperasional->ttlPendapatan - $pajakPenghasilan->pajakPenghasilan;
 
         return $labaRugiTahunBerjalan;
     }
@@ -137,10 +139,12 @@ Class M_neraca_saldo extends CI_Model{
         $ttlSaldoAwalPendapatanSblmPajak = $this->db->query("SELECT SUM(saldo_awal) ttlSaldoAwalPendapatanSblmPajak FROM ak_rekening WHERE kode_rekening = '02.310.10'")->result()[0];
 
         $ttlSaldoAwalBiaya = $this->db->query("SELECT SUM(saldo_awal) ttlSaldoAwalBiaya FROM ak_rekening WHERE kode_rekening LIKE '02.2%'")->result()[0];
-
+        
+        $ttlSaldoAwalBiayaNonOperasional = $this->db->query("SELECT SUM(saldo_awal) ttlSaldoAwalBiayaNonOperasional FROM ak_rekening WHERE kode_rekening LIKE '02.300%'")->result()[0];
+        
         $ttlSaldoAwalPajakPenghasilan = $this->db->query("SELECT SUM(saldo_awal) ttlSaldoAwalPajakPenghasilan FROM ak_rekening WHERE kode_rekening LIKE '02.320%'")->result()[0];
 
-        $labaRugiTahunBerjalanAwal = ($ttlPendapatanAwal->ttlPendapatan + $ttlSaldoAwalPendapatan->ttlSaldoAwalPendapatan + $ttlSaldoAwalPendapatanSblmPajak->ttlSaldoAwalPendapatanSblmPajak) - ($ttlBiayaAwal->ttlPendapatan - $ttlSaldoAwalBiaya->ttlSaldoAwalBiaya) - ($pajakPenghasilanAwal->pajakPenghasilan + $ttlSaldoAwalPajakPenghasilan->ttlSaldoAwalPajakPenghasilan);
+        $labaRugiTahunBerjalanAwal = $ttlPendapatanAwal->ttlPendapatan + $ttlSaldoAwalPendapatan->ttlSaldoAwalPendapatan - $ttlBiayaAwal->ttlPendapatan - $ttlSaldoAwalBiaya->ttlSaldoAwalBiaya - $ttlSaldoAwalBiayaNonOperasional->ttlSaldoAwalBiayaNonOperasional - $pajakPenghasilanAwal->pajakPenghasilan - $ttlSaldoAwalPajakPenghasilan->ttlSaldoAwalPajakPenghasilan;
 
         return $labaRugiTahunBerjalanAwal;
     }

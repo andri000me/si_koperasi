@@ -240,7 +240,7 @@ if($this->session->userdata('_login') != TRUE){
           <div id="generalLedger" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
               <a class="collapse-item" href="<?php echo base_url() . 'index.php/general-ledger/bukubesar'; ?>">Buku Besar</a>
-              <a class="collapse-item" href="<?php echo base_url() . 'index.php/general-ledger/neracasaldo'; ?>">Neraca Saldo</a>
+              <a class="collapse-item" href="<?php echo base_url() . 'index.php/general-ledger/neracasaldo'; ?>">Neraca</a>
               <a class="collapse-item" href="<?php echo base_url() . 'index.php/general-ledger/labarugi'; ?>">Laba/Rugi</a>
               <!-- <a class="collapse-item" href="<?php echo base_url() . 'index.php/general-ledger/labarugi/lrbulanan'; ?>">Laba/Rugi Bulanan</a> -->
             </div>
@@ -277,7 +277,7 @@ if($this->session->userdata('_login') != TRUE){
             <div class="bg-white py-2 collapse-inner rounded">
               <a class="collapse-item" href="<?php echo base_url() . 'index.php/setup-akuntansi/kodeinduk' ?>">Kode Induk</a>
               <a class="collapse-item" href="<?php echo base_url() . 'index.php/setup-akuntansi/koderekening' ?>">Kode Rekening</a>
-              <a class="collapse-item" href="<?php echo base_url() . 'index.php/setup-akuntansi/settingrekening' ?>">Setting Rekening</a>
+              <!-- <a class="collapse-item" href="<?php echo base_url() . 'index.php/setup-akuntansi/settingrekening' ?>">Setting Rekening</a> -->
             </div>
           </div>
         </li>

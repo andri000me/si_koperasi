@@ -3,13 +3,13 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?php echo base_url() . 'index.php/dashboard' ?>">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="#">General Ledger</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Neraca Saldo</li>
+            <li class="breadcrumb-item active" aria-current="page">Neraca</li>
         </ol>
     </nav>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Neraca Saldo</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Neraca</h6>
         </div>
         <div class="card-body">
         <form method="GET" action="">
@@ -39,7 +39,7 @@
             <br>
             <center>
             <h5><b>Koperasi Madani</b></h5>
-            <h6><b>Neraca Saldo</b></h6>
+            <h6><b>Neraca</b></h6>
             <h6><b>Periode : <?php echo date('d-m-Y', strtotime($_GET['dari'])) . " S/d " . date('d-m-Y', strtotime($_GET['sampai'])) ?></b></h6>
             </center>
             <div class="row">
@@ -226,7 +226,7 @@
                                 
                                 $lrTahunBerjalan = $this->M_neraca_saldo->getLabaRugiTahunBerjalan($_GET['dari'], $_GET['sampai']);
                                 
-                                $ttlSaldoAwalKredit = $saldoAwalShu + $shuAwal;
+                                $ttlSaldoAwalKredit -= $saldoAwalShu + $shuAwal;
                                 $ttlMutasiDebet = $ttlMutasiDebet - $lrTahunBerjalan;
                                 // $ttlMutasiKredit = $ttlMutasiKredit + $mutasiKredit;
 
@@ -251,17 +251,17 @@
                                     <th><?php echo number_format($saldoAwalShu + $shuAwal, 2, ',', '.')?> </th>
                                     <th>( <?php echo number_format($lrTahunBerjalan, 2, ',', '.')?> )</th>
                                     <th>0,00</th>
-                                    <th>( <?php echo number_format($lrTahunBerjalan, 2, ',', '.')?> )</th>
+                                    <th>( <?php echo number_format($lrTahunBerjalan + $saldoAwalShu + $shuAwal, 2, ',', '.')?> )</th>
                                     <th>0,00</th>
                                 </tr>
                             </tbody>
                             <tfoot class="bg-warning text-white">
                                 <th colspan="2"></th>
-                                <th><?php echo number_format($ttlSaldoAwalDebet, 2, ',', '.') ?></th>
-                                <th><?php echo number_format($ttlSaldoAwalKredit, 2, ',', '.') ?></th>
+                                <th><?php echo number_format(floor($ttlSaldoAwalDebet), 2, ',', '.') ?></th>
+                                <th><?php echo number_format($ttlSaldoAwalKredit * -1, 2, ',', '.') ?></th>
                                 <th><?php echo number_format($ttlMutasiDebet, 2, ',', '.') ?></th>
                                 <th><?php echo number_format($ttlMutasiKredit, 2, ',', '.') ?></th>
-                                <th><?php echo number_format($ttlSaldoAkhirDebet, 2, ',', '.') ?></th>
+                                <th><?php echo number_format(floor($ttlSaldoAkhirDebet), 2, ',', '.') ?></th>
                                 <th><?php echo number_format($ttlSaldoAkhirKredit * -1, 2, ',', '.') ?></th>
                             </tfoot>
                         </table>
