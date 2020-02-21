@@ -556,7 +556,7 @@
                                 </tr>
                             <?php
                                 $totalBiayaNonOperasionalAwal += $saldoAwal;
-                                $totalMutasiBiayaNonOperasional += $mutasiDebet - $mutasiKredit;
+                                $totalMutasiBiayaNonOperasional = $mutasiDebet - $mutasiKredit;
                                 $totalBiayaNonOperasional += $saldoAkhir;
                             }
                             ?>

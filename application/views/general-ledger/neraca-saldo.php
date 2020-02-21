@@ -221,16 +221,20 @@
                                 
                                 <?php
                             }
+                                $lrTahunLalu = $this->M_neraca_saldo->getSaldoAwal('01.270.10')->saldo_awal;
+
                                 $saldoAwalShu = $this->M_neraca_saldo->getSaldoAwal('02.330.10')->saldo_awal;
                                 $shuAwal = $this->M_neraca_saldo->getLabaRugiTahunBerjalanAwal($_GET['dari']);
                                 
                                 $lrTahunBerjalan = $this->M_neraca_saldo->getLabaRugiTahunBerjalan($_GET['dari'], $_GET['sampai']);
                                 
+                                $ttlSaldoAwalKredit -= $lrTahunLalu;
                                 $ttlSaldoAwalKredit -= $saldoAwalShu + $shuAwal;
                                 $ttlMutasiDebet = $ttlMutasiDebet - $lrTahunBerjalan;
                                 // $ttlMutasiKredit = $ttlMutasiKredit + $mutasiKredit;
 
                                 $ttlSaldoAkhirDebet = $ttlSaldoAkhirDebet - $lrTahunBerjalan - ($saldoAwalShu + $shuAwal);
+                                $ttlSaldoAkhirDebet = $ttlSaldoAkhirDebet - $lrTahunLalu;
                                 // $ttlSaldoAwalDebet = $ttlSaldoAwalDebet + $saldoAwal;
                             ?>
                             <!-- LR belum fix -->
@@ -238,10 +242,10 @@
                                     <th>01.270.10</th>
                                     <th>SHU Tahun Lalu</th>
                                     <th>0,00</th>
+                                    <th><?php echo number_format($lrTahunLalu, 2, ',', '.')?> </th>
                                     <th>0,00</th>
                                     <th>0,00</th>
-                                    <th>0,00</th>
-                                    <th>0,00</th>
+                                    <th>( <?php echo number_format($lrTahunBerjalan + $lrTahunLalu, 2, ',', '.')?> )</th>
                                     <th>0,00</th>
                                 </tr>
                                 <tr>
