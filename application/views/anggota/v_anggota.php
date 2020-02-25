@@ -66,7 +66,7 @@
                                 <td><?php if($p->status=="0"){echo "Non Aktif";}else if($p->status=="1"){echo "Aktif";} ?></td>
                                 <td style="text-align:center;">
                                     <a href="<?php echo base_url().'index.php/anggota/rekeningAnggota/'.$p->no_anggota; ?>" class="btn btn-sm btn-warning"><i class="icofont-eye"></i></a>
-                                    <button type="button" class="btn btn-sm btn-success" onclick="edit(<?php echo $p->no_anggota; ?>)"><i class="icofont-ui-edit"></i></button>
+                                    <button type="button" class="btn btn-sm btn-success" onclick="edit('<?php echo $p->no_anggota; ?>')"><i class="icofont-ui-edit"></i></button>
                                     <?php if($p->status==1){ ?>
                                     <a onclick="return confirm('Anda Yakin Ingin Menonaktifkan Anggota?')" href="<?php echo base_url() . 'index.php/anggota/disableAccount/' . $p->no_anggota; ?>" class="btn btn-sm btn-danger" ><i class="icofont-ui-power"></i></a>
                                     <?php }else if($p->status==0){ ?>
@@ -118,7 +118,7 @@
                                 <label for="" class="pull-left">Status</label>
                                 <select name="status" id="" class="form-control form-control-sm" required>
                                     <option value="">--Pilih--</option>
-                                    <option value="1">Aktif</option>
+                                    <option value="1" selected>Aktif</option>
                                     <option value="0">Non Aktif</option>
                                 </select>
                             </div>
