@@ -14,7 +14,7 @@ if($this->session->userdata('_login') != TRUE){
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Koperasi</title>
+  <title>KSU Madani</title>
 
   <!-- Custom fonts for this template -->
   <link href="<?php echo base_url(); ?>assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -53,10 +53,7 @@ if($this->session->userdata('_login') != TRUE){
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo base_url() . 'index.php/dashboard' ?>">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="icofont-food-cart"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">Koperasi</div>
+        <div class="sidebar-brand-text mx-3">KSU Madani</div>
       </a>
 
       <!-- Divider -->
